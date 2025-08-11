@@ -1,84 +1,75 @@
 import { useState } from 'react';
 import {
-    AppstoreOutlined,
-    ContainerOutlined,
-    DesktopOutlined,
-    MailOutlined,
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
     PieChartOutlined,
+    ProductOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Button, Menu } from 'antd';
+import type { MenuProps, MenuTheme } from 'antd';
+import { Button, Menu, Switch } from 'antd';
 import './AdminPage.scss'
+import { RiCollapseHorizontalLine } from 'react-icons/ri';
+import { MdOutlineFeaturedPlayList } from 'react-icons/md';
+import { FaUsers } from 'react-icons/fa';
+import { FaReact } from 'react-icons/fa6';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
-    // {
-    //     key: '1',
-    //     label:
-    //         <div>
-    //             <h3>Hồ Ka IT</h3>
-    //             <hr />
-    //         </div>
-
-    // },
-    { key: '1', icon: <PieChartOutlined />, label: 'Option 1' },
-    { key: '2', icon: <DesktopOutlined />, label: 'Option 2' },
-    { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
+    { key: 'title', icon: <FaReact className='admin-sidebar-icon-1' />, label: 'Hồ Ka IT' },
+    { key: '1', icon: <PieChartOutlined />, label: 'Dashboard' },
     {
         key: 'sub1',
-        label: 'Navigation One',
-        icon: <MailOutlined />,
+        label: 'Feature (Chức năng) ',
+        icon: <MdOutlineFeaturedPlayList />,
         children: [
-            { key: '5', label: 'Option 5' },
-            { key: '6', label: 'Option 6' },
-            { key: '7', label: 'Option 7' },
-            { key: '8', label: 'Option 8' },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
+            { key: '2', icon: <FaUsers />, label: 'Quản lý Users (ND)' },
+            { key: '3', icon: <ProductOutlined />, label: 'Quản lý Producte (SP)' },
         ],
     },
 ];
 const AdminPage = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
+
+    const [theme, setTheme] = useState<MenuTheme>('dark');
+    const changeTheme = (value: boolean) => {
+        setTheme(value ? 'dark' : 'light');
+    };
+
     return (
         <div className='admin-container'>
             <div className='admin-sidebar-container'>
-                <div style={{ width: 256 }}>
+                <div className='admin-sidebar-menu'
+                    style={{
+                        width: collapsed ? '80px' : '256px'
+                    }}
+                >
                     <Menu
-                        defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['sub1']}
+                        defaultSelectedKeys={['title']}
+                        defaultOpenKeys={['title']}
                         mode="inline"
-                        theme="dark"
+                        theme={theme}
                         inlineCollapsed={collapsed}
                         items={items}
                     />
+
                 </div>
             </div>
             <div className='admin-main-container'>
-                <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
-                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                </Button>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <Button type='primary' onClick={toggleCollapsed}>
+                        {collapsed ? <RiCollapseHorizontalLine /> : <RiCollapseHorizontalLine />}
+                    </Button>
+
+                    <Switch
+                        checked={theme === 'dark'}
+                        onChange={changeTheme}
+                        checkedChildren="Dark"
+                        unCheckedChildren="Light"
+                    />
+                </div>
+
                 <h1>
                     Nội dung bên trái
                 </h1>
