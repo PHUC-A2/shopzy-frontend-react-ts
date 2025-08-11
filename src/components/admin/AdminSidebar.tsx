@@ -11,6 +11,7 @@ import { FaReact, FaUserShield } from 'react-icons/fa6';
 import { Link } from 'react-router';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { AiOutlineLogout } from 'react-icons/ai';
+import { SiAegisauthenticator } from 'react-icons/si';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
@@ -21,9 +22,9 @@ const items: MenuItem[] = [
         label: 'Feature (Chức năng) ',
         icon: <MdOutlineFeaturedPlayList />,
         children: [
-            { key: 'adminUser', icon: <FaUsers />, label: <Link to={"#/admin/users"}>Quản lý Users (ND)</Link> },
+            { key: 'adminUser', icon: <FaUsers />, label: <Link to={"/admin/users"}>Quản lý Users (ND)</Link> },
             { key: 'adminProducte', icon: <ProductOutlined />, label: <Link to={"#/admin/producte"}>Quản lý Producte (SP)</Link> },
-            { key: 'adminRole', icon: <FaUsers />, label: <Link to={"#/admin/roles"}>Quản lý Role (VT)</Link> },
+            { key: 'adminRole', icon: <SiAegisauthenticator />, label: <Link to={"#/admin/roles"}>Quản lý Role (VT)</Link> },
         ],
     },
     {
