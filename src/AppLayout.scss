@@ -7,8 +7,32 @@ body {
 
 }
 
-.app-layout-container {
+/*CSS cho UserLayout*/
+.user-layout-container {
     padding-top  : 5px;
     padding-left : 10px;
     padding-right: 10px;
+}
+
+/*CSS cho AdminLayout*/
+.admin-layout-container {
+
+    //  display: flex; // ở file AdminSidebar.scss đã có
+    //  flex   : 1; 
+    .admin-main-container {
+        flex: 1;
+
+        .admin-main-action {
+            display        : flex;
+            flex           : 1;
+            justify-content: space-between;
+            padding-top: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        .admin-main-outlet {
+            padding-top: 0px;
+        }
+    }
 }

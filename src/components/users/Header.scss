@@ -1,9 +1,9 @@
- .header-container {
+ .user-header-container {
      .ant-menu-overflow-item.ant-menu-submenu.ant-menu-submenu-horizontal {
          margin-left: auto;
      }
 
-     .header-title {
+     .user-header-title {
          display     : flex;
          align-items : center;
          margin-right: 20px;
@@ -11,7 +11,7 @@
          color       : red;
          font-size   : 30px;
 
-         .header-icon-1 {
+         .user-header-icon-1 {
              margin-right: 10px;
              color       : rgb(26, 147, 147);
              width       : 70px;

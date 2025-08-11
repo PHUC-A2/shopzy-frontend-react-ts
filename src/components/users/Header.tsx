@@ -56,12 +56,12 @@ const Header = () => {
         setCurrent(e.key);
     };
     return (
-        <div className='header-menu' style={{
+        <div className='user-header-menu' style={{
             display: "flex",
             alignItems: "center",
             width: "100%"
         }} >
-            <h1 className='header-title' style={{ margin: 0 }}> <FaReact className='header-icon-1' /> Hồ Ka IT</h1>
+            <h1 className='user-header-title' style={{ margin: 0 }}> <FaReact className='user-header-icon-1' /> Hồ Ka IT</h1>
             <Menu
                 style={{ display: "flex", flex: 1 }}
                 onClick={onClick}

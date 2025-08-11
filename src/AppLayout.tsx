@@ -2,16 +2,16 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router";
-import MainLayout from "./routers/MainLayout";
+import UserLayout from "./routers/UserLayout";
 import HomePage from "./pages/HomePage";
 import UsersPage from "./pages/users/UsersPage";
+import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
+import AdminLayout from "./routers/AdminLayout";
 import AdminPage from "./pages/admin/AdminPage";
-import AdminUsersPage from "./pages/admin/AdminUsersPage";
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <UserLayout />,
 
     /* cấu hình cho user */
     children: [
@@ -29,8 +29,12 @@ const router = createBrowserRouter([
   /* cấu hình cho admin */
   {
     path: "/admin",
-    element: <AdminPage />,
+    element: <AdminLayout />,
     children: [
+      {
+        index: true,
+        element: <AdminPage />
+      },
       {
         path: "users",
         element: <AdminUsersPage />

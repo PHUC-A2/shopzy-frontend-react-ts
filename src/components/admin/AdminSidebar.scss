@@ -1,9 +1,10 @@
-.admin-container {
+.admin-layout-container {
     display: flex;
     flex   : 1;
 
     /* css cho phần sidebar*/
     .admin-sidebar-container {
+        display: flex;
         color: red;
 
         ul.ant-menu.ant-menu-root.ant-menu-vertical.ant-menu-dark.ant-menu-inline-collapsed.css-dev-only-do-not-override-l9pxc0 {
@@ -30,8 +31,9 @@
         }
 
         .admin-sidebar-icon-1 {
-            color: rgb(251, 144, 5);
+            color    : rgb(251, 144, 5);
             animation: spin 2s linear infinite;
+
             :hover {
                 color: rgb(237, 10, 10);
             }
@@ -46,15 +48,5 @@
                 transform: rotate(360deg);
             }
         }
-    }
-
-    /* css cho phần main (body)*/
-    .admin-main-container {
-        // chiếm toàn bộ layout còn lại
-        // của admin-container (vì cha đã co display:flex)
-        flex         : 1;
-        padding-left : 5px;
-        padding-right: 10px;
-        padding-top  : 5px;
     }
 }
