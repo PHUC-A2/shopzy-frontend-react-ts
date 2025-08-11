@@ -1,0 +1,73 @@
+import { useState } from 'react';
+import {
+    SettingOutlined
+} from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
+import { HiHome } from 'react-icons/hi';
+import { FaReact, FaUser } from 'react-icons/fa';
+import { IoMdLogIn } from 'react-icons/io';
+import { FaCircleUser, FaUserPlus } from 'react-icons/fa6';
+import { AiFillDashboard } from 'react-icons/ai';
+import { Link } from 'react-router';
+import './Header.scss'
+type MenuItem = Required<MenuProps>['items'][number];
+
+const items: MenuItem[] = [
+    {
+        label: <Link to={"/"}>Home</Link>,
+        key: 'home',
+        icon: <HiHome />,
+    },
+    {
+        label: <Link to={"/users"}>Users</Link>,
+        key: 'users',
+        icon: <FaUser />,
+    },
+    {
+        label: <Link to={"/admin"}>Admin</Link>,
+        key: 'admin',
+        icon: <AiFillDashboard />,
+    },
+    {
+        label: 'Settings',
+        key: 'settings',
+        icon: <SettingOutlined />,
+        className: "header-settings",
+        children: [
+            {
+                type: 'group',
+                children: [
+                    { label: 'Sign in', key: 'signin', icon: <IoMdLogIn /> },
+                    { label: 'Sign up', key: 'signup', icon: < FaUserPlus /> },
+                    { label: 'Profile', key: 'profile', icon: <FaCircleUser /> },
+                ],
+            },
+        ],
+    },
+];
+
+
+const Header = () => {
+    const [current, setCurrent] = useState('home');
+
+    const onClick: MenuProps['onClick'] = (e) => {
+        console.log('click ', e);
+        setCurrent(e.key);
+    };
+    return (
+        <div className='header-menu' style={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%"
+        }} >
+            <h1 className='header-title' style={{ margin: 0 }}> <FaReact className='header-icon-1' /> Hồ Ka IT</h1>
+            <Menu
+                style={{ display: "flex", flex: 1 }}
+                onClick={onClick}
+                selectedKeys={[current]}
+                mode="horizontal" items={items} />
+        </div>
+    )
+}
+export default Header;
