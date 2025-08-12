@@ -43,192 +43,22 @@ const items: MenuItem[] = [
         ],
     },
     {
-        key: 'sub2',
+        key: 'sub4',
         label: 'Navigation Two',
         icon: <AppstoreOutlined />,
         children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
+            { key: '13', label: 'Option 9' },
+            { key: '14', label: 'Option 10' },
             {
-                key: 'sub3',
+                key: 'sub5',
                 label: 'Submenu',
                 children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
+                    { key: '15', label: 'Option 11' },
+                    { key: '16', label: 'Option 12' },
                 ],
             },
         ],
     },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    }
 ];
 
 interface IProps {
@@ -239,10 +69,10 @@ const AdminSidebar = (props: IProps) => {
 
     const { collapsed } = props;
     return (
-        <div className='admin-sidebar-menu' 
-        style={{
-            width:collapsed ? '80px' :'256px'
-        }}
+        <div className='admin-sidebar-menu'
+            style={{
+                width: collapsed ? '80px' : '256px'
+            }}
         >
             <Menu
                 defaultSelectedKeys={['1']}
