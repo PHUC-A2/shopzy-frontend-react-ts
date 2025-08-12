@@ -1,10 +1,11 @@
 html,
 body {
-    padding    : 0;
-    margin     : 0;
-    font-size  : 16px;
-    font-family: 'Times New Roman', Times, serif;
-    overflow-x : hidden; // không cho cuộn phải
+    padding       : 0;
+    margin        : 0;
+    height        : 100%;
+    font-size     : 16px;
+    font-family   : 'Times New Roman', Times, serif;
+    // overflow-x : hidden; // không cho cuộn phải
 
 }
 
@@ -17,23 +18,32 @@ body {
 
 /*CSS cho AdminLayout*/
 .admin-layout-container {
+    display : flex;
+    height  : 100vh;
+    position: fixed;
 
-    //  display: flex; // ở file AdminSidebar.scss đã có
-    //  flex   : 1; 
+    .admin-sidebar-container {
+        height: 100vh;
+
+        ul.ant-menu.ant-menu-root.ant-menu-vertical.ant-menu-dark.ant-menu-inline-collapsed.css-dev-only-do-not-override-l9pxc0 {
+            height: 100vh;
+        }
+
+        ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark.css-dev-only-do-not-override-l9pxc0 {
+            height: 100vh;
+        }
+
+        // xử lý cho phần collaped
+        .admin-sidebar-menu {
+            max-width : 256px;
+            min-width : 80px;
+            transition: all 0.2s ease;
+        }
+    }
+
     .admin-main-container {
-        flex: 1;
-
-        .admin-main-action {
-            display        : flex;
-            flex           : 1;
-            justify-content: space-between;
-            padding-top    : 5px;
-            padding-left   : 5px;
-            padding-right  : 5px;
-        }
-
-        .admin-main-outlet {
-            padding-top: 0px;
-        }
+        flex      : 1;
+        min-height: 100vh;
+        overflow-y: auto;
     }
 }

@@ -1,64 +1,67 @@
 import {
+    AppstoreOutlined,
+    ContainerOutlined,
+    DesktopOutlined,
+    MailOutlined,
     PieChartOutlined,
-    ProductOutlined,
 } from '@ant-design/icons';
-import type { MenuProps, MenuTheme } from 'antd';
+import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import './AdminSidebar.scss'
-import { MdOutlineFeaturedPlayList } from 'react-icons/md';
-import { FaUsers } from 'react-icons/fa';
-import { FaReact, FaUserShield } from 'react-icons/fa6';
-import { Link } from 'react-router';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { AiOutlineLogout } from 'react-icons/ai';
-import { SiAegisauthenticator } from 'react-icons/si';
+
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
-    { key: 'title', icon: <FaReact className='admin-sidebar-icon-1' />, label: 'Hồ Ka IT' },
-    { key: 'admin', icon: <PieChartOutlined />, label: <Link className='nav-link' to={"/admin"}>Dashboard</Link> },
+    { key: '1', icon: <PieChartOutlined />, label: 'Option 1' },
+    { key: '2', icon: <DesktopOutlined />, label: 'Option 2' },
+    { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
     {
         key: 'sub1',
-        label: 'Feature (Chức năng)',
-        icon: <MdOutlineFeaturedPlayList />,
+        label: 'Navigation One',
+        icon: <MailOutlined />,
         children: [
-            { key: 'adminUser', label: <Link className='nav-link' to={"/admin/users"}><FaUsers />  Quản lý Users (ND)</Link> },
-            { key: 'adminProducte', label: <Link className='nav-link' to={"#/admin/producte"}><ProductOutlined /> Quản lý Producte (SP)</Link> },
-            { key: 'adminRole', label: <Link className='nav-link' to={"#/admin/roles"}><SiAegisauthenticator /> Quản lý Role (VT)</Link> },
+            { key: '5', label: 'Option 5' },
+            { key: '6', label: 'Option 6' },
+            { key: '7', label: 'Option 7' },
+            { key: '8', label: 'Option 8' },
         ],
     },
     {
         key: 'sub2',
-        label: 'Settings',
-        icon: <IoSettingsOutline />,
+        label: 'Navigation Two',
+        icon: <AppstoreOutlined />,
         children: [
-            { key: 'adminLogout', label: <Link className='nav-link' to={"#/admin/logout"}><AiOutlineLogout /> Log out</Link> },
-            { key: 'adminProfile', label: <Link className='nav-link' to={"#/admin/profile"}><FaUserShield /> Profile</Link> },
+            { key: '9', label: 'Option 9' },
+            { key: '10', label: 'Option 10' },
+            {
+                key: 'sub3',
+                label: 'Submenu',
+                children: [
+                    { key: '11', label: 'Option 11' },
+                    { key: '12', label: 'Option 12' },
+                ],
+            },
         ],
     },
 ];
 
-
 interface IProps {
     collapsed: boolean;
-    theme: MenuTheme;
 }
 
 const AdminSidebar = (props: IProps) => {
 
-    const { collapsed, theme } = props;
-
+    const { collapsed } = props;
     return (
-        <div className='admin-sidebar-menu'
-            style={{
-                width: collapsed ? '80px' : '256px'
-            }}
+        <div className='admin-sidebar-menu' 
+        style={{
+            width:collapsed ? '80px' :'256px'
+        }}
         >
             <Menu
-                defaultSelectedKeys={['admin']}
-                defaultOpenKeys={['admin']}
+                defaultSelectedKeys={['1']}
+                defaultOpenKeys={['sub1']}
                 mode="inline"
-                theme={theme}
+                theme="dark"
                 inlineCollapsed={collapsed}
                 items={items}
             />
