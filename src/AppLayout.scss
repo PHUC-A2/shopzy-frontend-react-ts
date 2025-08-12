@@ -24,6 +24,7 @@ body {
 
     .admin-sidebar-container {
         height: 100vh;
+        overflow-y: auto;
 
         ul.ant-menu.ant-menu-root.ant-menu-vertical.ant-menu-dark.ant-menu-inline-collapsed.css-dev-only-do-not-override-l9pxc0 {
             height: 100vh;
