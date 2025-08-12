@@ -78,7 +78,7 @@ const AdminSidebar = (props: IProps) => {
         >
             <Menu
                 defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
+                defaultOpenKeys={['1']}
                 mode="inline"
                 theme={theme}
                 inlineCollapsed={collapsed}
