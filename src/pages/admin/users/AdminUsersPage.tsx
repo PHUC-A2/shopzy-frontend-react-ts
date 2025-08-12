@@ -1,105 +1,81 @@
-import { Space, Switch, Table, Tag } from 'antd';
-import type { TableProps } from 'antd';
+import { Space, Table } from 'antd';
+import { getAllUsers } from '../../../service/Api';
+import { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { IoMdPersonAdd } from 'react-icons/io';
+import { AiFillDelete } from 'react-icons/ai';
+import { CiEdit } from 'react-icons/ci';
+import { FaRegEye } from 'react-icons/fa';
 
-interface DataType {
-    key: string;
+interface IUsers {
+    id: string;
     name: string;
-    age: number;
-    address: string;
-    tags: string[];
+    fullName: string;
+    email: string;
 }
 
-const columns: TableProps<DataType>['columns'] = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text) => <a>{text}</a>,
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-    },
-    {
-        title: 'Tags',
-        key: 'tags',
-        dataIndex: 'tags',
-        render: (_, { tags }) => (
-            <>
-                {tags.map((tag) => {
-                    let color = tag.length > 5 ? 'geekblue' : 'green';
-                    if (tag === 'loser') {
-                        color = 'volcano';
-                    }
-                    return (
-                        <Tag color={color} key={tag}>
-                            {tag.toUpperCase()}
-                        </Tag>
-                    );
-                })}
-            </>
-        ),
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (_, record) => (
-            <Space size="middle">
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
-            </Space>
-        ),
-    },
-];
-
-const data: DataType[] = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-];
-
 const AdminUsersPage = () => {
-    const handleSwitchOnChange = (checked: boolean) => {
-        if (checked) {
-            console.log("Bạn đã bật")
-        } else {
-            console.log("Bạn đã tắt")
-        }
-    };
+
+    const [listUsers, setListUser] = useState<IUsers[]>([]);
+
+    const fetchAllUsers = async () => {
+        const res = await getAllUsers();
+        console.log(res.data.data)
+        setListUser(res.data.data)
+    }
+
+    useEffect(() => {
+        fetchAllUsers();
+    }, [])
+
+    const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
+            render: (text: any) => <a>{text}</a>,
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            // render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'Full Name',
+            dataIndex: 'fullName',
+            key: 'fullName',
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: () => (
+                <Space size="middle">
+                    <Button variant="outline-success"><FaRegEye /></Button>
+                    <Button variant="outline-primary"><IoMdPersonAdd /></Button>
+                    <Button variant="outline-warning"><CiEdit /></Button>
+                    <Button variant="outline-danger"><AiFillDelete /></Button>
+                </Space>
+            ),
+        },
+    ];
+
+
+
     return (
         <div className='admin-user-container'>
 
-            <Table<DataType>
+            <Table
+                bordered
                 columns={columns}
-                dataSource={data}
+                dataSource={listUsers}
+                rowKey={'id'}
             />
-            <div>
-                <Switch defaultChecked onChange={handleSwitchOnChange} />
-            </div>
         </div>
     )
 }

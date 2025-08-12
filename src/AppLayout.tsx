@@ -8,6 +8,8 @@ import UsersPage from "./pages/users/UsersPage";
 import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
 import AdminLayout from "./routers/AdminLayout";
 import AdminPage from "./pages/admin/AdminPage";
+import { ToastContainer} from 'react-toastify';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +50,7 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer />
     </>
   )
 }

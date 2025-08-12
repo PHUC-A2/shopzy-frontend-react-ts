@@ -16,15 +16,15 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
     { key: 'title', icon: <FaReact className='admin-sidebar-icon-1' />, label: 'Hồ Ka IT' },
-    { key: 'admin', icon: <PieChartOutlined />, label: <Link to={"/admin"}>Dashboard</Link> },
+    { key: 'admin', icon: <PieChartOutlined />, label: <Link className='nav-link' to={"/admin"}>Dashboard</Link> },
     {
         key: 'sub1',
-        label: 'Feature (Chức năng) ',
+        label: 'Feature (Chức năng)',
         icon: <MdOutlineFeaturedPlayList />,
         children: [
-            { key: 'adminUser', icon: <FaUsers />, label: <Link to={"/admin/users"}>Quản lý Users (ND)</Link> },
-            { key: 'adminProducte', icon: <ProductOutlined />, label: <Link to={"#/admin/producte"}>Quản lý Producte (SP)</Link> },
-            { key: 'adminRole', icon: <SiAegisauthenticator />, label: <Link to={"#/admin/roles"}>Quản lý Role (VT)</Link> },
+            { key: 'adminUser', label: <Link className='nav-link' to={"/admin/users"}><FaUsers />  Quản lý Users (ND)</Link> },
+            { key: 'adminProducte', label: <Link className='nav-link' to={"#/admin/producte"}><ProductOutlined /> Quản lý Producte (SP)</Link> },
+            { key: 'adminRole', label: <Link className='nav-link' to={"#/admin/roles"}><SiAegisauthenticator /> Quản lý Role (VT)</Link> },
         ],
     },
     {
@@ -32,8 +32,8 @@ const items: MenuItem[] = [
         label: 'Settings',
         icon: <IoSettingsOutline />,
         children: [
-            { key: 'adminLogout', icon: <AiOutlineLogout />, label: <Link to={"#/admin/logout"}>Log out</Link> },
-            { key: 'adminProfile', icon: <FaUserShield />, label: <Link to={"#/admin/profile"}>Profile</Link> },
+            { key: 'adminLogout', label: <Link className='nav-link' to={"#/admin/logout"}><AiOutlineLogout /> Log out</Link> },
+            { key: 'adminProfile', label: <Link className='nav-link' to={"#/admin/profile"}><FaUserShield /> Profile</Link> },
         ],
     },
 ];

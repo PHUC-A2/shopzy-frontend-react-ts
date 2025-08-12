@@ -15,17 +15,17 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
     {
-        label: <Link to={"/"}>Home</Link>,
+        label: <Link className='text-decoration-none' to={"/"}>Home</Link>,
         key: 'home',
         icon: <HiHome />,
     },
     {
-        label: <Link to={"/users"}>Users</Link>,
+        label: <Link className='text-decoration-none' to={"/users"}>Users</Link>,
         key: 'users',
         icon: <FaUser />,
     },
     {
-        label: <Link to={"/admin"}>Admin</Link>,
+        label: <Link className='text-decoration-none' to={"/admin"}>Admin</Link>,
         key: 'admin',
         icon: <AiFillDashboard />,
     },
