@@ -1,18 +1,19 @@
 import {
     AppstoreOutlined,
     ContainerOutlined,
-    DesktopOutlined,
+    DashboardOutlined,
     MailOutlined,
-    PieChartOutlined,
+    UserAddOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+import type { MenuProps, MenuTheme } from 'antd';
 import { Menu } from 'antd';
+import { Link } from 'react-router';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
-    { key: '1', icon: <PieChartOutlined />, label: 'Option 1' },
-    { key: '2', icon: <DesktopOutlined />, label: 'Option 2' },
+    { key: '1', icon: <DashboardOutlined />, label: <Link className='nav-link' to={"/admin"}> Dashboard</Link> },
+    { key: '2', icon: <UserAddOutlined />, label: <Link className='nav-link' to={"/admin/users"}> Users</Link> },
     { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
     {
         key: 'sub1',
@@ -63,11 +64,12 @@ const items: MenuItem[] = [
 
 interface IProps {
     collapsed: boolean;
+    theme: MenuTheme;
 }
 
 const AdminSidebar = (props: IProps) => {
 
-    const { collapsed } = props;
+    const { collapsed, theme } = props;
     return (
         <div className='admin-sidebar-menu'
             style={{
@@ -78,7 +80,7 @@ const AdminSidebar = (props: IProps) => {
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
                 mode="inline"
-                theme="dark"
+                theme={theme}
                 inlineCollapsed={collapsed}
                 items={items}
             />

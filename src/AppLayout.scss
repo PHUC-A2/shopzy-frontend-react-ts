@@ -20,10 +20,11 @@ body {
 .admin-layout-container {
     display : flex;
     height  : 100vh;
+    width   : 100%;
     position: fixed;
 
     .admin-sidebar-container {
-        height: 100vh;
+        height    : 100vh;
         overflow-y: auto;
 
         ul.ant-menu.ant-menu-root.ant-menu-vertical.ant-menu-dark.ant-menu-inline-collapsed.css-dev-only-do-not-override-l9pxc0 {
@@ -43,8 +44,26 @@ body {
     }
 
     .admin-main-container {
-        flex      : 1;
-        min-height: 100vh;
-        overflow-y: auto;
+        flex         : 1;
+        min-height   : 100vh;
+        overflow-y   : auto;
+        padding-top  : 5px;
+        padding-left : 10px;
+        padding-right: 10px;
+
+        /*Phần  style phần collaped và dark */
+        .admin-main-action {
+            display         : flex;
+            justify-content : space-between;
+            align-items     : center;
+            margin-bottom   : 20px;
+            background-color: #e6fffb;
+        }
+
+        /* phầm main outlet*/
+        .admin-main-outlet {
+            flex  : 1;
+            height: 100vh;
+        }
     }
 }
