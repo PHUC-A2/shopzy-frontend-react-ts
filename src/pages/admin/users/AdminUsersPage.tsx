@@ -11,6 +11,7 @@ import AdminModalGetUserDetails from "./modals/AdminModalGetUserDetails";
 import type { IUser } from "../../../types/intefaces";
 import AdminModalAddUser from "./modals/AdminModalAddUser";
 import type { PopconfirmProps } from 'antd';
+import AdminModalUpdateUser from "./modals/AdminModalUpdateUser";
 
 const AdminUsersPage = () => {
 
@@ -19,6 +20,16 @@ const AdminUsersPage = () => {
     const [placement, setPlacement] = useState<DrawerProps['placement']>('left');
     const [openUserDrawer, setOpenUserDrawer] = useState<boolean>(false);
     const [openModalAddUser, setOpenModalAddUser] = useState<boolean>(false);
+    const [openModalUpdateUser, setOpenModalUpdateUser] = useState<boolean>(false);
+    const [userUpdate, setUserUpdate] = useState<IUser | null>(null);
+
+    // sửa user
+    // đảm bảo luôn có data user
+    const handleEditUser = (user1: IUser) => {
+        console.log(user1.fullName);
+        setUserUpdate(user1);
+        setOpenModalUpdateUser(true);
+    }
 
     // xóa user
     const handleDeleteUser = async (id: number) => {
@@ -113,7 +124,7 @@ const AdminUsersPage = () => {
                             <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
 
                                 <Button variant="outline-success" onClick={() => handleGetUserDetails(item.id)}><FaRegEye /></Button>
-                                <Button variant="outline-dark"><CiEdit /></Button>
+                                <Button variant="outline-dark" onClick={() => handleEditUser(item)}><CiEdit /></Button>
 
                                 <Popconfirm
                                     title="Delete the user"
@@ -143,6 +154,13 @@ const AdminUsersPage = () => {
                 openModalAddUser={openModalAddUser}
                 setOpenModalAddUser={setOpenModalAddUser}
                 handleGetAllUsers={handleGetAllUsers}
+            />
+            {/* Modal Update user */}
+            <AdminModalUpdateUser
+                openModalUpdateUser={openModalUpdateUser}
+                setOpenModalUpdateUser={setOpenModalUpdateUser}
+                handleGetAllUsers={handleGetAllUsers}
+                userUpdate={userUpdate}
             />
         </>
     )
