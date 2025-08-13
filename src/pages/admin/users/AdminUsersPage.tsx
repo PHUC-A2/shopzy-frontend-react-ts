@@ -3,13 +3,14 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
-import { getAllUsers, getUserDetails } from "../../../service/Api";
+import { deleteUser, getAllUsers, getUserDetails } from "../../../service/Api";
 import { toast } from "react-toastify";
-import type { DrawerProps } from 'antd';
+import { message, Popconfirm, type DrawerProps } from 'antd';
 import { useEffect, useState } from "react";
 import AdminModalGetUserDetails from "./modals/AdminModalGetUserDetails";
 import type { IUser } from "../../../types/intefaces";
 import AdminModalAddUser from "./modals/AdminModalAddUser";
+import type { PopconfirmProps } from 'antd';
 
 const AdminUsersPage = () => {
 
@@ -19,12 +20,29 @@ const AdminUsersPage = () => {
     const [openUserDrawer, setOpenUserDrawer] = useState<boolean>(false);
     const [openModalAddUser, setOpenModalAddUser] = useState<boolean>(false);
 
+    // xóa user
+    const handleDeleteUser = async (id: number) => {
+        try {
+            const res = await deleteUser(id);
+            if (res?.data?.statusCode === 200) {
+                toast.info('User deleted successfully')
+                handleGetAllUsers();
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div>Có lỗi xảy ra khi xóa user</div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    }
 
-    // thêm user
-    // const handleAddUser = () => {
-    //     setOpenModalAddUser(true);
-    //     // alert('me')
-    // }
+    const cancel: PopconfirmProps['onCancel'] = (e) => {
+        console.log(e);
+        message.error('Click on No');
+    };
 
     // chi tiết user
     const handleGetUserDetails = async (id: number) => {
@@ -96,7 +114,17 @@ const AdminUsersPage = () => {
 
                                 <Button variant="outline-success" onClick={() => handleGetUserDetails(item.id)}><FaRegEye /></Button>
                                 <Button variant="outline-dark"><CiEdit /></Button>
-                                <Button variant="outline-danger"><MdDelete /></Button>
+
+                                <Popconfirm
+                                    title="Delete the user"
+                                    description="Are you sure to delete this user?"
+                                    onConfirm={() => handleDeleteUser(item.id)}
+                                    onCancel={cancel}
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                    <Button variant="outline-danger"><MdDelete /></Button>
+                                </Popconfirm>
                             </td>
                         </tr>
                     ))}
