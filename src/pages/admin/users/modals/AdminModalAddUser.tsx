@@ -1,8 +1,9 @@
 // import { useState } from 'react';
-import { Input, Modal } from 'antd';
-import { useState } from 'react';
+import { Modal } from 'antd';
 import { toast } from 'react-toastify';
 import { createUser } from '../../../../service/Api';
+import { Form, Input } from 'antd';
+import type { IUser } from '../../../../types/intefaces';
 
 interface IProps {
     openModalAddUser: boolean;
@@ -12,30 +13,20 @@ interface IProps {
 
 const AdminModalAddUser = (props: IProps) => {
     const { openModalAddUser, setOpenModalAddUser, handleGetAllUsers } = props;
-    const [name, setName] = useState<string>("");
-    const [fullName, setFullName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [phoneNumber, setPhoneNumber] = useState<string>("");
+    const [form] = Form.useForm();
 
 
-    const handleAddUser = async () => {
+    const handleAddUser = async (values: IUser) => {
         setOpenModalAddUser(false);
         try {
-            const res = await createUser(name, fullName, email, password, phoneNumber);
+            const res = await createUser(values.name, values.fullName, values.email, values.password, values.phoneNumber);
             if (res.data.statusCode === 201) {
-                setName("")
-                setFullName("")
-                setEmail("")
-                setPassword("")
-                setPhoneNumber("")
+                form.resetFields(); // dùng để xóa các giá trị sau khi đã submit
+                form.setFieldsValue({ name: '', fullName: '', email: '', password: '', phoneNumber: '' });
                 handleGetAllUsers();
                 toast.success('Create user successfully')
-                console.log(res);
-                console.log(res.data.data);
             }
         } catch (error: any) {
-
             const m = error?.response?.data?.message ?? "unknow";
             toast.error(
                 <div>
@@ -54,35 +45,60 @@ const AdminModalAddUser = (props: IProps) => {
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 open={openModalAddUser}
                 okText="Save"
-                onOk={() => handleAddUser()}
+                onOk={() => form.submit()}
                 onCancel={() => setOpenModalAddUser(false)}
             >
                 <div>
-                    <div className='mb-3'>
-                        <strong>Name:</strong>
-                        <Input placeholder="Please enter a name"
-                            value={name} onChange={(e) => setName(e.target.value)} allowClear />
-                    </div>
-                    <div className='mb-3'>
-                        <strong>Full Name:</strong>
-                        <Input placeholder="Please enter a full name"
-                            value={fullName} onChange={(e) => setFullName(e.target.value)} allowClear />
-                    </div>
-                    <div className='mb-3'>
-                        <strong>Email:</strong>
-                        <Input placeholder="Please enter a email"
-                            value={email} onChange={(e) => setEmail(e.target.value)} allowClear />
-                    </div>
-                    <div className='mb-3'>
-                        <strong>Password:</strong>
-                        <Input.Password placeholder="Please enter a password"
-                            value={password} onChange={(e) => setPassword(e.target.value)} allowClear />
-                    </div>
-                    <div className='mb-3'>
-                        <strong>Phone Number:</strong>
-                        <Input placeholder="Please enter a phone number"
-                            value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} allowClear />
-                    </div>
+                    <hr />
+                    <Form
+                        form={form}
+                        onFinish={handleAddUser}
+                        layout='vertical'
+                        autoComplete="off"
+                    >
+                        <Form.Item
+                            label="Name"
+                            name="name"
+                            rules={[{ required: true, message: 'Please input your name!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Full Name"
+                            name="fullName"
+                            rules={[{ required: true, message: 'Please input your full name!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            rules={[
+                                { required: true, message: 'Please input your email!' },
+                                { type: "email", message: 'Email is not valid!' }
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                            rules={[{ required: true, message: 'Please input your password!' }]}
+                        >
+                            <Input.Password />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Phone Number"
+                            name="phoneNumber"
+                            rules={[{ required: true, message: 'Please input your phone number!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Form>
                 </div>
             </Modal>
         </>
