@@ -9,13 +9,22 @@ import type { DrawerProps } from 'antd';
 import { useEffect, useState } from "react";
 import AdminModalGetUserDetails from "./modals/AdminModalGetUserDetails";
 import type { IUser } from "../../../types/intefaces";
+import AdminModalAddUser from "./modals/AdminModalAddUser";
 
 const AdminUsersPage = () => {
 
     const [listUsers, setListUsers] = useState<IUser[]>([]);
     const [user, setUser] = useState<IUser | null>(null);
-    const [openUserDrawer, setOpenUserDrawer] = useState(false);
     const [placement, setPlacement] = useState<DrawerProps['placement']>('left');
+    const [openUserDrawer, setOpenUserDrawer] = useState<boolean>(false);
+    const [openModalAddUser, setOpenModalAddUser] = useState<boolean>(false);
+
+
+    // thêm user
+    // const handleAddUser = () => {
+    //     setOpenModalAddUser(true);
+    //     // alert('me')
+    // }
 
     // chi tiết user
     const handleGetUserDetails = async (id: number) => {
@@ -51,11 +60,17 @@ const AdminUsersPage = () => {
 
     return (
         <>
-            <div>
+            <div className="d-flex justify-content-between align-items-center">
                 <h2>Table Users</h2>
-                <hr />
+                <div>
+                    <Button className="d-flex align-items-center"
+                        variant="outline-primary"
+                        onClick={() => setOpenModalAddUser(true)} >
+                        <AiOutlineUserAdd /> Add a user
+                    </Button>
+                </div>
             </div>
-
+            <hr />
             <Table striped bordered hover className="text-center">
                 <thead>
                     <tr>
@@ -64,6 +79,7 @@ const AdminUsersPage = () => {
                         <th>Name</th>
                         <th>Full Name</th>
                         <th>Email</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -75,10 +91,10 @@ const AdminUsersPage = () => {
                             <td>{item.name}</td>
                             <td>{item.fullName}</td>
                             <td>{item.email}</td>
+                            <td >{item.status}</td>
                             <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
 
                                 <Button variant="outline-success" onClick={() => handleGetUserDetails(item.id)}><FaRegEye /></Button>
-                                <Button variant="outline-primary" ><AiOutlineUserAdd /></Button>
                                 <Button variant="outline-dark"><CiEdit /></Button>
                                 <Button variant="outline-danger"><MdDelete /></Button>
                             </td>
@@ -94,8 +110,12 @@ const AdminUsersPage = () => {
                 openUserDrawer={openUserDrawer}
                 user={user}
             />
-
-
+            {/* Modal AddUser */}
+            <AdminModalAddUser
+                openModalAddUser={openModalAddUser}
+                setOpenModalAddUser={setOpenModalAddUser}
+                handleGetAllUsers={handleGetAllUsers}
+            />
         </>
     )
 }
