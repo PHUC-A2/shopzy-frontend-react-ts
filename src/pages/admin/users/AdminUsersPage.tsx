@@ -87,6 +87,8 @@ const AdminUsersPage = () => {
         handleGetAllUsers();
     }, [])
 
+
+    console.log(listUsers?.length === 0 ? "data null" : listUsers.length);
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
@@ -113,7 +115,8 @@ const AdminUsersPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {listUsers.map((item, index) => (
+                    {/* {listUsers.length > 0 ? "": ""} */}
+                    {listUsers.length > 0 ? listUsers.map((item, index) => (
                         <tr key={index}>
                             <td onClick={() => handleGetUserDetails(item.id)}><a href="#">{index + 1}</a></td>
                             <td>{item.id}</td>
@@ -138,7 +141,13 @@ const AdminUsersPage = () => {
                                 </Popconfirm>
                             </td>
                         </tr>
-                    ))}
+                    )) : (
+                        <tr>
+                            <td colSpan={7} style={{ textAlign: 'center', fontStyle: 'italic' }}>
+                                Không có dữ liệu
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </Table>
 
