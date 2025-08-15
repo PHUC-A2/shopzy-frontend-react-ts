@@ -34,7 +34,7 @@ const items: MenuItem[] = [
         label: <Link className='text-decoration-none' to={"#/admin"}>Cart</Link>,
         key: 'cart',
         icon: <TiShoppingCart />,
-        className:'header-cart'
+        className: 'header-cart'
     },
     {
         label: 'Settings',
@@ -45,9 +45,9 @@ const items: MenuItem[] = [
             {
                 type: 'group',
                 children: [
-                    { label: 'Sign in', key: 'signin', icon: <IoMdLogIn /> },
-                    { label: 'Sign up', key: 'signup', icon: < FaUserPlus /> },
-                    { label: 'Profile', key: 'profile', icon: <FaCircleUser /> },
+                    { label: <Link to={'/login'} className='text-decoration-none'>Sign in</Link>, key: 'signin', icon: <IoMdLogIn /> },
+                    { label: <Link to={'/register'} className='text-decoration-none'>Sign up</Link>, key: 'signup', icon: < FaUserPlus /> },
+                    { label: <Link to={'#/profile'} className='text-decoration-none'>Profile</Link>, key: 'profile', icon: <FaCircleUser /> },
                 ],
             },
         ],
@@ -68,7 +68,7 @@ const Header = () => {
             alignItems: "center",
             width: "100%"
         }} >
-            <h1 className='user-header-title' style={{ margin: 0 }}> <FaReact className='user-header-icon-1' /> Hồ Ka IT</h1>
+            <h1 className='user-header-title' style={{ margin: 0 }}> <FaReact className='user-header-icon-1' /> Shopzy</h1>
             <Menu
                 style={{ display: "flex", flex: 1 }}
                 onClick={onClick}
