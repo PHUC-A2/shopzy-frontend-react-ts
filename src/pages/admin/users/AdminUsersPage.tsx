@@ -65,7 +65,13 @@ const AdminUsersPage = () => {
                 setUser(res.data.data);
             }
         } catch (error: any) {
-            toast.error('Lỗi không thể gọi API', error)
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <strong>Có lỗi xảy ra! </strong>
+                    <div> {m}</div>
+                </div>
+            )
         }
     }
 
@@ -79,7 +85,13 @@ const AdminUsersPage = () => {
                 toast.error('Có lỗi xảy ra')
             }
         } catch (error: any) {
-            toast.error('Có lỗi xảy ra', error)
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <strong>Có lỗi xảy ra! </strong>
+                    <div> {m}</div>
+                </div>
+            )
         }
     }
 

@@ -30,7 +30,7 @@ const AdminModalAddUser = (props: IProps) => {
             const m = error?.response?.data?.message ?? "unknow";
             toast.error(
                 <div>
-                    <div>Có lỗi xảy ra !</div>
+                    <strong>Có lỗi xảy ra!</strong>
                     <div>{m}</div>
                 </div>
             );
