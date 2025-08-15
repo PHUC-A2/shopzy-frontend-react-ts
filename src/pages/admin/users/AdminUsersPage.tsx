@@ -88,7 +88,7 @@ const AdminUsersPage = () => {
     }, [])
 
 
-    console.log(listUsers?.length === 0 ? "data null" : listUsers.length);
+    // console.log(listUsers?.length === 0 ? "data null" : listUsers.length);
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">

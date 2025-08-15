@@ -11,6 +11,7 @@ import { FaCircleUser, FaUserPlus } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
 import { Link } from 'react-router';
 import './Header.scss'
+import { TiShoppingCart } from 'react-icons/ti';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
@@ -28,6 +29,12 @@ const items: MenuItem[] = [
         label: <Link className='text-decoration-none' to={"/admin"}>Admin</Link>,
         key: 'admin',
         icon: <AiFillDashboard />,
+    },
+    {
+        label: <Link className='text-decoration-none' to={"#/admin"}>Cart</Link>,
+        key: 'cart',
+        icon: <TiShoppingCart />,
+        className:'header-cart'
     },
     {
         label: 'Settings',
