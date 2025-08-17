@@ -30,11 +30,19 @@ const deleteUser = (id: number) => {
     return axios.delete(url);
 }
 
+
+// đăng ký 
+const register = (name: string, fullName: string, email: string, password: string, phoneNumber: string) => {
+    const url = `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/register`
+    return axios.post(url, { name, fullName, email, password, phoneNumber });
+}
+
 // có thể gọi đến ở mọi nơi
 export {
     getAllUsers,
     getUserDetails,
     createUser,
     deleteUser,
-    updateUser
+    updateUser,
+    register
 }

@@ -1,19 +1,51 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Flex, Form, Input } from 'antd';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import './Register.scss';
 import { GrPhone } from 'react-icons/gr';
+import type { IUser } from '../../types/intefaces';
+import { register } from '../../service/Api';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
 
-const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-};
+
 const RegisterPage = () => {
+    const navigate = useNavigate();
+    const [form] = Form.useForm();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    const handleRegister = async (values: IUser) => {
+        setIsLoading(true);
+        const res = await register(values.name, values.fullName, values.email, values.password, values.phoneNumber);
+        setIsLoading(false);
+        try {
+            if (res?.data?.statusCode === 201) {
+                toast.success('Đăng ký tài khoản thành công');
+                form.resetFields(); // xóa các gái trị form sau khi submit
+                form.setFieldsValue({ name: '', fullName: '', email: '', password: '', phoneNumber: '' });
+                setTimeout(() => {
+                    navigate('/login') // chuyển sang trang log in sau khi đăng ký
+                }, 2000)
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><strong>Có lỗi xảy ra!</strong></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+
+    };
+
     return (
         <div className='register-container'>
             <Form
                 className='register-from'
+                form={form}
                 style={{ maxWidth: 460 }}
-                onFinish={onFinish}
+                onFinish={handleRegister}
             >
                 <Form.Item>
                     <Flex justify='center'>
@@ -64,7 +96,7 @@ const RegisterPage = () => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type='primary' block htmlType="submit">
+                    <Button type='primary' block htmlType="submit" loading={isLoading}>
                         Register
                     </Button>
                     <Flex className='mt-2' justify='space-between' align='center'>

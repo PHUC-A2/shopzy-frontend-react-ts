@@ -79,8 +79,9 @@ const AdminUsersPage = () => {
     const handleGetAllUsers = async () => {
         try {
             const res = await getAllUsers();
+            console.log(res);
             if (res?.data?.statusCode === 200) {
-                setListUsers(res.data.data);
+                setListUsers(res.data.data.result);
             } else {
                 toast.error('Có lỗi xảy ra')
             }
