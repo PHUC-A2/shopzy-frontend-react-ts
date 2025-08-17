@@ -37,6 +37,12 @@ const register = (name: string, fullName: string, email: string, password: strin
     return axios.post(url, { name, fullName, email, password, phoneNumber });
 }
 
+// Đăng nhập
+const login = (username: string, password: string) => {
+    const url = `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/login`
+    return axios.post(url, { username, password });
+}
+
 // có thể gọi đến ở mọi nơi
 export {
     getAllUsers,
@@ -44,5 +50,6 @@ export {
     createUser,
     deleteUser,
     updateUser,
-    register
+    register,
+    login
 }

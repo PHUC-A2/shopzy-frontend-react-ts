@@ -1,19 +1,44 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Flex, Form, Input } from 'antd';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import './Login.scss';
+import type { ILogin } from '../../types/intefaces';
+import { login } from '../../service/Api';
+import { toast } from 'react-toastify';
 
-const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-};
+
 
 const LoginPage = () => {
+
+    const [form] = Form.useForm();
+    const natigave = useNavigate();
+
+    const handleLogin = async (values: ILogin) => {
+        try {
+            const res = await login(values.username, values.password);
+            if (res?.data?.statusCode === 200) {
+                form.resetFields();
+                form.setFieldsValue({ username: '', password: '' });
+                natigave('/'); // đăng nhập xong chuyển sang trang /
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><strong>Có lỗi xảy ra!</strong></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    };
+
     return (
         <div className='login-container'>
             <Form
+                form={form}
                 className='login-from'
                 style={{ maxWidth: 460 }}
-                onFinish={onFinish}
+                onFinish={handleLogin}
             >
                 <Form.Item>
                     <Flex justify='center'>
@@ -21,7 +46,7 @@ const LoginPage = () => {
                     </Flex>
                 </Form.Item>
                 <Form.Item
-                    name="email"
+                    name="username"
                     rules={[
                         { type: "email", message: 'The input is not valid E-mail!' },
                         { required: true, message: 'Please input your Email!' }

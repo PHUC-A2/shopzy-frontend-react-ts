@@ -1,4 +1,3 @@
-
 // USER
 export interface IUser {
     id: number;
@@ -8,4 +7,10 @@ export interface IUser {
     password: string;
     phoneNumber: string;
     status: string;
+}
+
+// login
+export interface ILogin {
+    username: string;
+    password: string;
 }
