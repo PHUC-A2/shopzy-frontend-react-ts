@@ -5,18 +5,25 @@ import './Login.scss';
 import type { ILogin } from '../../types/intefaces';
 import { login } from '../../service/Api';
 import { toast } from 'react-toastify';
-
+import { useDispatch } from 'react-redux'; //dispatch là 1 biến obj a:{}
 
 
 const LoginPage = () => {
 
     const [form] = Form.useForm();
     const natigave = useNavigate();
+    const dispatch = useDispatch();
+
 
     const handleLogin = async (values: ILogin) => {
         try {
             const res = await login(values.username, values.password);
+            console.log(res);
             if (res?.data?.statusCode === 200) {
+                dispatch({
+                    type: 'FETCH_USER_LOGIN_SUCCESS', // type
+                    payload: res.data
+                })
                 form.resetFields();
                 form.setFieldsValue({ username: '', password: '' });
                 natigave('/'); // đăng nhập xong chuyển sang trang /
