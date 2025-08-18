@@ -1,3 +1,4 @@
+import { FETCH_USER_LOGIN_SUCCESS } from "../action/userAction";
 
 const INITIAL_STATE = {
     account: {
@@ -14,8 +15,8 @@ const INITIAL_STATE = {
 
 const userReducer = (state = INITIAL_STATE, action: any) => {
     switch (action.type) {
-        case 'FETCH_USER_LOGIN_SUCCESS':
-            // console.log("Check action: ", action.payload.data.access_token)
+        case FETCH_USER_LOGIN_SUCCESS:
+            console.log("Check action: ", action.payload.data.access_token)
             return {
                 ...state, account: {
                     access_token: action.payload.data.access_token,
@@ -28,7 +29,9 @@ const userReducer = (state = INITIAL_STATE, action: any) => {
                 },
                 isAuthenticated: true
             };
+        default:
+            return state;
     }
-    return state;
+
 }
 export default userReducer;
