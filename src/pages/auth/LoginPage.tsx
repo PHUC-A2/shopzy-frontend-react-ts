@@ -5,6 +5,8 @@ import './Login.scss';
 import type { ILogin } from '../../types/intefaces';
 import { login } from '../../service/Api';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setUserLoginInfo } from '../../redux/slice/userSlide';
 
 
 
@@ -12,14 +14,23 @@ const LoginPage = () => {
 
     const [form] = Form.useForm();
     const natigave = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogin = async (values: ILogin) => {
         try {
             const res = await login(values.username, values.password);
             if (res?.data?.statusCode === 200) {
+                const { access_token, user } = res.data.data;
+
+                // lưu access_token vào localStorage để khi F5 không mất data
+                localStorage.setItem('access_token', access_token);
+
+                // đẩy vào redux
+                dispatch(setUserLoginInfo({ access_token, user, isAuthenticated: true }));
                 form.resetFields();
                 form.setFieldsValue({ username: '', password: '' });
                 natigave('/'); // đăng nhập xong chuyển sang trang /
+                toast.success('Đăng nhập thành công')
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknow";
