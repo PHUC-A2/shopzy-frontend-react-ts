@@ -10,20 +10,45 @@ import { FaReact, FaUser } from 'react-icons/fa';
 import { IoMdLogIn } from 'react-icons/io';
 import { FaCircleUser, FaUserPlus } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import './Header.scss'
 import { TiShoppingCart } from 'react-icons/ti';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../redux/reducer/rootReducer';
+import { logout } from '../../service/Api';
+import { toast } from 'react-toastify';
+import { doLogout } from '../../redux/action/userAction';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
 
     const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
-    const account = useSelector((state: RootState) => state.user.account);
+    // const account = useSelector((state: RootState) => state.user.account);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    console.log("account: ", account)
-    console.log("isAuthenticated: ", isAuthenticated)
+    const handleLogout = async () => {
+        try {
+            const res = await logout();
+            if (res.data.statusCode === 200) {
+                // xóa data ở redux và trả về login
+                dispatch(doLogout());
+                toast.success('Logout thành công');
+                navigate('/login')
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><b>Có lỗi xảy ra!</b></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    }
+
+    // console.log("account: ", account)
+    // console.log("isAuthenticated: ", isAuthenticated)
     const items: MenuItem[] = [
         {
             label: <Link className='text-decoration-none' to={"/"}>Home</Link>,
@@ -58,7 +83,7 @@ const Header = () => {
                 ...(isAuthenticated ?
                     [
                         { label: <Link to={'#/profile'} className='text-decoration-none'>Profile</Link>, key: 'profile', icon: <FaCircleUser /> },
-                        { label: 'Log out', key: 'logout', icon: <LogoutOutlined /> }
+                        { label: <span onClick={handleLogout}>Log out</span>, key: 'logout', icon: <LogoutOutlined /> }
                     ]
                     :
                     [

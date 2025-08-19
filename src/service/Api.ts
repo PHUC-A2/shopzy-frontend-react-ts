@@ -43,6 +43,12 @@ const login = (username: string, password: string) => {
     return axios.post(url, { username, password });
 }
 
+// Đăng xuất
+const logout = () => {
+    const url = `${import.meta.env.VITE_BACKEND_URL}/api/v1/auth/logout`
+    return axios.post(url);
+}
+
 // có thể gọi đến ở mọi nơi
 export {
     getAllUsers,
@@ -51,5 +57,6 @@ export {
     deleteUser,
     updateUser,
     register,
-    login
+    login,
+    logout
 }
