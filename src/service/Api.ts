@@ -91,6 +91,7 @@ const updateUser = (id: number, name: string, fullName: string, phoneNumber: str
 
 const deleteUser = (id: number) => instance.delete(`/api/v1/users/${id}`);
 
+/* api auth  */
 const register = (name: string, fullName: string, email: string, password: string, phoneNumber: string) =>
     instance.post("/api/v1/auth/register", { name, fullName, email, password, phoneNumber });
 

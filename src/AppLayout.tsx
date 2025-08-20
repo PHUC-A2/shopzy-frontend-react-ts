@@ -14,7 +14,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAccount } from "./service/Api";
-import { setUserLoginInfo } from "./redux/slice/authSlide";
+import { setUserLoginInfo } from "./redux/slice/authSlice";
 
 const router = createBrowserRouter([
   /* cấu hình cho user */
