@@ -79,7 +79,7 @@ const AdminUsersPage = () => {
     const handleGetAllUsers = async () => {
         try {
             const res = await getAllUsers();
-            console.log(res);
+            // console.log(res);
             if (res?.data?.statusCode === 200) {
                 setListUsers(res.data.data.result);
             } else {

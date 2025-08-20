@@ -16,16 +16,16 @@ import { TiShoppingCart } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
 import { logout } from '../../service/Api';
-import { setLogoutUser } from '../../redux/slice/userSlide';
+import { setLogoutUser } from '../../redux/slice/authSlide';
 import { toast } from 'react-toastify';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
 
-    const isAuthenticated = useSelector((state: RootState) => state.user.isAuthenticated);
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
     const natigave = useNavigate();
-    
+
 
     const handleLogout = async () => {
         try {
@@ -47,9 +47,9 @@ const Header = () => {
 
     }
 
-    const account = useSelector((state: RootState) => state.user.user);
-    console.log("account: ", account)
-    
+    // const account = useSelector((state: RootState) => state.auth.user);
+    // console.log("account: ", account)
+
     const items: MenuItem[] = [
         {
             label: <Link className='text-decoration-none' to={"/"}>Home</Link>,

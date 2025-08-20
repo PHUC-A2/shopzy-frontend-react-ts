@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-interface UserState {
+interface AuthState {
     access_token: string | null;
     user: {
         id: number;
@@ -10,17 +10,17 @@ interface UserState {
     isAuthenticated: boolean;
 }
 
-const initialState: UserState = {
+const initialState: AuthState = {
     access_token: localStorage.getItem("access_token") || null, // 👉 lấy token cũ từ localStorage
     user: null, // mặc định null
     isAuthenticated: false // mặc định là false
 };
 
-const userSlice = createSlice({
-    name: 'user',
+const authSlice = createSlice({
+    name: 'auth',
     initialState,
     reducers: {
-        setUserLoginInfo: (state, action: PayloadAction<UserState>) => {
+        setUserLoginInfo: (state, action: PayloadAction<AuthState>) => {
             // console.log(action.payload);
             state.access_token = action.payload.access_token;
             state.user = action.payload.user;
@@ -35,5 +35,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUserLoginInfo, setLogoutUser } = userSlice.actions;
-export default userSlice.reducer;
+export const { setUserLoginInfo, setLogoutUser } = authSlice.actions;
+export default authSlice.reducer;

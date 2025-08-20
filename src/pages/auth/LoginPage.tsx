@@ -6,7 +6,7 @@ import type { ILogin } from '../../types/intefaces';
 import { login } from '../../service/Api';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { setUserLoginInfo } from '../../redux/slice/userSlide';
+import { setUserLoginInfo } from '../../redux/slice/authSlide';
 
 
 

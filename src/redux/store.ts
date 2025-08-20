@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userReducer from './slice/userSlide';
+import authReducer from './slice/authSlide';
 export const store = configureStore({
     reducer: {
-        user: userReducer  // userReducer là tên có thể đặt tùy ý
+        auth: authReducer  // authReducer là tên có thể đặt tùy ý
     },
 })
 
