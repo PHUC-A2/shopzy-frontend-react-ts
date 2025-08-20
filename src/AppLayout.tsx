@@ -11,10 +11,12 @@ import AdminPage from "./pages/admin/AdminPage";
 import { toast, ToastContainer } from 'react-toastify';
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAccount } from "./service/Api";
+import { getAccount, getUserDetails } from "./service/Api";
 import { setUserLoginInfo } from "./redux/slice/authSlice";
+import type { RootState } from "./redux/store";
+import { setClearProfileUser, setProfileUser } from "./redux/slice/userSlice";
 
 const router = createBrowserRouter([
   /* cấu hình cho user */
@@ -50,7 +52,10 @@ const router = createBrowserRouter([
 const App = () => {
 
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const account = useSelector((state: RootState) => state.auth.user);
 
+  // xử lý khi F5 với Login (authSlice)
   useEffect(() => {
     const init = async () => {
       // kiểm tra nếu không có token thì bỏ qua
@@ -74,6 +79,38 @@ const App = () => {
 
     init(); // gọi hàm 
   }, [dispatch])
+
+
+  // xử lý khi F5 với userSlice
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        // nếu đã login
+        if (isAuthenticated && account?.id) {
+          // đảm bảo cho id của user login không bị undefined
+          const idAccount = account.id; // luôn đảm bảo là number
+          const res = await getUserDetails(idAccount);
+          const { id, name, fullName, email, phoneNumber } = res?.data?.data;
+          if (res?.data?.statusCode === 200) {
+
+            // đẩy lên redux để lưu
+            dispatch(setProfileUser({ id, name, fullName, email, phoneNumber }));
+          }
+        }
+
+        // nếu logout thì xóa profile
+        if(!isAuthenticated){
+          dispatch(setClearProfileUser());
+        }
+
+      } catch (error: any) {
+        toast.error('Chưa đăng nhập, không có profile')
+      }
+    }
+
+    // gọi hàm
+    getProfile();
+  }, [dispatch, isAuthenticated, account?.id])
 
   return (
     <>

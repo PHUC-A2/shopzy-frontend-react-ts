@@ -24,7 +24,8 @@ const Header = () => {
 
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
-    const natigave = useNavigate();
+    const navigave = useNavigate();
+    const profile = useSelector((state: RootState) => state.user.user);
 
 
     const handleLogout = async () => {
@@ -33,7 +34,7 @@ const Header = () => {
             if (res?.data?.statusCode === 200) {
                 dispatch(setLogoutUser())
                 toast.success('Đăng xuất thành công');
-                natigave('/login');
+                navigave('/login');
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknow";
@@ -47,8 +48,10 @@ const Header = () => {
 
     }
 
-    // const account = useSelector((state: RootState) => state.auth.user);
-    // console.log("account: ", account)
+
+    const handleProfile = async () => {
+        console.log("Profile: ", profile);
+    }
 
     const items: MenuItem[] = [
         {
@@ -89,7 +92,7 @@ const Header = () => {
                             ]
                             :
                             [
-                                { label: <Link to={'#/profile'} className='text-decoration-none'>Profile</Link>, key: 'profile', icon: <FaCircleUser /> },
+                                { label: <span onClick={handleProfile}>Profile</span>, key: 'profile', icon: <FaCircleUser /> },
                                 { label: <span onClick={handleLogout}>Log out</span>, key: 'logout', icon: <LogoutOutlined /> },
                             ])
                     ],

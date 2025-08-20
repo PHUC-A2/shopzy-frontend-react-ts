@@ -13,7 +13,7 @@ import { setUserLoginInfo } from '../../redux/slice/authSlice';
 const LoginPage = () => {
 
     const [form] = Form.useForm();
-    const natigave = useNavigate();
+    const navigave = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogin = async (values: ILogin) => {
@@ -29,7 +29,7 @@ const LoginPage = () => {
                 dispatch(setUserLoginInfo({ access_token, user, isAuthenticated: true }));
                 form.resetFields();
                 form.setFieldsValue({ username: '', password: '' });
-                natigave('/'); // đăng nhập xong chuyển sang trang /
+                navigave('/'); // đăng nhập xong chuyển sang trang /
                 toast.success('Đăng nhập thành công')
             }
         } catch (error: any) {
