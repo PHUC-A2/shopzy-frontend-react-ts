@@ -104,15 +104,25 @@ const getAccount = () => instance.get("/api/v1/auth/account");
 
 const getRefreshToken = () => instance.get("/api/v1/auth/refresh");
 
+
+/* api user */
+const getAllProducts = () => instance.get("/api/v1/products");
+
 export {
     getAllUsers,
     getUserDetails,
     createUser,
     deleteUser,
     updateUser,
+
+    // auth
     register,
     login,
     logout,
     getAccount,
-    getRefreshToken
+    getRefreshToken,
+
+    // products
+    getAllProducts
+
 };
