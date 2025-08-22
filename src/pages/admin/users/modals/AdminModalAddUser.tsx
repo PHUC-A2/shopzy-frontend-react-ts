@@ -17,20 +17,20 @@ const AdminModalAddUser = (props: IProps) => {
 
 
     const handleAddUser = async (values: IUser) => {
-        setOpenModalAddUser(false);
         try {
             const res = await createUser(values.name, values.fullName, values.email, values.password, values.phoneNumber);
             if (res.data.statusCode === 201) {
+                await handleGetAllUsers();
+                setOpenModalAddUser(false);
+                toast.success('New user created successfully')
                 form.resetFields(); // dùng để xóa các giá trị sau khi đã submit
                 form.setFieldsValue({ name: '', fullName: '', email: '', password: '', phoneNumber: '' });
-                handleGetAllUsers();
-                toast.success('Create user successfully')
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknow";
             toast.error(
                 <div>
-                    <strong>Có lỗi xảy ra!</strong>
+                    <div><strong>Có lỗi xảy ra!</strong></div>
                     <div>{m}</div>
                 </div>
             );

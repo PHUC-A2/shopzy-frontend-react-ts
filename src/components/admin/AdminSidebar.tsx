@@ -1,12 +1,12 @@
 import {
     AppstoreOutlined,
-    ContainerOutlined,
     DashboardOutlined,
     MailOutlined,
     UserAddOutlined,
 } from '@ant-design/icons';
 import type { MenuProps, MenuTheme } from 'antd';
 import { Menu } from 'antd';
+import { AiOutlineProduct } from 'react-icons/ai';
 import { Link } from 'react-router';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -14,7 +14,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 const items: MenuItem[] = [
     { key: '1', icon: <DashboardOutlined />, label: <Link className='nav-link' to={"/admin"}> Dashboard</Link> },
     { key: '2', icon: <UserAddOutlined />, label: <Link className='nav-link' to={"/admin/users"}> Users</Link> },
-    { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
+    { key: '3', icon: <AiOutlineProduct />, label: <Link className='nav-link' to={"/admin/products"}> Products</Link> },
     {
         key: 'sub1',
         label: 'Navigation One',

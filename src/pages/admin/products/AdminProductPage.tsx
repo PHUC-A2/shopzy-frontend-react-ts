@@ -1,6 +1,5 @@
 import { Popconfirm } from "antd";
 import { Button, Table } from "react-bootstrap";
-import { AiOutlineUserAdd } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -8,10 +7,14 @@ import { getAllProducts } from "../../../service/Api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import type { IProduct } from "../../../types/intefaces";
+import { IoIosAddCircle } from "react-icons/io";
+import AdminModalAddProduct from "./modals/AdminModalAddProduct";
 
 const AdminProductPage = () => {
 
     const [listProduct, setListProduct] = useState<IProduct[]>([]);
+    const [openAdminModalAddProduct, setOpenAdminModalProduct] = useState<boolean>(false);
+
 
     const fetchAllProducts = async () => {
         try {
@@ -41,9 +44,10 @@ const AdminProductPage = () => {
                 <h2>Table Product</h2>
                 <div>
                     <Button className="d-flex align-items-center"
+                        onClick={() => setOpenAdminModalProduct(true)}
                         variant="outline-primary"
                     >
-                        <AiOutlineUserAdd /> Add a product
+                        <IoIosAddCircle /> Add a product
                     </Button>
                 </div>
             </div>
@@ -62,6 +66,7 @@ const AdminProductPage = () => {
                         <th>Image Url</th>
                         <th>Size</th>
                         <th>Color</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -101,14 +106,19 @@ const AdminProductPage = () => {
                         </tr>
                     )) : (
                         <tr>
-                            <td colSpan={7} style={{ textAlign: 'center', fontStyle: 'italic' }}>
+                            <td colSpan={12} style={{ textAlign: 'center', fontStyle: 'italic' }}>
                                 Không có dữ liệu
                             </td>
                         </tr>
                     )}
                 </tbody>
             </Table>
-
+            {/* add product */}
+            <AdminModalAddProduct
+                openAdminModalAddProduct={openAdminModalAddProduct}
+                setOpenAdminModalProduct={setOpenAdminModalProduct}
+                fetchAllProducts={fetchAllProducts}
+            />
         </>
     )
 }

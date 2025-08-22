@@ -37,9 +37,13 @@ export interface IProduct {
     description: string;
     price: number;
     stock: number;
-    status: string;
-    productCondition: string;
+    status: ProductStatusEnum;
+    productCondition: ProductConditionEnum;
     imageUrl: string;
     size: string;
     color: string;
 }
+
+// dùng union tương tự enum
+export type ProductConditionEnum = "NEW" | "USED";
+export type ProductStatusEnum = "IN_STOCK" | "OUT_OF_STOCK";
