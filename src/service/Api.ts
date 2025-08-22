@@ -1,7 +1,7 @@
 // import axios from "axios";
 
 import instance from "../config/customAxios";
-import type { IProduct, ProductConditionEnum, ProductStatusEnum } from "../types/intefaces";
+import type { ProductConditionEnum, ProductStatusEnum } from "../types/intefaces";
 
 // /* api user */
 // const getAllUsers = () => {
@@ -110,6 +110,7 @@ const getRefreshToken = () => instance.get("/api/v1/auth/refresh");
 const createProduct = (name: string, description: string, price: number, stock: number, status: ProductStatusEnum, productCondition: ProductConditionEnum, imageUrl: string, size: string, color: string) =>
     instance.post("/api/v1/products", { name, description, price, stock, status, productCondition, imageUrl, size, color });
 const getAllProducts = () => instance.get("/api/v1/products");
+const deleteProducts = (id: number) => instance.delete(`/api/v1/products/${id}`);
 
 export {
     getAllUsers,
@@ -127,6 +128,7 @@ export {
 
     // products
     createProduct,
-    getAllProducts
+    getAllProducts,
+    deleteProducts
 
 };

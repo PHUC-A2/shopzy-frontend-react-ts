@@ -50,8 +50,7 @@ const AdminUsersPage = () => {
         }
     }
 
-    const cancel: PopconfirmProps['onCancel'] = (e) => {
-        console.log(e);
+    const cancel: PopconfirmProps['onCancel'] = () => {
         message.error('Click on No');
     };
 

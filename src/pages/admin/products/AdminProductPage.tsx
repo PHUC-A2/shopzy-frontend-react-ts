@@ -1,9 +1,9 @@
-import { Popconfirm } from "antd";
+import { message, Popconfirm, type PopconfirmProps } from "antd";
 import { Button, Table } from "react-bootstrap";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { getAllProducts } from "../../../service/Api";
+import { deleteProducts, getAllProducts } from "../../../service/Api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import type { IProduct } from "../../../types/intefaces";
@@ -14,6 +14,31 @@ const AdminProductPage = () => {
 
     const [listProduct, setListProduct] = useState<IProduct[]>([]);
     const [openAdminModalAddProduct, setOpenAdminModalProduct] = useState<boolean>(false);
+
+
+    // xóa 
+
+    const handleDeleteProduct = async (id: number) => {
+        try {
+            const res = await deleteProducts(id);
+            if (res?.data?.statusCode === 200) {
+                await fetchAllProducts();
+                toast.info('Product deleted successfully')
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><b>Có lỗi xảy ra!</b></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    }
+
+    const cancel: PopconfirmProps['onCancel'] = () => {
+        message.error('Click on No');
+    };
 
 
     const fetchAllProducts = async () => {
@@ -95,8 +120,8 @@ const AdminProductPage = () => {
                                 <Popconfirm
                                     title="Delete the user"
                                     description="Are you sure to delete this user?"
-                                    // onConfirm={() => handleDeleteUser(item.id)}
-                                    // onCancel={cancel}
+                                    onConfirm={() => handleDeleteProduct(item.id)}
+                                    onCancel={cancel}
                                     okText="Yes"
                                     cancelText="No"
                                 >
