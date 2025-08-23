@@ -109,7 +109,12 @@ const getRefreshToken = () => instance.get("/api/v1/auth/refresh");
 /* api user */
 const createProduct = (name: string, description: string, price: number, stock: number, status: ProductStatusEnum, productCondition: ProductConditionEnum, imageUrl: string, size: string, color: string) =>
     instance.post("/api/v1/products", { name, description, price, stock, status, productCondition, imageUrl, size, color });
+
+const updateProduct = (id: number, name: string, description: string, price: number, stock: number, status: ProductStatusEnum, productCondition: ProductConditionEnum, imageUrl: string, size: string, color: string) =>
+    instance.put("/api/v1/products", { id, name, description, price, stock, status, productCondition, imageUrl, size, color });
+
 const getAllProducts = () => instance.get("/api/v1/products");
+
 const deleteProducts = (id: number) => instance.delete(`/api/v1/products/${id}`);
 
 export {
@@ -129,6 +134,7 @@ export {
     // products
     createProduct,
     getAllProducts,
-    deleteProducts
+    deleteProducts,
+    updateProduct
 
 };

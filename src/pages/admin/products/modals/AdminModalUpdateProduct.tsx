@@ -1,29 +1,29 @@
-
 import { Flex, Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { toast } from 'react-toastify';
-import { createProduct } from '../../../../service/Api';
+import { updateProduct } from '../../../../service/Api';
 import type { IProduct } from '../../../../types/intefaces';
+import { useEffect } from 'react';
 
 interface IProps {
-    openAdminModalAddProduct: boolean;
-    setOpenAdminModalAddProduct: (v: boolean) => void;
+    openAdminModalUpdateProduct: boolean;
+    setOpenAdminModalUpdateProduct: (v: boolean) => void;
     fetchAllProducts: () => void;
+    productUpdate: IProduct | null;
 }
-
-const AdminModalAddProduct = (props: IProps) => {
-    const { openAdminModalAddProduct, setOpenAdminModalAddProduct, fetchAllProducts } = props;
+const AdminModalUpdateProduct = (props: IProps) => {
+    const { openAdminModalUpdateProduct, setOpenAdminModalUpdateProduct, fetchAllProducts, productUpdate } = props;
     const [form] = useForm();
 
-    const handleAddProduct = async (values: IProduct) => {
+    const handleUpdateProduct = async (values: IProduct) => {
         try {
-            const res = await createProduct(values.name, values.description, values.price, values.stock, values.status, values.productCondition, values.imageUrl, values.size, values.color);
-            if (res?.data?.statusCode === 201) {
+            const res = await updateProduct(values.id, values.name, values.description, values.price, values.stock, values.status, values.productCondition, values.imageUrl, values.size, values.color);
+            if (res?.data?.statusCode === 200) {
                 await fetchAllProducts();
-                setOpenAdminModalAddProduct(false);
-                toast.success("New product created successfully")
+                setOpenAdminModalUpdateProduct(false);
+                toast.success("Product updated successfully")
                 form.resetFields();
-                form.setFieldsValue({ name: "", description: "", price: 0, stock: 0, status: "IN_STOCK", productCondition: "NEW", imageUrl: "", size: "", color: "" })
+                form.setFieldsValue({ id: "", name: "", description: "", price: 0, stock: 0, status: "IN_STOCK", productCondition: "NEW", imageUrl: "", size: "", color: "" })
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknow";
@@ -37,27 +37,36 @@ const AdminModalAddProduct = (props: IProps) => {
 
     }
 
+    useEffect(() => {
+        if (openAdminModalUpdateProduct && productUpdate) {
+            form.setFieldsValue(productUpdate);
+        }
+    }, [openAdminModalUpdateProduct, productUpdate])
+    
     return (
         <>
             <Modal
                 title="Add a Product"
                 closable={{ 'aria-label': 'Custom Close Button' }}
-                open={openAdminModalAddProduct}
+                open={openAdminModalUpdateProduct}
                 onOk={() => form.submit()}
-                okText="Save"
+                okText="Update"
                 maskClosable={false}
-                onCancel={() => setOpenAdminModalAddProduct(false)}
+                onCancel={() => setOpenAdminModalUpdateProduct(false)}
                 width={1000}
             >
                 <Form
                     form={form}
-                    onFinish={handleAddProduct}
+                    onFinish={handleUpdateProduct}
                     layout='vertical'
                     autoComplete="off"
-                    // style={{ maxWidth: 900, margin: "0 auto" }} // 👈 căn giữa
+                // style={{ maxWidth: 900, margin: "0 auto" }} // 👈 căn giữa
                 >
                     <Flex justify='space-between' gap={20} style={{ width: "100%" }}>
                         <Flex vertical style={{ flex: 1 }} >
+                            <Form.Item name="id" hidden>
+                                <Input type="hidden" />
+                            </Form.Item>
                             <Form.Item
                                 label="Product name"
                                 name="name"
@@ -133,4 +142,4 @@ const AdminModalAddProduct = (props: IProps) => {
     )
 }
 
-export default AdminModalAddProduct;
+export default AdminModalUpdateProduct;

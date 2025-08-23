@@ -9,12 +9,20 @@ import { useEffect, useState } from "react";
 import type { IProduct } from "../../../types/intefaces";
 import { IoIosAddCircle } from "react-icons/io";
 import AdminModalAddProduct from "./modals/AdminModalAddProduct";
+import AdminModalUpdateProduct from "./modals/AdminModalUpdateProduct";
 
 const AdminProductPage = () => {
 
     const [listProduct, setListProduct] = useState<IProduct[]>([]);
-    const [openAdminModalAddProduct, setOpenAdminModalProduct] = useState<boolean>(false);
+    const [openAdminModalAddProduct, setOpenAdminModalAddProduct] = useState<boolean>(false);
+    const [openAdminModalUpdateProduct, setOpenAdminModalUpdateProduct] = useState<boolean>(false);
+    const [productUpdate, setProductUpdate] = useState<IProduct | null>(null);
 
+    // cập nhật
+    const handleUpdateProduct = (product: IProduct) => {
+        setProductUpdate(product);
+        setOpenAdminModalUpdateProduct(true);
+    }
 
     // xóa 
 
@@ -69,7 +77,7 @@ const AdminProductPage = () => {
                 <h2>Table Product</h2>
                 <div>
                     <Button className="d-flex align-items-center"
-                        onClick={() => setOpenAdminModalProduct(true)}
+                        onClick={() => setOpenAdminModalAddProduct(true)}
                         variant="outline-primary"
                     >
                         <IoIosAddCircle /> Add a product
@@ -115,7 +123,7 @@ const AdminProductPage = () => {
                             <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
 
                                 <Button variant="outline-success" ><FaRegEye /></Button>
-                                <Button variant="outline-dark"><CiEdit /></Button>
+                                <Button variant="outline-dark" onClick={() => handleUpdateProduct(item)}><CiEdit /></Button>
 
                                 <Popconfirm
                                     title="Delete the user"
@@ -141,7 +149,15 @@ const AdminProductPage = () => {
             {/* add product */}
             <AdminModalAddProduct
                 openAdminModalAddProduct={openAdminModalAddProduct}
-                setOpenAdminModalProduct={setOpenAdminModalProduct}
+                setOpenAdminModalAddProduct={setOpenAdminModalAddProduct}
+                fetchAllProducts={fetchAllProducts}
+            />
+
+            {/* upfate product */}
+            <AdminModalUpdateProduct
+                openAdminModalUpdateProduct={openAdminModalUpdateProduct}
+                setOpenAdminModalUpdateProduct={setOpenAdminModalUpdateProduct}
+                productUpdate={productUpdate}
                 fetchAllProducts={fetchAllProducts}
             />
         </>
