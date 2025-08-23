@@ -115,6 +115,8 @@ const updateProduct = (id: number, name: string, description: string, price: num
 
 const getAllProducts = () => instance.get("/api/v1/products");
 
+const getProductDetails = (id: number) => instance.get(`/api/v1/products/${id}`);
+
 const deleteProducts = (id: number) => instance.delete(`/api/v1/products/${id}`);
 
 export {
@@ -135,6 +137,7 @@ export {
     createProduct,
     getAllProducts,
     deleteProducts,
-    updateProduct
+    updateProduct,
+    getProductDetails
 
 };

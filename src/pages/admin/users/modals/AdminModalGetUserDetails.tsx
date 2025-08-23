@@ -1,25 +1,23 @@
-import { Drawer, type DrawerProps } from "antd";
+import { Drawer } from "antd";
 import type { IUser } from "../../../../types/intefaces";
 
 interface IProps {
     setOpenUserDrawer: (v: boolean) => void;
     openUserDrawer: boolean;
-    placement: DrawerProps['placement'];
     user: IUser | null;
 }
 
 const AdminModalGetUserDetails = (props: IProps) => {
 
-    const { placement, openUserDrawer, setOpenUserDrawer, user } = props;
+    const { openUserDrawer, setOpenUserDrawer, user } = props;
 
     return (
         <Drawer
             title="User Details"
-            placement={placement}
+            placement="right"
             closable={false}
             onClose={() => setOpenUserDrawer(false)}
             open={openUserDrawer}
-            key={placement}
         >
             <p><strong>ID: </strong><span> {user?.id}</span></p>
             <p><strong>Name: </strong><span> {user?.name}</span></p>

@@ -3,13 +3,14 @@ import { Button, Table } from "react-bootstrap";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { deleteProducts, getAllProducts } from "../../../service/Api";
+import { deleteProducts, getAllProducts, getProductDetails } from "../../../service/Api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import type { IProduct } from "../../../types/intefaces";
 import { IoIosAddCircle } from "react-icons/io";
 import AdminModalAddProduct from "./modals/AdminModalAddProduct";
 import AdminModalUpdateProduct from "./modals/AdminModalUpdateProduct";
+import AdminModalGetProductDetails from "./modals/AdminModalGetProductDetails";
 
 const AdminProductPage = () => {
 
@@ -17,6 +18,28 @@ const AdminProductPage = () => {
     const [openAdminModalAddProduct, setOpenAdminModalAddProduct] = useState<boolean>(false);
     const [openAdminModalUpdateProduct, setOpenAdminModalUpdateProduct] = useState<boolean>(false);
     const [productUpdate, setProductUpdate] = useState<IProduct | null>(null);
+    const [openAdminModalGetProductDetails, setOpenAdminModalGetProductDetails] = useState<boolean>(false);
+    const [product, setProduct] = useState<IProduct | null>(null);
+
+    // chi tiết
+    const handleGetProductDetails = async (id: number) => {
+        try {
+            const res = await getProductDetails(id);
+            if (res?.data?.statusCode === 200) {
+                setProduct(res?.data?.data);
+                setOpenAdminModalGetProductDetails(true);
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><b>Có lỗi xảy ra!</b></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+
+    }
 
     // cập nhật
     const handleUpdateProduct = (product: IProduct) => {
@@ -106,7 +129,7 @@ const AdminProductPage = () => {
                     {/* {listProduct.length > 0 ? "": ""} */}
                     {listProduct.length > 0 ? listProduct.map((item, index) => (
                         <tr key={item.id}>
-                            <td>{index}</td>
+                            <td><span><a href="#" onClick={() => handleGetProductDetails(item.id)} >{index + 1}</a></span></td>
                             <td>{item.id}</td>
                             <td>{item.name}</td>
                             <td>{item.description}</td>
@@ -122,7 +145,7 @@ const AdminProductPage = () => {
 
                             <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
 
-                                <Button variant="outline-success" ><FaRegEye /></Button>
+                                <Button variant="outline-success" onClick={() => handleGetProductDetails(item.id)} ><FaRegEye /></Button>
                                 <Button variant="outline-dark" onClick={() => handleUpdateProduct(item)}><CiEdit /></Button>
 
                                 <Popconfirm
@@ -153,12 +176,19 @@ const AdminProductPage = () => {
                 fetchAllProducts={fetchAllProducts}
             />
 
-            {/* upfate product */}
+            {/* update product */}
             <AdminModalUpdateProduct
                 openAdminModalUpdateProduct={openAdminModalUpdateProduct}
                 setOpenAdminModalUpdateProduct={setOpenAdminModalUpdateProduct}
                 productUpdate={productUpdate}
                 fetchAllProducts={fetchAllProducts}
+            />
+
+            {/* get details */}
+            <AdminModalGetProductDetails
+                openAdminModalGetProductDetails={openAdminModalGetProductDetails}
+                setOpenAdminModalGetProductDetails={setOpenAdminModalGetProductDetails}
+                product={product}
             />
         </>
     )

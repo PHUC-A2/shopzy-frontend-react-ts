@@ -5,7 +5,7 @@ import { FaRegEye } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { deleteUser, getAllUsers, getUserDetails } from "../../../service/Api";
 import { toast } from "react-toastify";
-import { message, Popconfirm, type DrawerProps } from 'antd';
+import { message, Popconfirm } from 'antd';
 import { useEffect, useState } from "react";
 import AdminModalGetUserDetails from "./modals/AdminModalGetUserDetails";
 import type { IUser } from "../../../types/intefaces";
@@ -17,7 +17,6 @@ const AdminUsersPage = () => {
 
     const [listUsers, setListUsers] = useState<IUser[]>([]);
     const [user, setUser] = useState<IUser | null>(null);
-    const [placement, setPlacement] = useState<DrawerProps['placement']>('left');
     const [openUserDrawer, setOpenUserDrawer] = useState<boolean>(false);
     const [openModalAddUser, setOpenModalAddUser] = useState<boolean>(false);
     const [openModalUpdateUser, setOpenModalUpdateUser] = useState<boolean>(false);
@@ -56,7 +55,6 @@ const AdminUsersPage = () => {
 
     // chi tiết user
     const handleGetUserDetails = async (id: number) => {
-        setPlacement('right');
         try {
             setOpenUserDrawer(true);
             const res = await getUserDetails(id);
@@ -165,7 +163,6 @@ const AdminUsersPage = () => {
 
             {/* Modal Drawer chi tiết User */}
             <AdminModalGetUserDetails
-                placement={placement}
                 setOpenUserDrawer={setOpenUserDrawer}
                 openUserDrawer={openUserDrawer}
                 user={user}
