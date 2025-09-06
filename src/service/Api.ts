@@ -80,64 +80,46 @@ import type { ProductConditionEnum, ProductStatusEnum } from "../types/intefaces
 // chuyển sang dùng instance
 
 /* api user */
-const getAllUsers = () => instance.get("/api/v1/users");
+export const getAllUsers = () => instance.get("/api/v1/users");
 
-const getUserDetails = (id: number) => instance.get(`/api/v1/users/${id}`);
+export const getUserDetails = (id: number) => instance.get(`/api/v1/users/${id}`);
 
-const createUser = (name: string, fullName: string, email: string, password: string, phoneNumber: string) =>
+export const createUser = (name: string, fullName: string, email: string, password: string, phoneNumber: string) =>
     instance.post("/api/v1/users", { name, fullName, email, password, phoneNumber });
 
-const updateUser = (id: number, name: string, fullName: string, phoneNumber: string) =>
+export const updateUser = (id: number, name: string, fullName: string, phoneNumber: string) =>
     instance.put("/api/v1/users", { id, name, fullName, phoneNumber });
 
-const deleteUser = (id: number) => instance.delete(`/api/v1/users/${id}`);
+export const deleteUser = (id: number) => instance.delete(`/api/v1/users/${id}`);
 
 /* api auth  */
-const register = (name: string, fullName: string, email: string, password: string, phoneNumber: string) =>
+export const register = (name: string, fullName: string, email: string, password: string, phoneNumber: string) =>
     instance.post("/api/v1/auth/register", { name, fullName, email, password, phoneNumber });
 
-const login = (username: string, password: string) =>
+export const login = (username: string, password: string) =>
     instance.post("/api/v1/auth/login", { username, password });
 
-const logout = () => instance.post("/api/v1/auth/logout");
+export const logout = () => instance.post("/api/v1/auth/logout");
 
-const getAccount = () => instance.get("/api/v1/auth/account");
+export const getAccount = () => instance.get("/api/v1/auth/account");
 
-const getRefreshToken = () => instance.get("/api/v1/auth/refresh");
+export const getRefreshToken = () => instance.get("/api/v1/auth/refresh");
 
 
 /* api user */
-const createProduct = (name: string, description: string, price: number, stock: number, status: ProductStatusEnum, productCondition: ProductConditionEnum, imageUrl: string, size: string, color: string) =>
+export const createProduct = (name: string, description: string, price: number, stock: number, status: ProductStatusEnum, productCondition: ProductConditionEnum, imageUrl: string, size: string, color: string) =>
     instance.post("/api/v1/products", { name, description, price, stock, status, productCondition, imageUrl, size, color });
 
-const updateProduct = (id: number, name: string, description: string, price: number, stock: number, status: ProductStatusEnum, productCondition: ProductConditionEnum, imageUrl: string, size: string, color: string) =>
+export const updateProduct = (id: number, name: string, description: string, price: number, stock: number, status: ProductStatusEnum, productCondition: ProductConditionEnum, imageUrl: string, size: string, color: string) =>
     instance.put("/api/v1/products", { id, name, description, price, stock, status, productCondition, imageUrl, size, color });
 
-const getAllProducts = () => instance.get("/api/v1/products");
+export const getAllProducts = () => instance.get("/api/v1/products");
 
-const getProductDetails = (id: number) => instance.get(`/api/v1/products/${id}`);
+export const getProductDetails = (id: number) => instance.get(`/api/v1/products/${id}`);
 
-const deleteProducts = (id: number) => instance.delete(`/api/v1/products/${id}`);
+export const deleteProducts = (id: number) => instance.delete(`/api/v1/products/${id}`);
 
-export {
-    getAllUsers,
-    getUserDetails,
-    createUser,
-    deleteUser,
-    updateUser,
+/* api cart */
 
-    // auth
-    register,
-    login,
-    logout,
-    getAccount,
-    getRefreshToken,
+export const getAllCarts = () => instance.get(`/api/v1/carts`);
 
-    // products
-    createProduct,
-    getAllProducts,
-    deleteProducts,
-    updateProduct,
-    getProductDetails
-
-};

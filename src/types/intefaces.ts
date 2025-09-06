@@ -4,9 +4,9 @@ export interface IUser {
     name: string;
     fullName: string;
     email: string;
-    password: string;
+    password?: string | null;
     phoneNumber: string;
-    status: string;
+    status?: string | null;
 }
 
 // login
@@ -43,6 +43,13 @@ export interface IProduct {
     size: string;
     color: string;
 }
+
+// cart
+export interface ICart {
+    id: number;
+    user: IUser | null;
+}
+
 
 // dùng union tương tự enum
 export type ProductConditionEnum = "NEW" | "USED";

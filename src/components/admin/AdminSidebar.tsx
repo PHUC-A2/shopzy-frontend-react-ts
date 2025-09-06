@@ -7,6 +7,7 @@ import {
 import type { MenuProps, MenuTheme } from 'antd';
 import { Menu } from 'antd';
 import { AiOutlineProduct } from 'react-icons/ai';
+import { FaCartPlus } from 'react-icons/fa6';
 import { Link } from 'react-router';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -15,6 +16,7 @@ const items: MenuItem[] = [
     { key: '1', icon: <DashboardOutlined />, label: <Link className='nav-link' to={"/admin"}> Dashboard</Link> },
     { key: '2', icon: <UserAddOutlined />, label: <Link className='nav-link' to={"/admin/users"}> Users</Link> },
     { key: '3', icon: <AiOutlineProduct />, label: <Link className='nav-link' to={"/admin/products"}> Products</Link> },
+    { key: '4', icon: <FaCartPlus />, label: <Link className='nav-link' to={"/admin/carts"}> Carts</Link> },
     {
         key: 'sub1',
         label: 'Navigation One',
