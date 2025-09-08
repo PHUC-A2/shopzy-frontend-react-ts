@@ -123,4 +123,5 @@ export const deleteProducts = (id: number) => instance.delete(`/api/v1/products/
 
 export const getAllCarts = () => instance.get(`/api/v1/carts`);
 export const getCartById = (id: number) => instance.get(`/api/v1/carts/${id}`);
+export const createCart = (userId: number) => instance.post(`/api/v1/carts`, { user: { id: userId } }); // vì api trả ra dạng {user:{"id":1}}
 

@@ -9,12 +9,14 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { IoIosAddCircle } from "react-icons/io";
 import AdminModalGetCartDetails from "./modals/AdminModalGetCartDetails";
+import AdminModalAddCart from "./modals/AdminModalAddCart";
 
 const AdminCartPage = () => {
 
     const [listCart, setListCart] = useState<ICart[] | null>(null);
     const [cart, setCart] = useState<ICart | null>(null);
     const [openAdminModalGetCartDetails, setOpenAdminModalGetCartDetails] = useState<boolean>(false);
+    const [openAdminModalAddCart, setOpenAdminModalAddCart] = useState<boolean>(false);
 
     const handleGetCartDetails = async (id: number) => {
         try {
@@ -62,8 +64,8 @@ const AdminCartPage = () => {
                 <h2>Table Cart</h2>
                 <div>
                     <Button className="d-flex align-items-center"
-
                         variant="outline-primary"
+                        onClick={() => setOpenAdminModalAddCart(true)}
                     >
                         <IoIosAddCircle /> Add a cart
                     </Button>
@@ -101,6 +103,13 @@ const AdminCartPage = () => {
                 setOpenAdminModalGetCartDetails={setOpenAdminModalGetCartDetails}
                 openAdminModalGetCartDetails={openAdminModalGetCartDetails}
                 cart={cart}
+            />
+
+            {/* modal add cart */}
+            <AdminModalAddCart
+                openAdminModalAddCart={openAdminModalAddCart}
+                setOpenAdminModalAddCart={setOpenAdminModalAddCart}
+                fetchAllCarts={fetchAllCarts}
             />
         </>
     )
