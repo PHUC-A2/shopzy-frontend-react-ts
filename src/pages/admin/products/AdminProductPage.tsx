@@ -150,7 +150,7 @@ const AdminProductPage = () => {
 
                                 <Popconfirm
                                     title="Delete the user"
-                                    description="Are you sure to delete this user?"
+                                    description="Are you sure to delete this product?"
                                     onConfirm={() => handleDeleteProduct(item.id)}
                                     onCancel={cancel}
                                     okText="Yes"

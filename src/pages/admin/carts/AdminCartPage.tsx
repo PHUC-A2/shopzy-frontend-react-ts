@@ -1,6 +1,6 @@
 
 import { Button, Table } from "react-bootstrap";
-import { getAllCarts, getCartById } from "../../../service/Api";
+import { deleteCart, getAllCarts, getCartById } from "../../../service/Api";
 import { useEffect, useState } from "react";
 import type { ICart } from "../../../types/intefaces";
 import { FaRegEye } from "react-icons/fa6";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { IoIosAddCircle } from "react-icons/io";
 import AdminModalGetCartDetails from "./modals/AdminModalGetCartDetails";
 import AdminModalAddCart from "./modals/AdminModalAddCart";
+import { message, Popconfirm, type PopconfirmProps } from "antd";
 
 const AdminCartPage = () => {
 
@@ -17,6 +18,27 @@ const AdminCartPage = () => {
     const [cart, setCart] = useState<ICart | null>(null);
     const [openAdminModalGetCartDetails, setOpenAdminModalGetCartDetails] = useState<boolean>(false);
     const [openAdminModalAddCart, setOpenAdminModalAddCart] = useState<boolean>(false);
+
+    const cancel: PopconfirmProps['onCancel'] = () => {
+        message.error('Click on No');
+    };
+    const handleDeleteCart = async (id: number) => {
+        try {
+            const res = await deleteCart(id);
+            if (res.data.statusCode === 200) {
+                await fetchAllCarts();
+                toast.success('Xóa giỏ hàng thành công')
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><b>Có lỗi xảy ra!</b></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    }
 
     const handleGetCartDetails = async (id: number) => {
         try {
@@ -90,7 +112,16 @@ const AdminCartPage = () => {
                                 <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
                                     <Button className="mr" variant="outline-info" onClick={() => handleGetCartDetails(item.id)}><FaRegEye /></Button>
                                     <Button variant="outline-dark"><CiEdit /></Button>
-                                    <Button variant="outline-danger"><MdDelete /></Button>
+                                    <Popconfirm
+                                        title="Delete the user"
+                                        description="Are you sure to delete this cart?"
+                                        onConfirm={() => handleDeleteCart(item.id)}
+                                        onCancel={cancel}
+                                        okText="Yes"
+                                        cancelText="No"
+                                    >
+                                        <Button variant="outline-danger"><MdDelete /></Button>
+                                    </Popconfirm>
                                 </td>
                             </tr>
                         ))
