@@ -3,7 +3,7 @@ import { Flex, Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { toast } from 'react-toastify';
 import { createProduct } from '../../../../service/Api';
-import type { IProduct } from '../../../../types/intefaces';
+import type { ICreateProductReq } from '../../../../types/intefaces';
 
 interface IProps {
     openAdminModalAddProduct: boolean;
@@ -15,9 +15,9 @@ const AdminModalAddProduct = (props: IProps) => {
     const { openAdminModalAddProduct, setOpenAdminModalAddProduct, fetchAllProducts } = props;
     const [form] = useForm();
 
-    const handleAddProduct = async (values: IProduct) => {
+    const handleAddProduct = async (data:ICreateProductReq) => {
         try {
-            const res = await createProduct(values.name, values.description, values.price, values.stock, values.status, values.productCondition, values.imageUrl, values.size, values.color);
+            const res = await createProduct(data);
             if (res?.data?.statusCode === 201) {
                 await fetchAllProducts();
                 setOpenAdminModalAddProduct(false);

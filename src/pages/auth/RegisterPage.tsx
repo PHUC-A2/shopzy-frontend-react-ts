@@ -3,10 +3,10 @@ import { Button, Flex, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router';
 import './Register.scss';
 import { GrPhone } from 'react-icons/gr';
-import type { IUser } from '../../types/intefaces';
 import { register } from '../../service/Api';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import type { ICreateUserReq } from '../../types/intefaces';
 
 
 const RegisterPage = () => {
@@ -14,15 +14,14 @@ const RegisterPage = () => {
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const handleRegister = async (values: IUser) => {
+    const handleRegister = async (data: ICreateUserReq) => {
         setIsLoading(true);
-        const res = await register(values.name, values.fullName, values.email, values.password, values.phoneNumber);
+        const res = await register(data);
         setIsLoading(false);
         try {
             if (res?.data?.statusCode === 201) {
                 toast.success('Đăng ký tài khoản thành công');
                 form.resetFields(); // xóa các gái trị form sau khi submit
-                form.setFieldsValue({ name: '', fullName: '', email: '', password: '', phoneNumber: '' });
                 setTimeout(() => {
                     navigate('/login') // chuyển sang trang log in sau khi đăng ký
                 }, 2000)

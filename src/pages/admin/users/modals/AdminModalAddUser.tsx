@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import { toast } from 'react-toastify';
 import { createUser } from '../../../../service/Api';
 import { Form, Input } from 'antd';
-import type { IUser } from '../../../../types/intefaces';
+import type { ICreateUserReq } from '../../../../types/intefaces';
 
 interface IProps {
     openModalAddUser: boolean;
@@ -16,9 +16,9 @@ const AdminModalAddUser = (props: IProps) => {
     const [form] = Form.useForm();
 
 
-    const handleAddUser = async (values: IUser) => {
+    const handleAddUser = async (data:ICreateUserReq) => {
         try {
-            const res = await createUser(values.name, values.fullName, values.email, values.password, values.phoneNumber);
+            const res = await createUser(data);
             if (res.data.statusCode === 201) {
                 await handleGetAllUsers();
                 setOpenModalAddUser(false);

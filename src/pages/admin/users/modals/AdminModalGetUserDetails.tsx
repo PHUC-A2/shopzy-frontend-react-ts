@@ -25,6 +25,7 @@ const AdminModalGetUserDetails = (props: IProps) => {
             <p><strong>Email: </strong><span> {user?.email}</span></p>
             <p><strong>Password: </strong><span hidden>{user?.password}</span></p>
             <p><strong>Phone Number: </strong><span> {user?.phoneNumber}</span></p>
+            <p><strong>Status: </strong><span> {user?.status}</span></p>
             <hr />
         </Drawer>
     )

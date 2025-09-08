@@ -28,7 +28,6 @@ const LoginPage = () => {
                 // đẩy vào redux
                 dispatch(setUserLoginInfo({ access_token, user, isAuthenticated: true }));
                 form.resetFields();
-                form.setFieldsValue({ username: '', password: '' });
                 navigave('/'); // đăng nhập xong chuyển sang trang /
                 toast.success('Đăng nhập thành công')
             }

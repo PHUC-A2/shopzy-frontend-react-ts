@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import { toast } from 'react-toastify';
 import { updateUser } from '../../../../service/Api';
 import { Form, Input } from 'antd';
-import type { IUser } from '../../../../types/intefaces';
+import type { IUpdateUserReq, IUser } from '../../../../types/intefaces';
 import { useEffect } from 'react';
 
 interface IProps {
@@ -18,9 +18,9 @@ const AdminModalUpdateUser = (props: IProps) => {
     const [form] = Form.useForm();
 
 
-    const handleUpdateUser = async (values: IUser) => {
+    const handleUpdateUser = async (data: IUpdateUserReq) => {
         try {
-            const res = await updateUser(values.id, values.name, values.fullName, values.phoneNumber);
+            const res = await updateUser(data);
             if (res.data.statusCode === 200) {
                 toast.success('User updated successfully')
                 form.resetFields(); // dùng để xóa các giá trị sau khi đã submit

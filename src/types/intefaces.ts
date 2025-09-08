@@ -1,20 +1,39 @@
-// USER
+// ================USER================
 export interface IUser {
     id: number;
+    name?: string;
+    fullName?: string;
+    email?: string;
+    password?: string;
+    phoneNumber?: string;
+    status?: string;
+}
+
+export interface ICreateUserReq {
     name: string;
     fullName: string;
     email: string;
-    password?: string | null;
+    password: string;
     phoneNumber: string;
-    status?: string | null;
+    status: string;
 }
 
+export interface IUpdateUserReq {
+    id:number;
+    name: string;
+    fullName: string;
+    phoneNumber: string;
+    status: string;
+}
+
+// ==============Auth==================
 // login
 export interface ILogin {
     username: string;
     password: string;
 }
 
+// ==============Product==================
 // product
 export interface IProduct {
     /*
@@ -44,6 +63,33 @@ export interface IProduct {
     color: string;
 }
 
+export interface ICreateProductReq {
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+    status: ProductStatusEnum;
+    productCondition: ProductConditionEnum;
+    imageUrl: string;
+    size: string;
+    color: string;
+}
+
+export interface IUpdateProductReq {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+    status: ProductStatusEnum;
+    productCondition: ProductConditionEnum;
+    imageUrl: string;
+    size: string;
+    color: string;
+}
+
+// ==============Cart==================
+
 // cart
 export interface ICart {
     id: number;
@@ -65,7 +111,6 @@ export interface ICreateCartReq {
     }
 }
 
-// cart update
 export interface IUpdateCartReq {
     id: number;
     user: {
@@ -73,6 +118,7 @@ export interface IUpdateCartReq {
     }
 }
 
+// ==============Các type tương tự Enum trong java==================
 
 // dùng union tương tự enum
 export type ProductConditionEnum = "NEW" | "USED";
