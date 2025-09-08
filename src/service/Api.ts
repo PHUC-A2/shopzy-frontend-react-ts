@@ -122,4 +122,5 @@ export const deleteProducts = (id: number) => instance.delete(`/api/v1/products/
 /* api cart */
 
 export const getAllCarts = () => instance.get(`/api/v1/carts`);
+export const getCartById = (id: number) => instance.get(`/api/v1/carts/${id}`);
 

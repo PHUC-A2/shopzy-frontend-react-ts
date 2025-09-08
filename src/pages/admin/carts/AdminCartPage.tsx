@@ -1,6 +1,6 @@
 
 import { Button, Table } from "react-bootstrap";
-import { getAllCarts } from "../../../service/Api";
+import { getAllCarts, getCartById } from "../../../service/Api";
 import { useEffect, useState } from "react";
 import type { ICart } from "../../../types/intefaces";
 import { FaRegEye } from "react-icons/fa6";
@@ -8,13 +8,30 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { IoIosAddCircle } from "react-icons/io";
+import AdminModalGetCartDetails from "./modals/AdminModalGetCartDetails";
 
 const AdminCartPage = () => {
 
     const [listCart, setListCart] = useState<ICart[] | null>(null);
+    const [cart, setCart] = useState<ICart | null>(null);
+    const [openAdminModalGetCartDetails, setOpenAdminModalGetCartDetails] = useState<boolean>(false);
 
-    const handleGetCartDetails = () => {
-        console.log("Hello")
+    const handleGetCartDetails = async (id: number) => {
+        try {
+            const res = await getCartById(id);
+            if (res.data.statusCode === 200) {
+                setOpenAdminModalGetCartDetails(true);
+                setCart(res.data.data);
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><b>Có lỗi xảy ra!</b></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
     }
 
     const fetchAllCarts = async () => {
@@ -45,7 +62,7 @@ const AdminCartPage = () => {
                 <h2>Table Cart</h2>
                 <div>
                     <Button className="d-flex align-items-center"
-                        onClick={handleGetCartDetails}
+
                         variant="outline-primary"
                     >
                         <IoIosAddCircle /> Add a cart
@@ -69,7 +86,7 @@ const AdminCartPage = () => {
                                 <td>{item.id}</td>
                                 <td>{item.user?.fullName}</td>
                                 <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
-                                    <Button className="mr" variant="outline-info"><FaRegEye /></Button>
+                                    <Button className="mr" variant="outline-info" onClick={() => handleGetCartDetails(item.id)}><FaRegEye /></Button>
                                     <Button variant="outline-dark"><CiEdit /></Button>
                                     <Button variant="outline-danger"><MdDelete /></Button>
                                 </td>
@@ -78,6 +95,13 @@ const AdminCartPage = () => {
                     }
                 </tbody>
             </Table>
+
+            {/* modal cart details */}
+            <AdminModalGetCartDetails
+                setOpenAdminModalGetCartDetails={setOpenAdminModalGetCartDetails}
+                openAdminModalGetCartDetails={openAdminModalGetCartDetails}
+                cart={cart}
+            />
         </>
     )
 }
