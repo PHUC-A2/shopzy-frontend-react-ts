@@ -11,6 +11,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import AdminModalGetCartDetails from "./modals/AdminModalGetCartDetails";
 import AdminModalAddCart from "./modals/AdminModalAddCart";
 import { message, Popconfirm, type PopconfirmProps } from "antd";
+import AdminModalUpdateCart from "./modals/AdminModalUpdateCart";
 
 const AdminCartPage = () => {
 
@@ -18,6 +19,13 @@ const AdminCartPage = () => {
     const [cart, setCart] = useState<ICart | null>(null);
     const [openAdminModalGetCartDetails, setOpenAdminModalGetCartDetails] = useState<boolean>(false);
     const [openAdminModalAddCart, setOpenAdminModalAddCart] = useState<boolean>(false);
+    const [openAdminModalUpdateCart, setOpenAdminModalUpdateCart] = useState<boolean>(false);
+    const [cartUpdate, setCartUpdate] = useState<ICart | null>(null);
+
+    const handleUpdateCart = (cart: ICart) => {
+        setCartUpdate(cart);
+        setOpenAdminModalUpdateCart(true);
+    }
 
     const cancel: PopconfirmProps['onCancel'] = () => {
         message.error('Click on No');
@@ -111,7 +119,7 @@ const AdminCartPage = () => {
                                 <td>{item.user?.fullName}</td>
                                 <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
                                     <Button className="mr" variant="outline-info" onClick={() => handleGetCartDetails(item.id)}><FaRegEye /></Button>
-                                    <Button variant="outline-dark"><CiEdit /></Button>
+                                    <Button variant="outline-dark" onClick={() => handleUpdateCart(item)}><CiEdit /></Button>
                                     <Popconfirm
                                         title="Delete the user"
                                         description="Are you sure to delete this cart?"
@@ -142,6 +150,16 @@ const AdminCartPage = () => {
                 setOpenAdminModalAddCart={setOpenAdminModalAddCart}
                 fetchAllCarts={fetchAllCarts}
             />
+
+            {/* modal update cart */}
+            <AdminModalUpdateCart
+                openAdminModalUpdateCart={openAdminModalUpdateCart}
+                setOpenAdminModalUpdateCart={setOpenAdminModalUpdateCart}
+                fetchAllCarts={fetchAllCarts}
+                cartUpdate={cartUpdate}
+            />
+
+
         </>
     )
 }

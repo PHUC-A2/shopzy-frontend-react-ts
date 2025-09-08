@@ -50,6 +50,29 @@ export interface ICart {
     user: IUser | null;
 }
 
+// cart create
+/*
+vì backend ở dạng object:
+    {
+        "user":{
+            "id":1
+        }
+    }
+*/
+export interface ICreateCartReq {
+    user: {
+        id: number;
+    }
+}
+
+// cart update
+export interface IUpdateCartReq {
+    id: number;
+    user: {
+        id: number;
+    }
+}
+
 
 // dùng union tương tự enum
 export type ProductConditionEnum = "NEW" | "USED";

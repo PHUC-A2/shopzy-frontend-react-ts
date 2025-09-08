@@ -1,31 +1,33 @@
 import { Form, InputNumber, Modal } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { toast } from "react-toastify";
-import type { ICreateCartReq } from "../../../../types/intefaces";
-import { createCart } from "../../../../service/Api";
+import type { ICart, IUpdateCartReq } from "../../../../types/intefaces";
+import { updateCart } from "../../../../service/Api";
+import { useEffect } from "react";
 
 interface IProps {
-    openAdminModalAddCart: boolean;
-    setOpenAdminModalAddCart: (v: boolean) => void;
+    openAdminModalUpdateCart: boolean;
+    setOpenAdminModalUpdateCart: (v: boolean) => void;
     fetchAllCarts: () => void;
+    cartUpdate: ICart | null;
 }
 
-const AdminModalAddCart = (props: IProps) => {
+const AdminModalUpdateCart = (props: IProps) => {
 
-    const { openAdminModalAddCart, setOpenAdminModalAddCart, fetchAllCarts } = props;
+    const { openAdminModalUpdateCart, setOpenAdminModalUpdateCart, fetchAllCarts, cartUpdate } = props;
     const [form] = useForm();
 
-    const handleAddCart = async (data: ICreateCartReq) => {
+    const handleUpdateCart = async (data: IUpdateCartReq) => {
 
         try {
-            const res = await createCart(data);
-            if (res.data.statusCode === 201) {
+            const res = await updateCart(data);
+            if (res.data.statusCode === 200) {
                 await fetchAllCarts();
-                setOpenAdminModalAddCart(false)
-                toast.success("Thêm mới giỏ hàng thành công")
+                setOpenAdminModalUpdateCart(false)
+                toast.success("Cập nhật giỏ hàng thành công")
                 form.resetFields();
-                form.setFieldsValue({ id: '' });
             }
+
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknow";
             toast.error(
@@ -37,27 +39,40 @@ const AdminModalAddCart = (props: IProps) => {
         }
     }
 
+    useEffect(() => {
+        if (openAdminModalUpdateCart && cartUpdate) {
+            form.setFieldsValue(cartUpdate);
+        }
+    }, [openAdminModalUpdateCart, cartUpdate]);
+
     return (
         <>
             <Modal
                 title="Add a Cart"
                 closable={{ 'aria-label': 'Custom Close Button' }}
-                open={openAdminModalAddCart}
+                open={openAdminModalUpdateCart}
                 onOk={() => form.submit()}
                 okText="Save"
                 maskClosable={false}
-                onCancel={() => setOpenAdminModalAddCart(false)}
+                onCancel={() => setOpenAdminModalUpdateCart(false)}
                 width={500}
             >
                 <Form
                     form={form}
-                    onFinish={handleAddCart}
+                    onFinish={handleUpdateCart}
                     layout='vertical'
                     autoComplete="off"
                 >
                     <Form.Item
+                        hidden
+                        name="id"
+                    >
+                        <InputNumber style={{ width: "100%" }} />
+                    </Form.Item>
+
+                    <Form.Item
                         label="User ID"
-                        name={['user', 'id']}
+                        name={['user', 'id']}   // <-- Nested key
                         rules={[{ required: true, message: 'Please input your user id!' }]}
                     >
                         <InputNumber style={{ width: "100%" }} />
@@ -67,4 +82,4 @@ const AdminModalAddCart = (props: IProps) => {
         </>
     )
 }
-export default AdminModalAddCart;
+export default AdminModalUpdateCart;
