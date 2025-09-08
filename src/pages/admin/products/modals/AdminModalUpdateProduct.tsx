@@ -23,7 +23,6 @@ const AdminModalUpdateProduct = (props: IProps) => {
                 setOpenAdminModalUpdateProduct(false);
                 toast.success("Product updated successfully")
                 form.resetFields();
-                form.setFieldsValue({ id: "", name: "", description: "", price: 0, stock: 0, status: "IN_STOCK", productCondition: "NEW", imageUrl: "", size: "", color: "" })
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknow";

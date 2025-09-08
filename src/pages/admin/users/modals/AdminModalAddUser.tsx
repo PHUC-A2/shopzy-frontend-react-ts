@@ -24,7 +24,6 @@ const AdminModalAddUser = (props: IProps) => {
                 setOpenModalAddUser(false);
                 toast.success('New user created successfully')
                 form.resetFields(); // dùng để xóa các giá trị sau khi đã submit
-                form.setFieldsValue({ name: '', fullName: '', email: '', password: '', phoneNumber: '' });
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknow";

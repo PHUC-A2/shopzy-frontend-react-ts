@@ -24,7 +24,6 @@ const AdminModalAddCart = (props: IProps) => {
                 setOpenAdminModalAddCart(false)
                 toast.success("Thêm mới giỏ hàng thành công")
                 form.resetFields();
-                form.setFieldsValue({ id: '' });
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknow";
