@@ -19,7 +19,7 @@ export interface ICreateUserReq {
 }
 
 export interface IUpdateUserReq {
-    id:number;
+    id: number;
     name: string;
     fullName: string;
     phoneNumber: string;
@@ -118,8 +118,27 @@ export interface IUpdateCartReq {
     }
 }
 
+// ==============Order==================
+export interface IOrder {
+    id: number;
+    user: IUser | null;
+    status: OrderStatusEnum;
+    paymentMethod: OrderPaymentMethodEnum;
+    paymentStatusMethod: OrderPaymentStatusEnum;
+    total: number;
+    shippingAddress: string;
+    shippingPhone: string;
+}
+
 // ==============Các type tương tự Enum trong java==================
 
 // dùng union tương tự enum
+
+// product
 export type ProductConditionEnum = "NEW" | "USED";
 export type ProductStatusEnum = "IN_STOCK" | "OUT_OF_STOCK";
+
+// order
+export type OrderPaymentMethodEnum = "COD" | "VNPAY";
+export type OrderPaymentStatusEnum = "UNPAID" | "PAID";
+export type OrderStatusEnum = "PENDING" | "SHIPPING" | "COMPLETED" | "CANCELLED";

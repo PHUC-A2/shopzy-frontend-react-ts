@@ -1,77 +1,83 @@
 import {
-    AppstoreOutlined,
     DashboardOutlined,
-    MailOutlined,
+    LogoutOutlined,
+    SettingOutlined,
     UserAddOutlined,
 } from '@ant-design/icons';
 import type { MenuProps, MenuTheme } from 'antd';
 import { Menu } from 'antd';
 import { AiOutlineProduct } from 'react-icons/ai';
-import { FaCartPlus } from 'react-icons/fa6';
-import { Link } from 'react-router';
+import { FaCartPlus, FaCircleUser } from 'react-icons/fa6';
+import { MdFeaturedPlayList } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router';
+import type { RootState } from '../../redux/store';
+import { logout } from '../../service/Api';
+import { setLogoutUser } from '../../redux/slice/authSlice';
+import { toast } from 'react-toastify';
+import { BsFillJournalBookmarkFill } from 'react-icons/bs';
 
 type MenuItem = Required<MenuProps>['items'][number];
-
-const items: MenuItem[] = [
-    { key: '1', icon: <DashboardOutlined />, label: <Link className='nav-link' to={"/admin"}> Dashboard</Link> },
-    { key: '2', icon: <UserAddOutlined />, label: <Link className='nav-link' to={"/admin/users"}> Users</Link> },
-    { key: '3', icon: <AiOutlineProduct />, label: <Link className='nav-link' to={"/admin/products"}> Products</Link> },
-    { key: '4', icon: <FaCartPlus />, label: <Link className='nav-link' to={"/admin/carts"}> Carts</Link> },
-    {
-        key: 'sub1',
-        label: 'Navigation One',
-        icon: <MailOutlined />,
-        children: [
-            { key: '5', label: 'Option 5' },
-            { key: '6', label: 'Option 6' },
-            { key: '7', label: 'Option 7' },
-            { key: '8', label: 'Option 8' },
-        ],
-    },
-    {
-        key: 'sub2',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '9', label: 'Option 9' },
-            { key: '10', label: 'Option 10' },
-            {
-                key: 'sub3',
-                label: 'Submenu',
-                children: [
-                    { key: '11', label: 'Option 11' },
-                    { key: '12', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-    {
-        key: 'sub4',
-        label: 'Navigation Two',
-        icon: <AppstoreOutlined />,
-        children: [
-            { key: '13', label: 'Option 9' },
-            { key: '14', label: 'Option 10' },
-            {
-                key: 'sub5',
-                label: 'Submenu',
-                children: [
-                    { key: '15', label: 'Option 11' },
-                    { key: '16', label: 'Option 12' },
-                ],
-            },
-        ],
-    },
-];
-
 interface IProps {
     collapsed: boolean;
     theme: MenuTheme;
 }
 
 const AdminSidebar = (props: IProps) => {
-
     const { collapsed, theme } = props;
+    const dispatch = useDispatch();
+    const navigave = useNavigate();
+    const profile = useSelector((state: RootState) => state.user.user);
+
+    const handleLogout = async () => {
+        try {
+            const res = await logout();
+            if (res?.data?.statusCode === 200) {
+                dispatch(setLogoutUser())
+                toast.success('Đăng xuất thành công');
+                navigave('/login');
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><b>Có Lỗi xảy ra!</b></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+
+    }
+
+
+    const handleProfile = async () => {
+        console.log("Profile: ", profile);
+    }
+
+    const items: MenuItem[] = [
+        { key: '1', icon: <DashboardOutlined />, label: <Link className='nav-link' to={"/admin"}> Dashboard</Link> },
+        {
+            key: 'sub1',
+            label: 'Feature',
+            icon: <MdFeaturedPlayList />,
+            children: [
+                { key: '2', icon: <UserAddOutlined />, label: <Link to="/admin/users" style={{ color: "white", textDecoration: "none" }}>User</Link> },
+                { key: '3', icon: <AiOutlineProduct />, label: <Link to="/admin/products" style={{ color: "white", textDecoration: "none" }}>Product</Link> },
+                { key: '4', icon: <FaCartPlus />, label: <Link to="/admin/carts" style={{ color: "white", textDecoration: "none" }}>Cart</Link> },
+                { key: '5', icon: <BsFillJournalBookmarkFill />, label: <Link to="/admin/orders" style={{ color: "white", textDecoration: "none" }}>Order</Link> },
+            ],
+        },
+        {
+            key: 'sub2',
+            label: 'Settings',
+            icon: <SettingOutlined />,
+            children: [
+                { key: "8", label: <span onClick={handleProfile}>Profile</span>, icon: <FaCircleUser /> },
+                { key: "9", label: <span onClick={handleLogout}>Log out</span>, icon: <LogoutOutlined /> },
+            ],
+        },
+    ];
+
     return (
         <div className='admin-sidebar-menu'
             style={{

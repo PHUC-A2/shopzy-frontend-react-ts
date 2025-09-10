@@ -1,7 +1,7 @@
 // import axios from "axios";
 
 import instance from "../config/customAxios";
-import type { ICreateCartReq, ICreateProductReq, ICreateUserReq,IUpdateCartReq, IUpdateProductReq, IUpdateUserReq} from "../types/intefaces";
+import type { ICreateCartReq, ICreateProductReq, ICreateUserReq, IUpdateCartReq, IUpdateProductReq, IUpdateUserReq } from "../types/intefaces";
 
 // /* api user */
 // const getAllUsers = () => {
@@ -102,10 +102,11 @@ export const getProductDetails = (id: number) => instance.get(`/api/v1/products/
 export const deleteProducts = (id: number) => instance.delete(`/api/v1/products/${id}`);
 
 /* api cart */
-
 export const getAllCarts = () => instance.get(`/api/v1/carts`);
 export const getCartById = (id: number) => instance.get(`/api/v1/carts/${id}`);
 export const deleteCart = (id: number) => instance.delete(`/api/v1/carts/${id}`);
 export const createCart = (data: ICreateCartReq) => instance.post(`/api/v1/carts`, data); // vì api trả ra dạng {user:{"id":1}}
 export const updateCart = (data: IUpdateCartReq) => instance.put(`/api/v1/carts`, data); // vì api trả ra dạng {user:{"id":1}}
 
+/* api order */
+export const getAllOrders = () => instance.get(`/api/v1/orders`);
