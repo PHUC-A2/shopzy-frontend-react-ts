@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteOrder, getAllOrders } from "../../../service/Api";
+import { deleteOrder, getAllOrders, getOrderById } from "../../../service/Api";
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
 import { message, Popconfirm, type PopconfirmProps } from "antd";
@@ -9,11 +9,32 @@ import { MdDelete } from "react-icons/md";
 import type { IOrder } from "../../../types/intefaces";
 import { toast } from "react-toastify";
 import AdminModalAddOrder from "./modals/AdminModalAddOrder";
+import AdminModalGetOrderDetails from "./modals/AdminModalGetOrderDetails";
 
 const AdminOrderPage = () => {
 
     const [listOrder, setListOrder] = useState<IOrder[]>([]);
+    const [order, setOrder] = useState<IOrder | null>(null);
     const [openAdminModalAddOrder, setOpenAdminModalAddOrder] = useState<boolean>(false);
+    const [openAdminModalGetOrderDetails, setOpenAdminModalGetOrderDetails] = useState<boolean>(false);
+
+    const handleGetOrderDetails = async (order: IOrder) => {
+        try {
+            const res = await getOrderById(order.id);
+            if (res.data.statusCode === 200) {
+                setOpenAdminModalGetOrderDetails(true);
+                setOrder(order);
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><b>Có lỗi xảy ra!</b></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    }
 
     const handleDeleteOrder = async (id: number) => {
         try {
@@ -90,7 +111,7 @@ const AdminOrderPage = () => {
                                 <td>{item.status}</td>
                                 <td>{item.user?.fullName}</td>
                                 <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
-                                    <Button className="mr" variant="outline-info"><FaRegEye /></Button>
+                                    <Button className="mr" variant="outline-info" onClick={() => handleGetOrderDetails(item)}><FaRegEye /></Button>
                                     <Button variant="outline-dark"><CiEdit /></Button>
                                     <Popconfirm
                                         title="Delete the user"
@@ -121,6 +142,13 @@ const AdminOrderPage = () => {
                 openAdminModalAddOrder={openAdminModalAddOrder}
                 setOpenAdminModalAddOrder={setOpenAdminModalAddOrder}
                 fetchAllOrders={fetchAllOrders}
+            />
+
+            {/* modal detail */}
+            <AdminModalGetOrderDetails
+                setOpenAdminModalGetOrderDetails={setOpenAdminModalGetOrderDetails}
+                openAdminModalGetOrderDetails={openAdminModalGetOrderDetails}
+                order={order}
             />
         </>
     )

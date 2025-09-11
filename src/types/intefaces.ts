@@ -121,13 +121,13 @@ export interface IUpdateCartReq {
 // ==============Order==================
 export interface IOrder {
     id: number;
-    user: IUser | null;
     status: OrderStatusEnum;
     paymentMethod: OrderPaymentMethodEnum;
-    paymentStatusMethod: OrderPaymentStatusEnum;
+    paymentStatus: OrderPaymentStatusEnum;
     total: number;
     shippingAddress: string;
     shippingPhone: string;
+    user: IUser | null;
 }
 
 export interface ICreateOrderReq {
@@ -136,7 +136,7 @@ export interface ICreateOrderReq {
     }
     status: OrderStatusEnum;
     paymentMethod: OrderPaymentMethodEnum;
-    paymentStatusMethod: OrderPaymentStatusEnum;
+    paymentStatus: OrderPaymentStatusEnum;
     total: number;
     shippingAddress: string;
     shippingPhone: string;

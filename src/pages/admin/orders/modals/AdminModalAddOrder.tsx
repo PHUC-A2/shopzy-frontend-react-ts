@@ -90,11 +90,11 @@ const AdminModalAddOrder = (props: IProps) => {
                             </Form.Item>
 
                             <Form.Item
-                                label="Payment Status Method"
-                                name="paymentStatusMethod"
-                                rules={[{ required: true, message: 'Please input your payment status method!' }]}
+                                label="Payment Status"
+                                name="paymentStatus"
+                                rules={[{ required: true, message: 'Please input your payment status!' }]}
                             >
-                                <Select placeholder="Select payment status method">
+                                <Select placeholder="Select payment status">
                                     <Select.Option value="UNPAID">UNPAID (Chưa trả tiền)</Select.Option>
                                     <Select.Option value="PAID">PAID (Đã trả tiền)</Select.Option>
                                 </Select>
