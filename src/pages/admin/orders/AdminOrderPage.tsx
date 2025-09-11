@@ -10,13 +10,21 @@ import type { IOrder } from "../../../types/intefaces";
 import { toast } from "react-toastify";
 import AdminModalAddOrder from "./modals/AdminModalAddOrder";
 import AdminModalGetOrderDetails from "./modals/AdminModalGetOrderDetails";
+import AdminModalUpdateOrder from "./modals/AdminModalUpdateOrder";
 
 const AdminOrderPage = () => {
 
     const [listOrder, setListOrder] = useState<IOrder[]>([]);
     const [order, setOrder] = useState<IOrder | null>(null);
+    const [orderUpdate, setOrderUpdate] = useState<IOrder | null>(null);
     const [openAdminModalAddOrder, setOpenAdminModalAddOrder] = useState<boolean>(false);
+    const [openAdminModalUpdateOrder, setOpenAdminModalUpdateOrder] = useState<boolean>(false);
     const [openAdminModalGetOrderDetails, setOpenAdminModalGetOrderDetails] = useState<boolean>(false);
+
+    const handleUpdateOrder = async (order: IOrder) => {
+        setOpenAdminModalUpdateOrder(true);
+        setOrderUpdate(order);
+    }
 
     const handleGetOrderDetails = async (order: IOrder) => {
         try {
@@ -112,7 +120,7 @@ const AdminOrderPage = () => {
                                 <td>{item.user?.fullName}</td>
                                 <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
                                     <Button className="mr" variant="outline-info" onClick={() => handleGetOrderDetails(item)}><FaRegEye /></Button>
-                                    <Button variant="outline-dark"><CiEdit /></Button>
+                                    <Button variant="outline-dark" onClick={() => handleUpdateOrder(item)}><CiEdit /></Button>
                                     <Popconfirm
                                         title="Delete the user"
                                         description="Are you sure to delete this cart?"
@@ -149,6 +157,14 @@ const AdminOrderPage = () => {
                 setOpenAdminModalGetOrderDetails={setOpenAdminModalGetOrderDetails}
                 openAdminModalGetOrderDetails={openAdminModalGetOrderDetails}
                 order={order}
+            />
+
+            {/* modal update */}
+            <AdminModalUpdateOrder
+                openAdminModalUpdateOrder={openAdminModalUpdateOrder}
+                setOpenAdminModalUpdateOrder={setOpenAdminModalUpdateOrder}
+                orderUpdate={orderUpdate}
+                fetchAllOrders={fetchAllOrders}
             />
         </>
     )
