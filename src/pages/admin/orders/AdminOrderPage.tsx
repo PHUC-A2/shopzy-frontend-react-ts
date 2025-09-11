@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getAllOrders } from "../../../service/Api";
+import { deleteOrder, getAllOrders } from "../../../service/Api";
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
-import { Popconfirm } from "antd";
+import { message, Popconfirm, type PopconfirmProps } from "antd";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -14,6 +14,24 @@ const AdminOrderPage = () => {
 
     const [listOrder, setListOrder] = useState<IOrder[]>([]);
     const [openAdminModalAddOrder, setOpenAdminModalAddOrder] = useState<boolean>(false);
+
+    const handleDeleteOrder = async (id: number) => {
+        try {
+            const res = await deleteOrder(id);
+            if (res.data.statusCode === 200) {
+                await fetchAllOrders();
+                toast.success("Đã xóa đơn hàng thành công");
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><b>Có lỗi xảy ra!</b></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    }
 
     const fetchAllOrders = async () => {
         try {
@@ -35,6 +53,10 @@ const AdminOrderPage = () => {
     useEffect(() => {
         fetchAllOrders();
     }, [])
+
+    const cancel: PopconfirmProps['onCancel'] = () => {
+        message.error('Click on No');
+    };
 
     return (
         <>
@@ -73,8 +95,8 @@ const AdminOrderPage = () => {
                                     <Popconfirm
                                         title="Delete the user"
                                         description="Are you sure to delete this cart?"
-                                        // onConfirm={() => handleDeleteCart(item.id)}
-                                        // onCancel={cancel}
+                                        onConfirm={() => handleDeleteOrder(item.id)}
+                                        onCancel={cancel}
                                         okText="Yes"
                                         cancelText="No"
                                     >
