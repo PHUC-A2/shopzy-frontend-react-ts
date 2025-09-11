@@ -7,15 +7,16 @@ import { login } from '../../service/Api';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setUserLoginInfo } from '../../redux/slice/authSlice';
+// import type { RootState } from '../../redux/store';
 
 
 
 const LoginPage = () => {
 
     const [form] = Form.useForm();
-    const navigave = useNavigate();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    // const accountLogin = useSelector((state: RootState) => state.auth);
     const handleLogin = async (values: ILogin) => {
         try {
             const res = await login(values.username, values.password);
@@ -28,7 +29,9 @@ const LoginPage = () => {
                 // đẩy vào redux
                 dispatch(setUserLoginInfo({ access_token, user, isAuthenticated: true }));
                 form.resetFields();
-                navigave('/'); // đăng nhập xong chuyển sang trang /
+                // test nếu email là admin chuyển vào trang admin
+                const emailLogin = res?.data?.data?.user?.email;
+                navigate(emailLogin === "admin@gmail.com" ? "/admin" : "/");
                 toast.success('Đăng nhập thành công')
             }
         } catch (error: any) {
