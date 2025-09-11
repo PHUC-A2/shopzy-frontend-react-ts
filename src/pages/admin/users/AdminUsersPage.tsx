@@ -5,7 +5,7 @@ import { FaRegEye } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { deleteUser, getAllUsers, getUserDetails } from "../../../service/Api";
 import { toast } from "react-toastify";
-import { message, Popconfirm } from 'antd';
+import { Empty, message, Popconfirm } from 'antd';
 import { useEffect, useState } from "react";
 import AdminModalGetUserDetails from "./modals/AdminModalGetUserDetails";
 import type { IUser } from "../../../types/intefaces";
@@ -154,7 +154,7 @@ const AdminUsersPage = () => {
                     )) : (
                         <tr>
                             <td colSpan={7} style={{ textAlign: 'center', fontStyle: 'italic' }}>
-                                Không có dữ liệu
+                                <Empty />
                             </td>
                         </tr>
                     )}

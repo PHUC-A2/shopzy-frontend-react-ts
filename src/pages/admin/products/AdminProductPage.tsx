@@ -1,4 +1,4 @@
-import { message, Popconfirm, type PopconfirmProps } from "antd";
+import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
 import { Button, Table } from "react-bootstrap";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
@@ -163,7 +163,7 @@ const AdminProductPage = () => {
                     )) : (
                         <tr>
                             <td colSpan={12} style={{ textAlign: 'center', fontStyle: 'italic' }}>
-                                Không có dữ liệu
+                                <Empty />
                             </td>
                         </tr>
                     )}

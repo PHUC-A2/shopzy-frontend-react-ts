@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { deleteOrder, getAllOrders, getOrderById } from "../../../service/Api";
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
-import { message, Popconfirm, type PopconfirmProps } from "antd";
+import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -136,7 +136,7 @@ const AdminOrderPage = () => {
                         )) : (
                             <tr>
                                 <td colSpan={5} style={{ textAlign: 'center', fontStyle: 'italic' }}>
-                                    Không có dữ liệu
+                                    <Empty />
                                 </td>
                             </tr>
                         )

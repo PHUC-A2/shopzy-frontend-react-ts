@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { IoIosAddCircle } from "react-icons/io";
 import AdminModalGetCartDetails from "./modals/AdminModalGetCartDetails";
 import AdminModalAddCart from "./modals/AdminModalAddCart";
-import { message, Popconfirm, type PopconfirmProps } from "antd";
+import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
 import AdminModalUpdateCart from "./modals/AdminModalUpdateCart";
 
 const AdminCartPage = () => {
@@ -135,7 +135,7 @@ const AdminCartPage = () => {
                         )) : (
                             <tr>
                                 <td colSpan={4} style={{ textAlign: 'center', fontStyle: 'italic' }}>
-                                    Không có dữ liệu
+                                    <Empty />
                                 </td>
                             </tr>
                         )
