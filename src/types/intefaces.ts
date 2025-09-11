@@ -130,6 +130,18 @@ export interface IOrder {
     shippingPhone: string;
 }
 
+export interface ICreateOrderReq {
+    user: {
+        id: number;
+    }
+    status: OrderStatusEnum;
+    paymentMethod: OrderPaymentMethodEnum;
+    paymentStatusMethod: OrderPaymentStatusEnum;
+    total: number;
+    shippingAddress: string;
+    shippingPhone: string;
+}
+
 // ==============Các type tương tự Enum trong java==================
 
 // dùng union tương tự enum

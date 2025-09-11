@@ -8,12 +8,14 @@ import { FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import type { IOrder } from "../../../types/intefaces";
 import { toast } from "react-toastify";
+import AdminModalAddOrder from "./modals/AdminModalAddOrder";
 
 const AdminOrderPage = () => {
 
     const [listOrder, setListOrder] = useState<IOrder[] | null>(null);
+    const [openAdminModalAddOrder, setOpenAdminModalAddOrder] = useState<boolean>(false);
 
-    const fetchAllCarts = async () => {
+    const fetchAllOrders = async () => {
         try {
             const res = await getAllOrders();
             if (res.data.statusCode === 200) {
@@ -31,7 +33,7 @@ const AdminOrderPage = () => {
     }
 
     useEffect(() => {
-        fetchAllCarts();
+        fetchAllOrders();
     }, [])
 
     return (
@@ -41,7 +43,7 @@ const AdminOrderPage = () => {
                 <div>
                     <Button className="d-flex align-items-center"
                         variant="outline-primary"
-                    // onClick={() => setOpenAdminModalAddCart(true)}
+                        onClick={() => setOpenAdminModalAddOrder(true)}
                     >
                         <IoIosAddCircle /> Add a order
                     </Button>
@@ -82,8 +84,20 @@ const AdminOrderPage = () => {
                             </tr>
                         ))
                     }
+                    <tr>
+                        <td colSpan={5} style={{ textAlign: 'center', fontStyle: 'italic' }}>
+                            Không có dữ liệu
+                        </td>
+                    </tr>
                 </tbody>
             </Table>
+
+            {/* modal add order */}
+            <AdminModalAddOrder
+                openAdminModalAddOrder={openAdminModalAddOrder}
+                setOpenAdminModalAddOrder={setOpenAdminModalAddOrder}
+                fetchAllOrders={fetchAllOrders}
+            />
         </>
     )
 }
