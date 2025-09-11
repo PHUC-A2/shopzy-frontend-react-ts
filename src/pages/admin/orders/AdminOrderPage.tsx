@@ -12,7 +12,7 @@ import AdminModalAddOrder from "./modals/AdminModalAddOrder";
 
 const AdminOrderPage = () => {
 
-    const [listOrder, setListOrder] = useState<IOrder[] | null>(null);
+    const [listOrder, setListOrder] = useState<IOrder[]>([]);
     const [openAdminModalAddOrder, setOpenAdminModalAddOrder] = useState<boolean>(false);
 
     const fetchAllOrders = async () => {
@@ -61,7 +61,7 @@ const AdminOrderPage = () => {
                 </thead>
                 <tbody>
                     {
-                        listOrder?.map((item, index) => (
+                        listOrder.length > 0 ? listOrder?.map((item, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item.id}</td>
@@ -82,13 +82,15 @@ const AdminOrderPage = () => {
                                     </Popconfirm>
                                 </td>
                             </tr>
-                        ))
+                        )) : (
+                            <tr>
+                                <td colSpan={5} style={{ textAlign: 'center', fontStyle: 'italic' }}>
+                                    Không có dữ liệu
+                                </td>
+                            </tr>
+                        )
                     }
-                    <tr>
-                        <td colSpan={5} style={{ textAlign: 'center', fontStyle: 'italic' }}>
-                            Không có dữ liệu
-                        </td>
-                    </tr>
+
                 </tbody>
             </Table>
 

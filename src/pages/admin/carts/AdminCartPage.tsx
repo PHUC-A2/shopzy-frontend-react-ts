@@ -15,7 +15,7 @@ import AdminModalUpdateCart from "./modals/AdminModalUpdateCart";
 
 const AdminCartPage = () => {
 
-    const [listCart, setListCart] = useState<ICart[] | null>(null);
+    const [listCart, setListCart] = useState<ICart[]>([]);
     const [cart, setCart] = useState<ICart | null>(null);
     const [openAdminModalGetCartDetails, setOpenAdminModalGetCartDetails] = useState<boolean>(false);
     const [openAdminModalAddCart, setOpenAdminModalAddCart] = useState<boolean>(false);
@@ -112,7 +112,7 @@ const AdminCartPage = () => {
                 </thead>
                 <tbody>
                     {
-                        listCart?.map((item, index) => (
+                        listCart.length > 0 ? listCart?.map((item, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{item.id}</td>
@@ -132,7 +132,13 @@ const AdminCartPage = () => {
                                     </Popconfirm>
                                 </td>
                             </tr>
-                        ))
+                        )) : (
+                            <tr>
+                                <td colSpan={4} style={{ textAlign: 'center', fontStyle: 'italic' }}>
+                                    Không có dữ liệu
+                                </td>
+                            </tr>
+                        )
                     }
                 </tbody>
             </Table>
