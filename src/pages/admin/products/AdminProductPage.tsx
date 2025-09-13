@@ -31,7 +31,7 @@ const AdminProductPage = () => {
                 setOpenAdminModalGetProductDetails(true);
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><b>Có lỗi xảy ra!</b></div>
@@ -58,7 +58,7 @@ const AdminProductPage = () => {
                 toast.info('Product deleted successfully')
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><b>Có lỗi xảy ra!</b></div>
@@ -80,7 +80,7 @@ const AdminProductPage = () => {
                 setListProduct(res?.data?.data?.result);
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><b>Có lỗi xảy ra!</b></div>

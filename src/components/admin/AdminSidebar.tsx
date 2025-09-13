@@ -38,7 +38,7 @@ const AdminSidebar = (props: IProps) => {
                 navigave('/login');
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><b>Có Lỗi xảy ra!</b></div>

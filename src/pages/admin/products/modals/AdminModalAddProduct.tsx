@@ -15,7 +15,7 @@ const AdminModalAddProduct = (props: IProps) => {
     const { openAdminModalAddProduct, setOpenAdminModalAddProduct, fetchAllProducts } = props;
     const [form] = useForm();
 
-    const handleAddProduct = async (data:ICreateProductReq) => {
+    const handleAddProduct = async (data: ICreateProductReq) => {
         try {
             const res = await createProduct(data);
             if (res?.data?.statusCode === 201) {
@@ -25,7 +25,7 @@ const AdminModalAddProduct = (props: IProps) => {
                 form.resetFields();
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><strong>Có lỗi xảy ra!</strong></div>
@@ -53,7 +53,7 @@ const AdminModalAddProduct = (props: IProps) => {
                     onFinish={handleAddProduct}
                     layout='vertical'
                     autoComplete="off"
-                    // style={{ maxWidth: 900, margin: "0 auto" }} // 👈 căn giữa
+                // style={{ maxWidth: 900, margin: "0 auto" }} // 👈 căn giữa
                 >
                     <Flex justify='space-between' gap={20} style={{ width: "100%" }}>
                         <Flex vertical style={{ flex: 1 }} >

@@ -39,7 +39,7 @@ const AdminUsersPage = () => {
                 handleGetAllUsers();
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div>Có lỗi xảy ra khi xóa user</div>
@@ -62,7 +62,7 @@ const AdminUsersPage = () => {
                 setUser(res.data.data);
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <strong>Có lỗi xảy ra! </strong>
@@ -83,7 +83,7 @@ const AdminUsersPage = () => {
                 toast.error('Có lỗi xảy ra')
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <strong>Có lỗi xảy ra! </strong>

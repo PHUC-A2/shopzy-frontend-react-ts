@@ -16,7 +16,7 @@ const AdminModalAddUser = (props: IProps) => {
     const [form] = Form.useForm();
 
 
-    const handleAddUser = async (data:ICreateUserReq) => {
+    const handleAddUser = async (data: ICreateUserReq) => {
         try {
             const res = await createUser(data);
             if (res.data.statusCode === 201) {
@@ -26,7 +26,7 @@ const AdminModalAddUser = (props: IProps) => {
                 form.resetFields(); // dùng để xóa các giá trị sau khi đã submit
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><strong>Có lỗi xảy ra!</strong></div>

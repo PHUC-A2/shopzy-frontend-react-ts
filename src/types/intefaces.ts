@@ -142,6 +142,16 @@ export interface ICartItem {
     updatedBy: string | null;  // null nếu chưa ai cập nhật
 }
 
+export interface ICreateCartItemReq {
+    quantity: number;
+    product: {
+        id: number;
+    }
+    cart: {
+        id: number;
+    }
+}
+
 // ==============Order==================
 export interface IOrder {
     id: number;

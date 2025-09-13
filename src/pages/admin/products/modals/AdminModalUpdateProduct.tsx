@@ -15,7 +15,7 @@ const AdminModalUpdateProduct = (props: IProps) => {
     const { openAdminModalUpdateProduct, setOpenAdminModalUpdateProduct, fetchAllProducts, productUpdate } = props;
     const [form] = useForm();
 
-    const handleUpdateProduct = async (data:IUpdateProductReq) => {
+    const handleUpdateProduct = async (data: IUpdateProductReq) => {
         try {
             const res = await updateProduct(data);
             if (res?.data?.statusCode === 200) {
@@ -25,7 +25,7 @@ const AdminModalUpdateProduct = (props: IProps) => {
                 form.resetFields();
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><strong>Có lỗi xảy ra!</strong></div>
@@ -41,7 +41,7 @@ const AdminModalUpdateProduct = (props: IProps) => {
             form.setFieldsValue(productUpdate);
         }
     }, [openAdminModalUpdateProduct, productUpdate])
-    
+
     return (
         <>
             <Modal

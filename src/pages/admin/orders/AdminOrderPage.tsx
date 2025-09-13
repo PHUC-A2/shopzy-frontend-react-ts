@@ -34,7 +34,7 @@ const AdminOrderPage = () => {
                 setOrder(order);
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><b>Có lỗi xảy ra!</b></div>
@@ -52,7 +52,7 @@ const AdminOrderPage = () => {
                 toast.success("Đã xóa đơn hàng thành công");
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><b>Có lỗi xảy ra!</b></div>
@@ -69,7 +69,7 @@ const AdminOrderPage = () => {
                 setListOrder(res?.data?.data?.result);
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><b>Có lỗi xảy ra!</b></div>

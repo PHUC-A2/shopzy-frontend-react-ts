@@ -27,7 +27,7 @@ const RegisterPage = () => {
                 }, 2000)
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><strong>Có lỗi xảy ra!</strong></div>

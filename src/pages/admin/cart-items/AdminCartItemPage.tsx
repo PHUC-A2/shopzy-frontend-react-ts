@@ -9,12 +9,14 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import AdminModalGetCartItemDetails from "./modals/AdminModalGetCartItemDetails";
+import AdminModalAddCartItem from "./modals/AdminModalAddCartItem";
 
 const AdminCartItemPage = () => {
 
     const [listCartItems, setListCartItems] = useState<ICartItem[]>([]);
     const [openAdminModalGetCartItemDetails, setOpenAdminModalGetCartItemDetails] = useState<boolean>(false);
     const [cartItem, setCartItem] = useState<ICartItem | null>(null);
+    const [openAdminModalAddCartItem, setOpenAdminModalAddCartItem] = useState<boolean>(false);
 
     const handleGetCartItemDetails = async (id: number) => {
         try {
@@ -24,7 +26,7 @@ const AdminCartItemPage = () => {
                 setOpenAdminModalGetCartItemDetails(true);
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><strong>Có lỗi xảy ra!</strong></div>
@@ -41,7 +43,7 @@ const AdminCartItemPage = () => {
                 setListCartItems(res.data.data.result);
             }
         } catch (error: any) {
-            const m = error?.response?.data?.message ?? "unknow";
+            const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><strong>Có lỗi xảy ra!</strong></div>
@@ -65,7 +67,7 @@ const AdminCartItemPage = () => {
                 <div>
                     <Button className="d-flex align-items-center"
                         variant="outline-primary"
-                    // onClick={() => setOpenAdminModalAddCart(true)}
+                        onClick={() => setOpenAdminModalAddCartItem(true)}
                     >
                         <IoIosAddCircle /> Add a cart item
                     </Button>
@@ -121,6 +123,13 @@ const AdminCartItemPage = () => {
                 setOpenAdminModalGetCartItemDetails={setOpenAdminModalGetCartItemDetails}
                 openAdminModalGetCartItemDetails={openAdminModalGetCartItemDetails}
                 cartItem={cartItem}
+            />
+
+            {/* modal add */}
+            <AdminModalAddCartItem
+                setOpenAdminModalAddCartItem={setOpenAdminModalAddCartItem}
+                openAdminModalAddCartItem={openAdminModalAddCartItem}
+                fetchAllCartItems={fetchAllCartItems}
             />
 
         </>
