@@ -123,7 +123,11 @@ export interface ICartItem {
     id: number;
     quantity: number;
     product: IProduct | null;
-    cart:ICart |null;
+    cart: ICart | null;
+    createdAt: string;         // hoặc Date, tùy backend
+    updatedAt: string | null;  // có thể null nếu chưa cập nhật
+    createdBy: string;         // email hoặc username
+    updatedBy: string | null;  // null nếu chưa ai cập nhật
 }
 
 // ==============Order==================

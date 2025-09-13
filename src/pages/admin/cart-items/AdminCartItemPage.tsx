@@ -1,6 +1,6 @@
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
-import { getAllCartItems } from "../../../service/Api";
+import { getAllCartItems, getCartItemById } from "../../../service/Api";
 import { useEffect, useState } from "react";
 import type { ICartItem } from "../../../types/intefaces";
 import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
@@ -8,15 +8,36 @@ import { FaRegEye } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
+import AdminModalGetCartItemDetails from "./modals/AdminModalGetCartItemDetails";
 
 const AdminCartItemPage = () => {
 
     const [listCartItems, setListCartItems] = useState<ICartItem[]>([]);
+    const [openAdminModalGetCartItemDetails, setOpenAdminModalGetCartItemDetails] = useState<boolean>(false);
+    const [cartItem, setCartItem] = useState<ICartItem | null>(null);
+
+    const handleGetCartItemDetails = async (id: number) => {
+        try {
+            const res = await getCartItemById(id);
+            if (res?.data?.statusCode === 200) {
+                setCartItem(res.data.data);
+                setOpenAdminModalGetCartItemDetails(true);
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.message ?? "unknow";
+            toast.error(
+                <div>
+                    <div><strong>Có lỗi xảy ra!</strong></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    }
 
     const fetchAllCartItems = async () => {
         try {
             const res = await getAllCartItems();
-            if (res.data.statusCode === 200) {
+            if (res?.data?.statusCode === 200) {
                 setListCartItems(res.data.data.result);
             }
         } catch (error: any) {
@@ -71,7 +92,7 @@ const AdminCartItemPage = () => {
                             <td>{item.product?.id}</td>
                             <td>{item.cart?.id}</td>
                             <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
-                                <Button variant="outline-success"><FaRegEye /></Button>
+                                <Button variant="outline-success" onClick={() => handleGetCartItemDetails(item.id)}><FaRegEye /></Button>
                                 <Button variant="outline-dark"><CiEdit /></Button>
                                 <Popconfirm
                                     title="Delete the cart item"
@@ -92,10 +113,16 @@ const AdminCartItemPage = () => {
                             </td>
                         </tr>
                     )}
-
-
                 </tbody>
             </Table>
+
+            {/* modal details */}
+            <AdminModalGetCartItemDetails
+                setOpenAdminModalGetCartItemDetails={setOpenAdminModalGetCartItemDetails}
+                openAdminModalGetCartItemDetails={openAdminModalGetCartItemDetails}
+                cartItem={cartItem}
+            />
+
         </>
     )
 }

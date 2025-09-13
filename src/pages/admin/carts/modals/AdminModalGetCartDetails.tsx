@@ -12,7 +12,7 @@ const AdminModalGetCartDetails = (props: IProps) => {
     return (
         <>
             <Drawer
-                title="Product Details"
+                title="Cart Details"
                 onClose={() => setOpenAdminModalGetCartDetails(false)}
                 open={openAdminModalGetCartDetails}
                 placement='right'

@@ -110,7 +110,7 @@ export const updateCart = (data: IUpdateCartReq) => instance.put(`/api/v1/carts`
 
 /* api cart item */
 export const getAllCartItems = () => instance.get(`/api/v1/cart-items`);
-
+export const getCartItemById = (id: number) => instance.get(`/api/v1/cart-items/${id}`);
 /* api order */
 export const getAllOrders = () => instance.get(`/api/v1/orders`);
 export const getOrderById = (id: number) => instance.get(`/api/v1/orders/${id}`);
