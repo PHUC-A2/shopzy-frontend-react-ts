@@ -10,13 +10,21 @@ import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import AdminModalGetCartItemDetails from "./modals/AdminModalGetCartItemDetails";
 import AdminModalAddCartItem from "./modals/AdminModalAddCartItem";
+import AdminModalUpdateCartItem from "./modals/AdminModalUpdateCartItem";
 
 const AdminCartItemPage = () => {
 
     const [listCartItems, setListCartItems] = useState<ICartItem[]>([]);
     const [openAdminModalGetCartItemDetails, setOpenAdminModalGetCartItemDetails] = useState<boolean>(false);
     const [cartItem, setCartItem] = useState<ICartItem | null>(null);
+    const [cartItemUpdate, setCartItemUpdate] = useState<ICartItem | null>(null);
     const [openAdminModalAddCartItem, setOpenAdminModalAddCartItem] = useState<boolean>(false);
+    const [openAdminModalUpdateCartItem, setOpenAdminModalUpdateCartItem] = useState<boolean>(false);
+
+    const handleUpdateCartItem = async (data: ICartItem) => {
+        setCartItemUpdate(data);
+        setOpenAdminModalUpdateCartItem(true);
+    }
 
     const handleDeleteCartItem = async (id: number) => {
         try {
@@ -112,7 +120,7 @@ const AdminCartItemPage = () => {
                             <td>{item.cart?.id}</td>
                             <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
                                 <Button variant="outline-success" onClick={() => handleGetCartItemDetails(item.id)}><FaRegEye /></Button>
-                                <Button variant="outline-dark"><CiEdit /></Button>
+                                <Button variant="outline-dark" onClick={() => handleUpdateCartItem(item)}><CiEdit /></Button>
                                 <Popconfirm
                                     title="Delete the cart item"
                                     description="Are you sure to delete this cart item?"
@@ -146,6 +154,14 @@ const AdminCartItemPage = () => {
             <AdminModalAddCartItem
                 setOpenAdminModalAddCartItem={setOpenAdminModalAddCartItem}
                 openAdminModalAddCartItem={openAdminModalAddCartItem}
+                fetchAllCartItems={fetchAllCartItems}
+            />
+
+            {/* modal update */}
+            <AdminModalUpdateCartItem
+                setOpenAdminModalUpdateCartItem={setOpenAdminModalUpdateCartItem}
+                openAdminModalUpdateCartItem={openAdminModalUpdateCartItem}
+                cartItemUpdate={cartItemUpdate}
                 fetchAllCartItems={fetchAllCartItems}
             />
 

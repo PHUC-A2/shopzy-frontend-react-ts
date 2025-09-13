@@ -152,6 +152,17 @@ export interface ICreateCartItemReq {
     }
 }
 
+export interface IUpdateCartItemReq {
+    id: number;
+    quantity: number;
+    product: {
+        id: number;
+    }
+    cart: {
+        id: number;
+    }
+}
+
 // ==============Order==================
 export interface IOrder {
     id: number;
