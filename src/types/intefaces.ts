@@ -6,7 +6,7 @@ export interface IUser {
     email?: string;
     password?: string;
     phoneNumber?: string;
-    status?: string;
+    status?: UserEnum;
     createdAt: string;         // hoặc Date, tùy backend
     updatedAt: string | null;  // có thể null nếu chưa cập nhật
     createdBy: string;         // email hoặc username
@@ -27,7 +27,7 @@ export interface IUpdateUserReq {
     name: string;
     fullName: string;
     phoneNumber: string;
-    status: string;
+    status: UserEnum;
 }
 
 // ==============Auth==================
@@ -187,6 +187,14 @@ export interface IUpdateOrderReq {
 
 // dùng union tương tự enum
 
+// user
+//     ACTIVE, // Hoạt động bình thường
+//     INACTIVE, // Ngưng hoạt động / bị vô hiệu hóa
+//     PENDING_VERIFICATION, // Chờ xác minh email/OTP
+//     BANNED, // Bị cấm
+//     DELETED // Đã xóa (hoặc lưu trữ)
+export type UserEnum = "ACTIVE" | "INACTIVE" | "PENDING_VERIFICATION" | "BANNED" | "DELETED";
+
 // product
 export type ProductConditionEnum = "NEW" | "USED";
 export type ProductStatusEnum = "IN_STOCK" | "OUT_OF_STOCK";
@@ -195,3 +203,4 @@ export type ProductStatusEnum = "IN_STOCK" | "OUT_OF_STOCK";
 export type OrderPaymentMethodEnum = "COD" | "VNPAY";
 export type OrderPaymentStatusEnum = "UNPAID" | "PAID";
 export type OrderStatusEnum = "PENDING" | "SHIPPING" | "COMPLETED" | "CANCELLED";
+

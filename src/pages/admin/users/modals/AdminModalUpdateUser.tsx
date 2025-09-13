@@ -1,5 +1,5 @@
 // import { useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, Select } from 'antd';
 import { toast } from 'react-toastify';
 import { updateUser } from '../../../../service/Api';
 import { Form, Input } from 'antd';
@@ -88,6 +88,20 @@ const AdminModalUpdateUser = (props: IProps) => {
                             rules={[{ required: true, message: 'Please input your phone number!' }]}
                         >
                             <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Status"
+                            name="status"
+                            rules={[{ required: true, message: 'Please input your phone number!' }]}
+                        >
+                            <Select placeholder="Select status">
+                                <Select.Option value="ACTIVE">ACTIVE</Select.Option>
+                                <Select.Option value="INACTIVE">INACTIVE</Select.Option>
+                                <Select.Option value="PENDING_VERIFICATION">PENDING_VERIFICATION</Select.Option>
+                                <Select.Option value="BANNED">BANNED</Select.Option>
+                                <Select.Option value="DELETED">DELETED</Select.Option>
+                            </Select>
                         </Form.Item>
                     </Form>
                 </div>
