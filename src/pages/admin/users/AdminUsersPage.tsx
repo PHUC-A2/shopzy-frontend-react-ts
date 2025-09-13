@@ -1,11 +1,11 @@
-import { Button, Table } from "react-bootstrap";
+import { Button, ButtonGroup, Table } from "react-bootstrap";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa6";
 import { MdDelete } from "react-icons/md";
 import { deleteUser, getAllUsers, getUserDetails } from "../../../service/Api";
 import { toast } from "react-toastify";
-import { Empty, message, Popconfirm } from 'antd';
+import { Empty, message, Popconfirm, Tag } from 'antd';
 import { useEffect, useState } from "react";
 import AdminModalGetUserDetails from "./modals/AdminModalGetUserDetails";
 import type { IUser } from "../../../types/intefaces";
@@ -112,12 +112,13 @@ const AdminUsersPage = () => {
                 </div>
             </div>
             <hr />
-            <Table striped bordered hover className="text-center">
-                <thead>
+
+            <Table striped bordered hover responsive className="align-middle text-center shadow-sm rounded">
+                <thead className="table-dark">
                     <tr>
                         <th>STT</th>
                         <th>ID</th>
-                        <th>Name</th>
+                        <th>Username</th>
                         <th>Full Name</th>
                         <th>Email</th>
                         <th>Status</th>
@@ -125,41 +126,65 @@ const AdminUsersPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {listUsers.length > 0 ? "": ""} */}
-                    {listUsers.length > 0 ? listUsers.map((item, index) => (
-                        <tr key={index}>
-                            <td onClick={() => handleGetUserDetails(item.id)}><a href="#">{index + 1}</a></td>
-                            <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>{item.fullName}</td>
-                            <td>{item.email}</td>
-                            <td >{item.status}</td>
-                            <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
-
-                                <Button variant="outline-success" onClick={() => handleGetUserDetails(item.id)}><FaRegEye /></Button>
-                                <Button variant="outline-dark" onClick={() => handleEditUser(item)}><CiEdit /></Button>
-
-                                <Popconfirm
-                                    title="Delete the user"
-                                    description="Are you sure to delete this user?"
-                                    onConfirm={() => handleDeleteUser(item.id)}
-                                    onCancel={cancel}
-                                    okText="Yes"
-                                    cancelText="No"
-                                >
-                                    <Button variant="outline-danger"><MdDelete /></Button>
-                                </Popconfirm>
-                            </td>
-                        </tr>
-                    )) : (
+                    {listUsers.length > 0 ? (
+                        listUsers.map((item, index) => (
+                            <tr key={item.id}>
+                                <td>
+                                    <a href="#" onClick={() => handleGetUserDetails(item.id)}>
+                                        {index + 1}
+                                    </a>
+                                </td>
+                                <td>{item.id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.fullName}</td>
+                                <td>{item.email}</td>
+                                <td>
+                                    {item.status === "ACTIVE" ? (
+                                        <Tag color="green">Active</Tag>
+                                    ) : (
+                                        <Tag color="red">{item.status}</Tag>
+                                    )}
+                                </td>
+                                <td>
+                                    <ButtonGroup size="sm">
+                                        <Button
+                                            variant="outline-success"
+                                            onClick={() => handleGetUserDetails(item.id)}
+                                        >
+                                            <FaRegEye />
+                                        </Button>
+                                        <Button
+                                            variant="outline-dark"
+                                            onClick={() => handleEditUser(item)}
+                                        >
+                                            <CiEdit />
+                                        </Button>
+                                        <Popconfirm
+                                            title="Delete the user"
+                                            description="Are you sure to delete this user?"
+                                            onConfirm={() => handleDeleteUser(item.id)}
+                                            onCancel={cancel}
+                                            okText="Yes"
+                                            cancelText="No"
+                                        >
+                                            <Button variant="outline-danger">
+                                                <MdDelete />
+                                            </Button>
+                                        </Popconfirm>
+                                    </ButtonGroup>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
                         <tr>
-                            <td colSpan={7} style={{ textAlign: 'center', fontStyle: 'italic' }}>
-                                <Empty />
+                            <td colSpan={7} style={{ textAlign: "center", fontStyle: "italic" }}>
+                                <Empty description="No users found" />
                             </td>
                         </tr>
                     )}
                 </tbody>
             </Table>
+
 
             {/* Modal Drawer chi tiết User */}
             <AdminModalGetUserDetails

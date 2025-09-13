@@ -1,5 +1,8 @@
 import { Drawer } from 'antd';
 import type { IProduct } from '../../../../types/intefaces';
+import { Descriptions, Tag } from "antd";
+import dayjs from "dayjs";
+
 interface IProps {
     openAdminModalGetProductDetails: boolean;
     setOpenAdminModalGetProductDetails: (v: boolean) => void;
@@ -17,17 +20,46 @@ const AdminModalGetProductDetails = (props: IProps) => {
                 placement='right'
                 closable={false}
             >
-                <p><strong>ID: </strong><span> {product?.id}</span></p>
-                <p><strong>Name: </strong><span> {product?.name}</span></p>
-                <p><strong>Description: </strong><span> {product?.description}</span></p>
-                <p><strong>Price: </strong><span> {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product?.price ?? 0)}</span></p>
-                <p><strong>Stock: </strong><span> {product?.stock}</span></p>
-                <p><strong>Status: </strong><span> {product?.status}</span></p>
-                <p><strong>Product condition: </strong><span> {product?.productCondition}</span></p>
-                <p><strong>Image Url: </strong><span> {product?.imageUrl}</span></p>
-                <p><strong>Size: </strong><span> {product?.size}</span></p>
-                <p><strong>Color: </strong><span> {product?.color}</span></p>
-                <hr />
+                <Descriptions bordered column={1} size="small">
+                    <Descriptions.Item label="ID">{product?.id}</Descriptions.Item>
+                    <Descriptions.Item label="Name">{product?.name ?? "N/A"}</Descriptions.Item>
+                    <Descriptions.Item label="Description">{product?.description ?? "N/A"}</Descriptions.Item>
+                    <Descriptions.Item label="Price">
+                        {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(product?.price ?? 0)}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Stock">{product?.stock ?? 0}</Descriptions.Item>
+                    <Descriptions.Item label="Status">
+                        {product?.status ? (
+                            <Tag color={product.status === "IN_STOCK" ? "green" : "red"}>{product.status}</Tag>
+                        ) : (
+                            "N/A"
+                        )}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Condition">{product?.productCondition ?? "N/A"}</Descriptions.Item>
+                    <Descriptions.Item label="Image">
+                        {product?.imageUrl ? (
+                            <img
+                                src={product.imageUrl}
+                                alt={product.name}
+                                style={{ maxWidth: 100, display: "block" }}
+                            />
+                        ) : (
+                            "N/A"
+                        )}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Size">{product?.size ?? "N/A"}</Descriptions.Item>
+                    <Descriptions.Item label="Color">{product?.color ?? "N/A"}</Descriptions.Item>
+
+                    {/* Metadata */}
+                    <Descriptions.Item label="Created At">
+                        {product?.createdAt ? dayjs(product.createdAt).format("DD/MM/YYYY HH:mm:ss") : "N/A"}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Created By">{product?.createdBy ?? "N/A"}</Descriptions.Item>
+                    <Descriptions.Item label="Updated At">
+                        {product?.updatedAt ? dayjs(product.updatedAt).format("DD/MM/YYYY HH:mm:ss") : "N/A"}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Updated By">{product?.updatedBy ?? "N/A"}</Descriptions.Item>
+                </Descriptions>
             </Drawer>
         </>
     )

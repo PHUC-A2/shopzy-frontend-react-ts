@@ -1,6 +1,6 @@
-import { Drawer } from "antd";
+import { Descriptions, Drawer, Tag } from "antd";
 import type { IUser } from "../../../../types/intefaces";
-
+import dayjs from "dayjs";
 interface IProps {
     setOpenUserDrawer: (v: boolean) => void;
     openUserDrawer: boolean;
@@ -19,14 +19,31 @@ const AdminModalGetUserDetails = (props: IProps) => {
             onClose={() => setOpenUserDrawer(false)}
             open={openUserDrawer}
         >
-            <p><strong>ID: </strong><span> {user?.id}</span></p>
-            <p><strong>Name: </strong><span> {user?.name}</span></p>
-            <p><strong>Full Name: </strong><span> {user?.fullName}</span></p>
-            <p><strong>Email: </strong><span> {user?.email}</span></p>
-            <p><strong>Password: </strong><span hidden>{user?.password}</span></p>
-            <p><strong>Phone Number: </strong><span> {user?.phoneNumber}</span></p>
-            <p><strong>Status: </strong><span> {user?.status}</span></p>
-            <hr />
+            <Descriptions bordered column={1} size="small">
+                <Descriptions.Item label="ID">{user?.id}</Descriptions.Item>
+                <Descriptions.Item label="Username">{user?.name ?? "N/A"}</Descriptions.Item>
+                <Descriptions.Item label="Full Name">{user?.fullName ?? "N/A"}</Descriptions.Item>
+                <Descriptions.Item label="Email">{user?.email ?? "N/A"}</Descriptions.Item>
+                <Descriptions.Item label="Phone Number">{user?.phoneNumber ?? "N/A"}</Descriptions.Item>
+
+                <Descriptions.Item label="Status">
+                    {user?.status ? (
+                        <Tag color={user.status === "ACTIVE" ? "green" : "red"}>{user.status}</Tag>
+                    ) : (
+                        "N/A"
+                    )}
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Created At">
+                    {user?.createdAt ? dayjs(user.createdAt).format("DD/MM/YYYY HH:mm:ss") : "N/A"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Created By">{user?.createdBy ?? "N/A"}</Descriptions.Item>
+
+                <Descriptions.Item label="Updated At">
+                    {user?.updatedAt ? dayjs(user.updatedAt).format("DD/MM/YYYY HH:mm:ss") : "N/A"}
+                </Descriptions.Item>
+                <Descriptions.Item label="Updated By">{user?.updatedBy ?? "N/A"}</Descriptions.Item>
+            </Descriptions>
         </Drawer>
     )
 }

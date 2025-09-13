@@ -7,6 +7,10 @@ export interface IUser {
     password?: string;
     phoneNumber?: string;
     status?: string;
+    createdAt: string;         // hoặc Date, tùy backend
+    updatedAt: string | null;  // có thể null nếu chưa cập nhật
+    createdBy: string;         // email hoặc username
+    updatedBy: string | null;  // null nếu chưa ai cập nhật
 }
 
 export interface ICreateUserReq {
@@ -61,6 +65,10 @@ export interface IProduct {
     imageUrl?: string;
     size?: string;
     color?: string;
+    createdAt: string;         // hoặc Date, tùy backend
+    updatedAt: string | null;  // có thể null nếu chưa cập nhật
+    createdBy: string;         // email hoặc username
+    updatedBy: string | null;  // null nếu chưa ai cập nhật
 }
 
 export interface ICreateProductReq {
@@ -94,6 +102,10 @@ export interface IUpdateProductReq {
 export interface ICart {
     id: number;
     user: IUser | null;
+    createdAt: string;         // hoặc Date, tùy backend
+    updatedAt: string | null;  // có thể null nếu chưa cập nhật
+    createdBy: string;         // email hoặc username
+    updatedBy: string | null;  // null nếu chưa ai cập nhật
 }
 
 // cart create
@@ -140,6 +152,10 @@ export interface IOrder {
     shippingAddress?: string;
     shippingPhone?: string;
     user: IUser | null;
+    createdAt: string;         // hoặc Date, tùy backend
+    updatedAt: string | null;  // có thể null nếu chưa cập nhật
+    createdBy: string;         // email hoặc username
+    updatedBy: string | null;  // null nếu chưa ai cập nhật
 }
 
 export interface ICreateOrderReq {

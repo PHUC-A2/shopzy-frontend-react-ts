@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { IoIosAddCircle } from "react-icons/io";
 import AdminModalGetCartDetails from "./modals/AdminModalGetCartDetails";
 import AdminModalAddCart from "./modals/AdminModalAddCart";
-import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
+import { Empty, message, Popconfirm, Space, type PopconfirmProps } from "antd";
 import AdminModalUpdateCart from "./modals/AdminModalUpdateCart";
 
 const AdminCartPage = () => {
@@ -102,45 +102,73 @@ const AdminCartPage = () => {
                 </div>
             </div>
             <hr />
-            <Table striped bordered hover size="sm">
+            <Table striped bordered hover size="sm" className="text-center align-middle">
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>ID</th>
-                        <th>User</th>
+                        <th>Cart ID</th>
+                        <th>User Full Name</th>
+                        <th>User Email</th>
+                        <th>User Phone</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        listCart.length > 0 ? listCart?.map((item, index) => (
-                            <tr key={index}>
+                    {listCart.length > 0 ? (
+                        listCart.map((item, index) => (
+                            <tr key={item.id}>
                                 <td>{index + 1}</td>
-                                <td>{item.id}</td>
-                                <td>{item.user?.fullName}</td>
-                                <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
-                                    <Button className="mr" variant="outline-info" onClick={() => handleGetCartDetails(item.id)}><FaRegEye /></Button>
-                                    <Button variant="outline-dark" onClick={() => handleUpdateCart(item)}><CiEdit /></Button>
-                                    <Popconfirm
-                                        title="Delete the cart"
-                                        description="Are you sure to delete this cart?"
-                                        onConfirm={() => handleDeleteCart(item.id)}
-                                        onCancel={cancel}
-                                        okText="Yes"
-                                        cancelText="No"
+                                <td>
+                                    <a
+                                        href="#"
+                                        onClick={() => handleGetCartDetails(item.id)}
+                                        style={{ textDecoration: "none" }}
                                     >
-                                        <Button variant="outline-danger"><MdDelete /></Button>
-                                    </Popconfirm>
+                                        {item.id}
+                                    </a>
+                                </td>
+                                <td>{item.user?.fullName}</td>
+                                <td>{item.user?.email}</td>
+                                <td>{item.user?.phoneNumber}</td>
+
+                                {/* Action */}
+                                <td>
+                                    <Space>
+                                        <Button
+                                            variant="outline-info"
+                                            onClick={() => handleGetCartDetails(item.id)}
+                                        >
+                                            <FaRegEye />
+                                        </Button>
+                                        <Button
+                                            variant="outline-dark"
+                                            onClick={() => handleUpdateCart(item)}
+                                        >
+                                            <CiEdit />
+                                        </Button>
+                                        <Popconfirm
+                                            title="Delete the cart"
+                                            description="Are you sure to delete this cart?"
+                                            onConfirm={() => handleDeleteCart(item.id)}
+                                            onCancel={cancel}
+                                            okText="Yes"
+                                            cancelText="No"
+                                        >
+                                            <Button variant="outline-danger">
+                                                <MdDelete />
+                                            </Button>
+                                        </Popconfirm>
+                                    </Space>
                                 </td>
                             </tr>
-                        )) : (
-                            <tr>
-                                <td colSpan={4} style={{ textAlign: 'center', fontStyle: 'italic' }}>
-                                    <Empty />
-                                </td>
-                            </tr>
-                        )
-                    }
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={6} style={{ textAlign: "center", fontStyle: "italic" }}>
+                                <Empty />
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </Table>
 

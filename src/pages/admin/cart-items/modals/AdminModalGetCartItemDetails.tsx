@@ -15,7 +15,7 @@ const AdminModalGetCartItemDetails = (props: IProps) => {
             onClose={() => setOpenAdminModalGetCartItemDetails(false)}
             open={openAdminModalGetCartItemDetails}
             placement="right"
-            width={600}
+            // width={600}
         >
             {/* Cart Item */}
             <Descriptions bordered column={1} size="small" title="Cart Item">

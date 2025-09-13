@@ -1,8 +1,6 @@
-import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
+import { Empty, message, type PopconfirmProps } from "antd";
 import { Button, Table } from "react-bootstrap";
-import { CiEdit } from "react-icons/ci";
-import { FaRegEye } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+
 import { deleteProducts, getAllProducts, getProductDetails } from "../../../service/Api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
@@ -11,7 +9,10 @@ import { IoIosAddCircle } from "react-icons/io";
 import AdminModalAddProduct from "./modals/AdminModalAddProduct";
 import AdminModalUpdateProduct from "./modals/AdminModalUpdateProduct";
 import AdminModalGetProductDetails from "./modals/AdminModalGetProductDetails";
-
+import { Popconfirm, Space, Tag, Image } from "antd";
+import { FaRegEye } from "react-icons/fa";
+import { CiEdit } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
 const AdminProductPage = () => {
 
     const [listProduct, setListProduct] = useState<IProduct[]>([]);
@@ -108,7 +109,7 @@ const AdminProductPage = () => {
                 </div>
             </div>
             <hr />
-            <Table striped bordered hover className="text-center">
+            <Table striped bordered hover className="text-center align-middle">
                 <thead>
                     <tr>
                         <th>STT</th>
@@ -118,51 +119,109 @@ const AdminProductPage = () => {
                         <th>Price</th>
                         <th>Stock</th>
                         <th>Status</th>
-                        <th>Product Condition</th>
-                        <th>Image Url</th>
+                        <th>Condition</th>
+                        <th>Image</th>
                         <th>Size</th>
                         <th>Color</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {listProduct.length > 0 ? "": ""} */}
-                    {listProduct.length > 0 ? listProduct.map((item, index) => (
-                        <tr key={item.id}>
-                            <td><span><a href="#" onClick={() => handleGetProductDetails(item.id)} >{index + 1}</a></span></td>
-                            <td>{item.id}</td>
-                            <td>{item.name}</td>
-                            <td>{item.description}</td>
-                            <td>
-                                {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price)}
-                            </td>
-                            <td>{item.stock}</td>
-                            <td>{item.status}</td>
-                            <td>{item.productCondition}</td>
-                            <td>{item.imageUrl}</td>
-                            <td>{item.size}</td>
-                            <td>{item.color}</td>
+                    {listProduct.length > 0 ? (
+                        listProduct.map((item, index) => (
+                            <tr key={item.id}>
+                                <td>
+                                    <a
+                                        href="#"
+                                        onClick={() => handleGetProductDetails(item.id)}
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        {index + 1}
+                                    </a>
+                                </td>
+                                <td>{item.id}</td>
+                                <td>{item.name}</td>
+                                <td style={{ maxWidth: 200, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                    {item.description}
+                                </td>
+                                <td>
+                                    {new Intl.NumberFormat("vi-VN", {
+                                        style: "currency",
+                                        currency: "VND",
+                                    }).format(item.price)}
+                                </td>
+                                <td>{item.stock}</td>
 
-                            <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
+                                {/* Status */}
+                                <td>
+                                    {item.status === "IN_STOCK" ? (
+                                        <Tag color="green">In Stock</Tag>
+                                    ) : (
+                                        <Tag color="red">{item.status}</Tag>
+                                    )}
+                                </td>
 
-                                <Button variant="outline-success" onClick={() => handleGetProductDetails(item.id)} ><FaRegEye /></Button>
-                                <Button variant="outline-dark" onClick={() => handleUpdateProduct(item)}><CiEdit /></Button>
+                                {/* Condition */}
+                                <td>
+                                    {item.productCondition === "NEW" ? (
+                                        <Tag color="blue">New</Tag>
+                                    ) : (
+                                        <Tag color="orange">{item.productCondition}</Tag>
+                                    )}
+                                </td>
 
-                                <Popconfirm
-                                    title="Delete the product"
-                                    description="Are you sure to delete this product?"
-                                    onConfirm={() => handleDeleteProduct(item.id)}
-                                    onCancel={cancel}
-                                    okText="Yes"
-                                    cancelText="No"
-                                >
-                                    <Button variant="outline-danger"><MdDelete /></Button>
-                                </Popconfirm>
-                            </td>
-                        </tr>
-                    )) : (
+                                {/* Image preview */}
+                                <td>
+                                    {item.imageUrl ? (
+                                        <Image
+                                            src={item.imageUrl}
+                                            alt={item.name}
+                                            width={60}
+                                            height={60}
+                                            style={{ objectFit: "cover", borderRadius: 8 }}
+                                        />
+                                    ) : (
+                                        <Tag color="default">No Image</Tag>
+                                    )}
+                                </td>
+
+                                <td>{item.size}</td>
+                                <td>{item.color}</td>
+
+                                {/* Action */}
+                                <td>
+                                    <Space>
+                                        <Button
+                                            variant="outline-success"
+                                            onClick={() => handleGetProductDetails(item.id)}
+                                        >
+                                            <FaRegEye />
+                                        </Button>
+                                        <Button
+                                            variant="outline-dark"
+                                            onClick={() => handleUpdateProduct(item)}
+                                        >
+                                            <CiEdit />
+                                        </Button>
+                                        <Popconfirm
+                                            title="Delete the product"
+                                            description="Are you sure to delete this product?"
+                                            onConfirm={() => handleDeleteProduct(item.id)}
+                                            onCancel={cancel}
+                                            okText="Yes"
+                                            cancelText="No"
+                                        >
+                                            <Button variant="outline-danger">
+                                                <MdDelete />
+                                            </Button>
+                                        </Popconfirm>
+                                    </Space>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
                         <tr>
-                            <td colSpan={12} style={{ textAlign: 'center', fontStyle: 'italic' }}>
+                            <td colSpan={12} style={{ textAlign: "center", fontStyle: "italic" }}>
                                 <Empty />
                             </td>
                         </tr>

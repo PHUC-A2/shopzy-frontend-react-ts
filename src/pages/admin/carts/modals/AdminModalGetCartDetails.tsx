@@ -1,5 +1,6 @@
-import { Drawer } from "antd";
+import { Descriptions, Drawer } from "antd";
 import type { ICart } from "../../../../types/intefaces";
+import dayjs from "dayjs";
 
 interface IProps {
     setOpenAdminModalGetCartDetails: (v: boolean) => void;
@@ -18,14 +19,27 @@ const AdminModalGetCartDetails = (props: IProps) => {
                 placement='right'
                 closable={false}
             >
-                <p><strong>Cart ID: </strong><span> {cart?.id}</span></p>
-                <p><strong>User: </strong></p>
-                <p><strong>User ID: </strong><span> {cart?.user?.id}</span></p>
-                <p><strong>Name: </strong><span> {cart?.user?.name}</span></p>
-                <p><strong>Full Name: </strong><span> {cart?.user?.fullName}</span></p>
-                <p><strong>Email: </strong><span> {cart?.user?.email}</span></p>
-                <p><strong>Phone Number: </strong><span> {cart?.user?.phoneNumber}</span></p>
-                <hr />
+                {/* Cart */}
+                <Descriptions bordered column={1} size="small" title="Cart Information">
+                    <Descriptions.Item label="Cart ID">{cart?.id}</Descriptions.Item>
+                    <Descriptions.Item label="Created At">
+                        {cart?.createdAt ? dayjs(cart.createdAt).format("DD/MM/YYYY HH:mm:ss") : "N/A"}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Created By">{cart?.createdBy ?? "N/A"}</Descriptions.Item>
+                    <Descriptions.Item label="Updated At">
+                        {cart?.updatedAt ? dayjs(cart.updatedAt).format("DD/MM/YYYY HH:mm:ss") : "N/A"}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Updated By">{cart?.updatedBy ?? "N/A"}</Descriptions.Item>
+                </Descriptions>
+
+                {/* User trong Cart */}
+                <Descriptions bordered column={1} size="small" title="User Information">
+                    <Descriptions.Item label="User ID">{cart?.user?.id}</Descriptions.Item>
+                    <Descriptions.Item label="Username">{cart?.user?.name}</Descriptions.Item>
+                    <Descriptions.Item label="Full Name">{cart?.user?.fullName}</Descriptions.Item>
+                    <Descriptions.Item label="Email">{cart?.user?.email}</Descriptions.Item>
+                    <Descriptions.Item label="Phone Number">{cart?.user?.phoneNumber}</Descriptions.Item>
+                </Descriptions>
             </Drawer>
         </>
     )

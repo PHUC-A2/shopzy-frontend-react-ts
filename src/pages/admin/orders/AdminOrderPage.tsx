@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { deleteOrder, getAllOrders, getOrderById } from "../../../service/Api";
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
-import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
+import { Empty, message, Popconfirm, Space, Tag, type PopconfirmProps } from "antd";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -101,48 +101,98 @@ const AdminOrderPage = () => {
                 </div>
             </div>
             <hr />
-            <Table striped bordered hover size="sm">
+            <Table striped bordered hover size="sm" className="text-center align-middle">
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>ID</th>
+                        <th>Order ID</th>
                         <th>Status</th>
+                        <th>Payment</th>
+                        <th>Total</th>
                         <th>User</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        listOrder.length > 0 ? listOrder?.map((item, index) => (
-                            <tr key={index}>
+                    {listOrder.length > 0 ? (
+                        listOrder.map((item, index) => (
+                            <tr key={item.id}>
                                 <td>{index + 1}</td>
-                                <td>{item.id}</td>
-                                <td>{item.status}</td>
-                                <td>{item.user?.fullName}</td>
-                                <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
-                                    <Button className="mr" variant="outline-info" onClick={() => handleGetOrderDetails(item)}><FaRegEye /></Button>
-                                    <Button variant="outline-dark" onClick={() => handleUpdateOrder(item)}><CiEdit /></Button>
-                                    <Popconfirm
-                                        title="Delete the order"
-                                        description="Are you sure to delete this order?"
-                                        onConfirm={() => handleDeleteOrder(item.id)}
-                                        onCancel={cancel}
-                                        okText="Yes"
-                                        cancelText="No"
-                                    >
-                                        <Button variant="outline-danger"><MdDelete /></Button>
-                                    </Popconfirm>
-                                </td>
-                            </tr>
-                        )) : (
-                            <tr>
-                                <td colSpan={5} style={{ textAlign: 'center', fontStyle: 'italic' }}>
-                                    <Empty />
-                                </td>
-                            </tr>
-                        )
-                    }
 
+                                {/* Order ID clickable */}
+                                <td>
+                                    <a
+                                        href="#"
+                                        onClick={() => handleGetOrderDetails(item)}
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        {item.id}
+                                    </a>
+                                </td>
+
+                                {/* Status với Tag màu */}
+                                <td>
+                                    {item.status === "COMPLETED" ? (
+                                        <Tag color="green">Completed</Tag>
+                                    ) : item.status === "PENDING" ? (
+                                        <Tag color="orange">Pending</Tag>
+                                    ) : (
+                                        <Tag color="red">{item.status}</Tag>
+                                    )}
+                                </td>
+
+                                {/* Payment method */}
+                                <td>{item.paymentMethod}</td>
+
+                                {/* Total định dạng tiền */}
+                                <td>
+                                    {new Intl.NumberFormat("vi-VN", {
+                                        style: "currency",
+                                        currency: "VND",
+                                    }).format(item.total ?? 0)}
+                                </td>
+
+                                {/* User */}
+                                <td>{item.user?.fullName}</td>
+
+                                {/* Action */}
+                                <td>
+                                    <Space>
+                                        <Button
+                                            variant="outline-info"
+                                            onClick={() => handleGetOrderDetails(item)}
+                                        >
+                                            <FaRegEye />
+                                        </Button>
+                                        <Button
+                                            variant="outline-dark"
+                                            onClick={() => handleUpdateOrder(item)}
+                                        >
+                                            <CiEdit />
+                                        </Button>
+                                        <Popconfirm
+                                            title="Delete the order"
+                                            description="Are you sure to delete this order?"
+                                            onConfirm={() => handleDeleteOrder(item.id)}
+                                            onCancel={cancel}
+                                            okText="Yes"
+                                            cancelText="No"
+                                        >
+                                            <Button variant="outline-danger">
+                                                <MdDelete />
+                                            </Button>
+                                        </Popconfirm>
+                                    </Space>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={7} style={{ textAlign: "center", fontStyle: "italic" }}>
+                                <Empty />
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </Table>
 
