@@ -149,7 +149,7 @@ const AdminProductPage = () => {
                                 <Button variant="outline-dark" onClick={() => handleUpdateProduct(item)}><CiEdit /></Button>
 
                                 <Popconfirm
-                                    title="Delete the user"
+                                    title="Delete the product"
                                     description="Are you sure to delete this product?"
                                     onConfirm={() => handleDeleteProduct(item.id)}
                                     onCancel={cancel}

@@ -6,8 +6,8 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps, MenuTheme } from 'antd';
 import { Menu } from 'antd';
-import { AiOutlineProduct } from 'react-icons/ai';
-import { FaCartPlus, FaCircleUser } from 'react-icons/fa6';
+import { AiOutlineProduct, AiOutlineShoppingCart } from 'react-icons/ai';
+import { FaBoxesPacking, FaCartPlus, FaCircleUser } from 'react-icons/fa6';
 import { MdFeaturedPlayList } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
@@ -64,7 +64,9 @@ const AdminSidebar = (props: IProps) => {
                 { key: '2', icon: <UserAddOutlined />, label: <Link to="/admin/users" style={{ color: "white", textDecoration: "none" }}>User</Link> },
                 { key: '3', icon: <AiOutlineProduct />, label: <Link to="/admin/products" style={{ color: "white", textDecoration: "none" }}>Product</Link> },
                 { key: '4', icon: <FaCartPlus />, label: <Link to="/admin/carts" style={{ color: "white", textDecoration: "none" }}>Cart</Link> },
-                { key: '5', icon: <BsFillJournalBookmarkFill />, label: <Link to="/admin/orders" style={{ color: "white", textDecoration: "none" }}>Order</Link> },
+                { key: '5', icon: <AiOutlineShoppingCart />, label: <Link to="/admin/cart-items" style={{ color: "white", textDecoration: "none" }}>Cart Item</Link> },
+                { key: '6', icon: <BsFillJournalBookmarkFill />, label: <Link to="/admin/orders" style={{ color: "white", textDecoration: "none" }}>Order</Link> },
+                { key: '7', icon: <FaBoxesPacking />, label: <Link to="/admin/order-items" style={{ color: "white", textDecoration: "none" }}>Order Item</Link> },
             ],
         },
         {

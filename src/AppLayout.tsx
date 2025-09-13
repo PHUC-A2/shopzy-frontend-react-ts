@@ -20,6 +20,7 @@ import { setClearProfileUser, setProfileUser } from "./redux/slice/userSlice";
 import AdminProductPage from "./pages/admin/products/AdminProductPage";
 import AdminCartPage from "./pages/admin/carts/AdminCartPage";
 import AdminOrderPage from "./pages/admin/orders/AdminOrderPage";
+import AdminCartItemPage from "./pages/admin/cart-items/AdminCartItemPage";
 
 const router = createBrowserRouter([
   /* cấu hình cho user */
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
         { path: "users", element: <AdminUsersPage /> },
         { path: "products", element: <AdminProductPage /> },
         { path: "carts", element: <AdminCartPage /> },
+        { path: "cart-items", element: <AdminCartItemPage /> },
         { path: "orders", element: <AdminOrderPage /> },
       ]
   },

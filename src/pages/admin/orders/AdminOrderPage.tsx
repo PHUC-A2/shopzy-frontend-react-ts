@@ -100,6 +100,7 @@ const AdminOrderPage = () => {
                     </Button>
                 </div>
             </div>
+            <hr />
             <Table striped bordered hover size="sm">
                 <thead>
                     <tr>
@@ -122,8 +123,8 @@ const AdminOrderPage = () => {
                                     <Button className="mr" variant="outline-info" onClick={() => handleGetOrderDetails(item)}><FaRegEye /></Button>
                                     <Button variant="outline-dark" onClick={() => handleUpdateOrder(item)}><CiEdit /></Button>
                                     <Popconfirm
-                                        title="Delete the user"
-                                        description="Are you sure to delete this cart?"
+                                        title="Delete the order"
+                                        description="Are you sure to delete this order?"
                                         onConfirm={() => handleDeleteOrder(item.id)}
                                         onCancel={cancel}
                                         okText="Yes"

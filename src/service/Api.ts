@@ -108,6 +108,9 @@ export const deleteCart = (id: number) => instance.delete(`/api/v1/carts/${id}`)
 export const createCart = (data: ICreateCartReq) => instance.post(`/api/v1/carts`, data); // vì api trả ra dạng {user:{"id":1}}
 export const updateCart = (data: IUpdateCartReq) => instance.put(`/api/v1/carts`, data); // vì api trả ra dạng {user:{"id":1}}
 
+/* api cart item */
+export const getAllCartItems = () => instance.get(`/api/v1/cart-items`);
+
 /* api order */
 export const getAllOrders = () => instance.get(`/api/v1/orders`);
 export const getOrderById = (id: number) => instance.get(`/api/v1/orders/${id}`);

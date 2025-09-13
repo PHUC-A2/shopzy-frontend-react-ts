@@ -52,15 +52,15 @@ export interface IProduct {
  */
 
     id: number;
-    name: string;
-    description: string;
+    name?: string;
+    description?: string;
     price: number;
     stock: number;
-    status: ProductStatusEnum;
-    productCondition: ProductConditionEnum;
-    imageUrl: string;
-    size: string;
-    color: string;
+    status?: ProductStatusEnum;
+    productCondition?: ProductConditionEnum;
+    imageUrl?: string;
+    size?: string;
+    color?: string;
 }
 
 export interface ICreateProductReq {
@@ -118,15 +118,23 @@ export interface IUpdateCartReq {
     }
 }
 
+// ==============Cart Item==================
+export interface ICartItem {
+    id: number;
+    quantity: number;
+    product: IProduct | null;
+    cart:ICart |null;
+}
+
 // ==============Order==================
 export interface IOrder {
     id: number;
-    status: OrderStatusEnum;
-    paymentMethod: OrderPaymentMethodEnum;
-    paymentStatus: OrderPaymentStatusEnum;
+    status?: OrderStatusEnum;
+    paymentMethod?: OrderPaymentMethodEnum;
+    paymentStatus?: OrderPaymentStatusEnum;
     total: number;
-    shippingAddress: string;
-    shippingPhone: string;
+    shippingAddress?: string;
+    shippingPhone?: string;
     user: IUser | null;
 }
 
