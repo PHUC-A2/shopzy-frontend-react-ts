@@ -1,6 +1,6 @@
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
-import { getAllCartItems, getCartItemById } from "../../../service/Api";
+import { deleteCartItem, getAllCartItems, getCartItemById } from "../../../service/Api";
 import { useEffect, useState } from "react";
 import type { ICartItem } from "../../../types/intefaces";
 import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
@@ -17,6 +17,23 @@ const AdminCartItemPage = () => {
     const [openAdminModalGetCartItemDetails, setOpenAdminModalGetCartItemDetails] = useState<boolean>(false);
     const [cartItem, setCartItem] = useState<ICartItem | null>(null);
     const [openAdminModalAddCartItem, setOpenAdminModalAddCartItem] = useState<boolean>(false);
+
+    const handleDeleteCartItem = async (id: number) => {
+        try {
+            const res = await deleteCartItem(id);
+            if (res?.data?.statusCode === 200) {
+                await fetchAllCartItems();
+            }
+        } catch (error: any) {
+            const m = error?.response?.data?.error ?? "unknown";
+            toast.error(
+                <div>
+                    <div><strong>Có lỗi xảy ra!</strong></div>
+                    <div>{m}</div>
+                </div>
+            )
+        }
+    }
 
     const handleGetCartItemDetails = async (id: number) => {
         try {
@@ -99,7 +116,7 @@ const AdminCartItemPage = () => {
                                 <Popconfirm
                                     title="Delete the cart item"
                                     description="Are you sure to delete this cart item?"
-                                    // onConfirm={() => handleDeleteProduct(item.id)}
+                                    onConfirm={() => handleDeleteCartItem(item.id)}
                                     onCancel={cancel}
                                     okText="Yes"
                                     cancelText="No"

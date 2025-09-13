@@ -111,6 +111,7 @@ export const updateCart = (data: IUpdateCartReq) => instance.put(`/api/v1/carts`
 /* api cart item */
 export const getAllCartItems = () => instance.get(`/api/v1/cart-items`);
 export const getCartItemById = (id: number) => instance.get(`/api/v1/cart-items/${id}`);
+export const deleteCartItem = (id: number) => instance.delete(`/api/v1/cart-items/${id}`);
 export const createCartItem = (data: ICreateCartItemReq) => instance.post(`/api/v1/cart-items`, data);
 
 /* api order */
