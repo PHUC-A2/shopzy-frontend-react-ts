@@ -1,16 +1,16 @@
 import { Outlet } from "react-router";
 import Header from "../components/users/Header";
 
-const UserLayout = () => {
+const ClientLayout = () => {
     return (
-        <div className="user-layout-container">
-            <div className="user-header-container">
+        <div className="client-layout-container">
+            <div className="client-header-container">
                 <Header />
             </div>
-            <div className="user-main-container">
+            <div className="client-main-container">
                 <Outlet />
             </div>
         </div>
     )
 }
-export default UserLayout;
+export default ClientLayout;

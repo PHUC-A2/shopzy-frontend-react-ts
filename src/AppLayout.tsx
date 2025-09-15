@@ -2,9 +2,9 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router";
-import UserLayout from "./routers/UserLayout";
+import ClientLayout from "./routers/ClientLayout";
 import HomePage from "./pages/HomePage";
-import UsersPage from "./pages/users/UsersPage";
+import UsersPage from "./pages/client/UsersPage";
 import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
 import AdminLayout from "./routers/AdminLayout";
 import AdminPage from "./pages/admin/AdminPage";
@@ -26,7 +26,7 @@ import AdminOrderItemPage from "./pages/admin/order-items/AdminOrderItemPage";
 const router = createBrowserRouter([
   /* cấu hình cho user */
   {
-    path: "/", element: <UserLayout />,
+    path: "/", element: <ClientLayout />,
     children:
       [
         { index: true, element: <HomePage /> },
