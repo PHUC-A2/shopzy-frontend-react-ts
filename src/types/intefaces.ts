@@ -204,6 +204,45 @@ export interface IUpdateOrderReq {
     shippingPhone: string;
 }
 
+// ==============Order Item==================
+export interface IOrderItem {
+    id: number;
+    quantity: number;
+    unitPrice: number;
+    product: IProduct | null;
+    order: IOrder | null;
+    createdAt: string;         // hoặc Date, tùy backend
+    updatedAt: string | null;  // có thể null nếu chưa cập nhật
+    createdBy: string;         // email hoặc username
+    updatedBy: string | null;  // null nếu chưa ai cập nhật
+}
+
+export interface ICreateOrderItemReq {
+    quantity: number;
+    unitPrice: number;
+    product: {
+        id: number;
+    };
+    order: {
+        id: number;
+    }
+}
+
+export interface IUpdateOrderItemReq {
+    id:number;
+    quantity: number;
+    unitPrice: number;
+    product: {
+        id: number;
+    };
+    order: {
+        id: number;
+    }
+}
+
+
+
+
 // ==============Các type tương tự Enum trong java==================
 
 // dùng union tương tự enum

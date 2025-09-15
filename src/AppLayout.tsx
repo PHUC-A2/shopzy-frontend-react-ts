@@ -21,6 +21,7 @@ import AdminProductPage from "./pages/admin/products/AdminProductPage";
 import AdminCartPage from "./pages/admin/carts/AdminCartPage";
 import AdminOrderPage from "./pages/admin/orders/AdminOrderPage";
 import AdminCartItemPage from "./pages/admin/cart-items/AdminCartItemPage";
+import AdminOrderItemPage from "./pages/admin/order-items/AdminOrderItemPage";
 
 const router = createBrowserRouter([
   /* cấu hình cho user */
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
         { path: "carts", element: <AdminCartPage /> },
         { path: "cart-items", element: <AdminCartItemPage /> },
         { path: "orders", element: <AdminOrderPage /> },
+        { path: "order-items", element: <AdminOrderItemPage /> },
       ]
   },
   /* cấu hình cho login */

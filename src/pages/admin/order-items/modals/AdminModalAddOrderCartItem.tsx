@@ -1,30 +1,28 @@
 import { Form, InputNumber, Modal } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { toast } from "react-toastify";
-import type { ICartItem, IUpdateCartItemReq } from "../../../../types/intefaces";
-import { updateCartItem } from "../../../../service/Api";
-import { useEffect } from "react";
+import type { ICreateOrderItemReq } from "../../../../types/intefaces";
+import { createOrderItem } from "../../../../service/Api";
 
 interface IProps {
-    openAdminModalUpdateCartItem: boolean;
-    setOpenAdminModalUpdateCartItem: (v: boolean) => void;
-    cartItemUpdate: ICartItem | null;
-    fetchAllCartItems: () => void;
+    openAdminModalAddOrderItem: boolean;
+    setOpenAdminModalAddOrderItem: (v: boolean) => void;
+    fetchAllOrderItems: () => void;
 }
 
-const AdminModalUpdateCartItem = (props: IProps) => {
+const AdminModalAddOrderItem = (props: IProps) => {
 
-    const { openAdminModalUpdateCartItem, setOpenAdminModalUpdateCartItem, cartItemUpdate, fetchAllCartItems } = props;
+    const { openAdminModalAddOrderItem, setOpenAdminModalAddOrderItem, fetchAllOrderItems } = props;
     const [form] = useForm();
 
-    const handleUpdateCartItem = async (data: IUpdateCartItemReq) => {
+    const handleAddOrderItem = async (data: ICreateOrderItemReq) => {
 
         try {
-            const res = await updateCartItem(data);
-            if (res.data.statusCode === 200) {
-                await fetchAllCartItems();
-                setOpenAdminModalUpdateCartItem(false)
-                toast.success("Cập nhật sản phẩm trong giỏ hàng thành công")
+            const res = await createOrderItem(data);
+            if (res.data.statusCode === 201) {
+                await fetchAllOrderItems();
+                setOpenAdminModalAddOrderItem(false)
+                toast.success("Thêm mới sản phẩm trong đơn hàng thành công")
                 form.resetFields();
             }
         } catch (error: any) {
@@ -38,41 +36,36 @@ const AdminModalUpdateCartItem = (props: IProps) => {
         }
     }
 
-    useEffect(() => {
-        if (openAdminModalUpdateCartItem && cartItemUpdate) {
-            form.setFieldsValue(cartItemUpdate);
-        }
-    }, [openAdminModalUpdateCartItem, cartItemUpdate]);
-
     return (
         <>
             <Modal
-                title="Add a Cart Item"
+                title="Add a order item"
                 closable={{ 'aria-label': 'Custom Close Button' }}
-                open={openAdminModalUpdateCartItem}
+                open={openAdminModalAddOrderItem}
                 onOk={() => form.submit()}
                 okText="Save"
                 maskClosable={false}
-                onCancel={() => setOpenAdminModalUpdateCartItem(false)}
+                onCancel={() => setOpenAdminModalAddOrderItem(false)}
                 width={500}
             >
                 <Form
                     form={form}
-                    onFinish={handleUpdateCartItem}
+                    onFinish={handleAddOrderItem}
                     layout='vertical'
                     autoComplete="off"
                 >
                     <Form.Item
-                        hidden
-                        name="id"
+                        label="Quantity"
+                        name="quantity"
+                        rules={[{ required: true, message: 'Please input your quantity id!' }]}
                     >
                         <InputNumber style={{ width: "100%" }} />
                     </Form.Item>
 
                     <Form.Item
-                        label="Quantity"
-                        name="quantity"
-                        rules={[{ required: true, message: 'Please input your quantity id!' }]}
+                        label="Unit Price"
+                        name="unitPrice"
+                        rules={[{ required: true, message: 'Please input your unit price!' }]}
                     >
                         <InputNumber style={{ width: "100%" }} />
                     </Form.Item>
@@ -86,9 +79,9 @@ const AdminModalUpdateCartItem = (props: IProps) => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Cart ID"
-                        name={['cart', 'id']}
-                        rules={[{ required: true, message: 'Please input your cart id!' }]}
+                        label="Order ID"
+                        name={['order', 'id']}
+                        rules={[{ required: true, message: 'Please input your order id!' }]}
                     >
                         <InputNumber style={{ width: "100%" }} />
                     </Form.Item>
@@ -97,4 +90,4 @@ const AdminModalUpdateCartItem = (props: IProps) => {
         </>
     )
 }
-export default AdminModalUpdateCartItem;
+export default AdminModalAddOrderItem;

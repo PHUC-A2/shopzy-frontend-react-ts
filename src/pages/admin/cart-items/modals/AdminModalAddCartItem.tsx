@@ -39,7 +39,7 @@ const AdminModalAddCartItem = (props: IProps) => {
     return (
         <>
             <Modal
-                title="Add a Cart"
+                title="Add a Cart Item"
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 open={openAdminModalAddCartItem}
                 onOk={() => form.submit()}

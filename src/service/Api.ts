@@ -1,7 +1,7 @@
 // import axios from "axios";
 
 import instance from "../config/customAxios";
-import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/intefaces";
+import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/intefaces";
 
 // /* api user */
 // const getAllUsers = () => {
@@ -122,3 +122,9 @@ export const deleteOrder = (id: number) => instance.delete(`/api/v1/orders/${id}
 export const createOrder = (data: ICreateOrderReq) => instance.post(`/api/v1/orders`, data);
 export const updateOrder = (data: IUpdateOrderReq) => instance.put(`/api/v1/orders`, data);
 
+/* api order item */
+export const getAllOrderItems = () => instance.get(`/api/v1/order-items`);
+export const getOrderItemById = (id: number) => instance.get(`/api/v1/order-items/${id}`);
+export const deleteOrderItem = (id: number) => instance.delete(`/api/v1/order-items/${id}`);
+export const createOrderItem = (data: ICreateOrderItemReq) => instance.post(`/api/v1/order-items`, data);
+export const updateOrderItem = (data: IUpdateOrderItemReq) => instance.put(`/api/v1/order-items`, data);
