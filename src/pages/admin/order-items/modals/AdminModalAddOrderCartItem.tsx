@@ -1,8 +1,8 @@
 import { Form, InputNumber, Modal } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { toast } from "react-toastify";
-import type { ICreateOrderItemReq } from "../../../../types/intefaces";
-import { createOrderItem } from "../../../../service/Api";
+import type { ICreateOrderItemReq } from "../../../../types/backend";
+import { createOrderItem } from "../../../../config/Api";
 
 interface IProps {
     openAdminModalAddOrderItem: boolean;

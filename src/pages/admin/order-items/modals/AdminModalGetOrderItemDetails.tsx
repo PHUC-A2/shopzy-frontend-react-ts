@@ -1,5 +1,5 @@
 import { Descriptions, Divider, Drawer } from "antd";
-import type { IOrderItem } from "../../../../types/intefaces";
+import type { IOrderItem } from "../../../../types/backend";
 
 interface IProps {
     setOpenAdminModalGetOrderItemDetails: (v: boolean) => void;

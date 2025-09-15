@@ -1,8 +1,8 @@
 import { Form, InputNumber, Modal } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { toast } from "react-toastify";
-import type { ICart, IUpdateCartReq } from "../../../../types/intefaces";
-import { updateCart } from "../../../../service/Api";
+import type { ICart, IUpdateCartReq } from "../../../../types/backend";
+import { updateCart } from "../../../../config/Api";
 import { useEffect } from "react";
 
 interface IProps {

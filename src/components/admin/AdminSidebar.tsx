@@ -12,7 +12,7 @@ import { MdFeaturedPlayList } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
 import type { RootState } from '../../redux/store';
-import { logout } from '../../service/Api';
+import { logout } from '../../config/Api';
 import { setLogoutUser } from '../../redux/slice/authSlice';
 import { toast } from 'react-toastify';
 import { BsFillJournalBookmarkFill } from 'react-icons/bs';

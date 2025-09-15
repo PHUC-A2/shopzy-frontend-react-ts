@@ -15,7 +15,7 @@ import './Header.scss'
 import { TiShoppingCart } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
-import { logout } from '../../service/Api';
+import { logout } from '../../config/Api';
 import { setLogoutUser } from '../../redux/slice/authSlice';
 import { toast } from 'react-toastify';
 type MenuItem = Required<MenuProps>['items'][number];

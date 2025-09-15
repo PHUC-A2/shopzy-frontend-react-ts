@@ -1,8 +1,8 @@
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
-import { deleteOrderItem, getAllOrderItems, getOrderItemById } from "../../../service/Api";
+import { deleteOrderItem, getAllOrderItems, getOrderItemById } from "../../../config/Api";
 import { useEffect, useState } from "react";
-import type { IOrderItem } from "../../../types/intefaces";
+import type { IOrderItem } from "../../../types/backend";
 import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
 import { FaRegEye } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
@@ -93,7 +93,7 @@ const AdminOrderItemPage = () => {
                 <div>
                     <Button className="d-flex align-items-center"
                         variant="outline-primary"
-                    onClick={() => setOpenAdminModalAddOrderItem(true)}
+                        onClick={() => setOpenAdminModalAddOrderItem(true)}
                     >
                         <IoIosAddCircle /> Add a order item
                     </Button>
@@ -123,10 +123,10 @@ const AdminOrderItemPage = () => {
                             <td>{item.order?.id}</td>
                             <td style={{ display: "flex", gap: 10, justifyContent: "space-between" }}>
                                 <Button variant="outline-success"
-                                 onClick={() => handleGetOrderItemDetails(item.id)}
+                                    onClick={() => handleGetOrderItemDetails(item.id)}
                                 ><FaRegEye /></Button>
                                 <Button variant="outline-dark"
-                                 onClick={() => handleUpdateOrderItem(item)}
+                                    onClick={() => handleUpdateOrderItem(item)}
                                 ><CiEdit /></Button>
                                 <Popconfirm
                                     title="Delete the order item"

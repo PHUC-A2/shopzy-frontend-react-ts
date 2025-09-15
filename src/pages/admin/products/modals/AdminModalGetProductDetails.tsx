@@ -1,5 +1,5 @@
 import { Drawer } from 'antd';
-import type { IProduct } from '../../../../types/intefaces';
+import type { IProduct } from '../../../../types/backend';
 import { Descriptions, Tag } from "antd";
 import dayjs from "dayjs";
 

@@ -1,8 +1,8 @@
 import { Form, InputNumber, Modal } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { toast } from "react-toastify";
-import type { ICreateCartReq } from "../../../../types/intefaces";
-import { createCart } from "../../../../service/Api";
+import type { ICreateCartReq } from "../../../../types/backend";
+import { createCart } from "../../../../config/Api";
 
 interface IProps {
     openAdminModalAddCart: boolean;

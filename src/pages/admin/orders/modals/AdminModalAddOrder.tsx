@@ -2,8 +2,8 @@
 import { Flex, Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { toast } from 'react-toastify';
-import type { ICreateOrderReq } from '../../../../types/intefaces';
-import { createOrder } from '../../../../service/Api';
+import type { ICreateOrderReq } from '../../../../types/backend';
+import { createOrder } from '../../../../config/Api';
 
 interface IProps {
     openAdminModalAddOrder: boolean;

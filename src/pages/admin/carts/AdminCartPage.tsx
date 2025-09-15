@@ -1,8 +1,8 @@
 
 import { Button, Table } from "react-bootstrap";
-import { deleteCart, getAllCarts, getCartById } from "../../../service/Api";
+import { deleteCart, getAllCarts, getCartById } from "../../../config/Api";
 import { useEffect, useState } from "react";
-import type { ICart } from "../../../types/intefaces";
+import type { ICart } from "../../../types/backend";
 import { FaRegEye } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";

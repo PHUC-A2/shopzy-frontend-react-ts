@@ -1,5 +1,5 @@
 import { Drawer, Descriptions, Divider } from "antd";
-import type { ICartItem } from "../../../../types/intefaces";
+import type { ICartItem } from "../../../../types/backend";
 
 interface IProps {
     setOpenAdminModalGetCartItemDetails: (v: boolean) => void;
@@ -15,7 +15,7 @@ const AdminModalGetCartItemDetails = (props: IProps) => {
             onClose={() => setOpenAdminModalGetCartItemDetails(false)}
             open={openAdminModalGetCartItemDetails}
             placement="right"
-            // width={600}
+        // width={600}
         >
             {/* Cart Item */}
             <Descriptions bordered column={1} size="small" title="Cart Item">

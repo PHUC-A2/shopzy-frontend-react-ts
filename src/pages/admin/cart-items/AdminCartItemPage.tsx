@@ -1,8 +1,8 @@
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
-import { deleteCartItem, getAllCartItems, getCartItemById } from "../../../service/Api";
+import { deleteCartItem, getAllCartItems, getCartItemById } from "../../../config/Api";
 import { useEffect, useState } from "react";
-import type { ICartItem } from "../../../types/intefaces";
+import type { ICartItem } from "../../../types/backend";
 import { Empty, message, Popconfirm, type PopconfirmProps } from "antd";
 import { FaRegEye } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";

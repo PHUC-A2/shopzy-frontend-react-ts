@@ -1,9 +1,9 @@
 // import { useState } from 'react';
 import { Modal, Select } from 'antd';
 import { toast } from 'react-toastify';
-import { updateUser } from '../../../../service/Api';
+import { updateUser } from '../../../../config/Api';
 import { Form, Input } from 'antd';
-import type { IUpdateUserReq, IUser } from '../../../../types/intefaces';
+import type { IUpdateUserReq, IUser } from '../../../../types/backend';
 import { useEffect } from 'react';
 
 interface IProps {

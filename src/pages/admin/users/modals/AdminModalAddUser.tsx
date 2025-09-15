@@ -1,9 +1,9 @@
 // import { useState } from 'react';
 import { Modal } from 'antd';
 import { toast } from 'react-toastify';
-import { createUser } from '../../../../service/Api';
+import { createUser } from '../../../../config/Api';
 import { Form, Input } from 'antd';
-import type { ICreateUserReq } from '../../../../types/intefaces';
+import type { ICreateUserReq } from '../../../../types/backend';
 
 interface IProps {
     openModalAddUser: boolean;

@@ -2,8 +2,8 @@
 import { Flex, Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { toast } from 'react-toastify';
-import { createProduct } from '../../../../service/Api';
-import type { ICreateProductReq } from '../../../../types/intefaces';
+import { createProduct } from '../../../../config/Api';
+import type { ICreateProductReq } from '../../../../types/backend';
 
 interface IProps {
     openAdminModalAddProduct: boolean;

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { deleteOrder, getAllOrders, getOrderById } from "../../../service/Api";
+import { deleteOrder, getAllOrders, getOrderById } from "../../../config/Api";
 import { Button, Table } from "react-bootstrap";
 import { IoIosAddCircle } from "react-icons/io";
 import { Empty, message, Popconfirm, Space, Tag, type PopconfirmProps } from "antd";
 import { CiEdit } from "react-icons/ci";
 import { FaRegEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import type { IOrder } from "../../../types/intefaces";
+import type { IOrder } from "../../../types/backend";
 import { toast } from "react-toastify";
 import AdminModalAddOrder from "./modals/AdminModalAddOrder";
 import AdminModalGetOrderDetails from "./modals/AdminModalGetOrderDetails";

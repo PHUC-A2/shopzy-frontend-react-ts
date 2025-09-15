@@ -1,5 +1,5 @@
 import { Descriptions, Drawer, Tag } from "antd";
-import type { IUser } from "../../../../types/intefaces";
+import type { IUser } from "../../../../types/backend";
 import dayjs from "dayjs";
 interface IProps {
     setOpenUserDrawer: (v: boolean) => void;

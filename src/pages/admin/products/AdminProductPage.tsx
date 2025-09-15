@@ -1,10 +1,10 @@
 import { Empty, message, type PopconfirmProps } from "antd";
 import { Button, Table } from "react-bootstrap";
 
-import { deleteProducts, getAllProducts, getProductDetails } from "../../../service/Api";
+import { deleteProducts, getAllProducts, getProductDetails } from "../../../config/Api";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import type { IProduct } from "../../../types/intefaces";
+import type { IProduct } from "../../../types/backend";
 import { IoIosAddCircle } from "react-icons/io";
 import AdminModalAddProduct from "./modals/AdminModalAddProduct";
 import AdminModalUpdateProduct from "./modals/AdminModalUpdateProduct";

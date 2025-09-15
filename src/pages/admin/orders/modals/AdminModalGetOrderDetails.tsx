@@ -1,6 +1,6 @@
 import { Descriptions, Drawer } from "antd";
 import dayjs from "dayjs";
-import type { IOrder } from "../../../../types/intefaces";
+import type { IOrder } from "../../../../types/backend";
 
 interface IProps {
     setOpenAdminModalGetOrderDetails: (v: boolean) => void;

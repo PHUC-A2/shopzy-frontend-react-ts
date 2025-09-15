@@ -2,8 +2,8 @@
 import { Flex, Form, Input, InputNumber, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { toast } from 'react-toastify';
-import type { IOrder, IUpdateOrderReq } from '../../../../types/intefaces';
-import { updateOrder } from '../../../../service/Api';
+import type { IOrder, IUpdateOrderReq } from '../../../../types/backend';
+import { updateOrder } from '../../../../config/Api';
 import { useEffect } from 'react';
 
 interface IProps {

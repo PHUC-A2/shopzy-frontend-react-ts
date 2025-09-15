@@ -3,10 +3,10 @@ import { Button, Flex, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router';
 import './Register.scss';
 import { GrPhone } from 'react-icons/gr';
-import { register } from '../../service/Api';
+import { register } from '../../config/Api';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
-import type { ICreateUserReq } from '../../types/intefaces';
+import type { ICreateUserReq } from '../../types/backend';
 
 
 const RegisterPage = () => {

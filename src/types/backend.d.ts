@@ -229,7 +229,7 @@ export interface ICreateOrderItemReq {
 }
 
 export interface IUpdateOrderItemReq {
-    id:number;
+    id: number;
     quantity: number;
     unitPrice: number;
     product: {

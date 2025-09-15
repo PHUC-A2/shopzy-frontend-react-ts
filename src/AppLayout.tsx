@@ -13,7 +13,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAccount, getUserDetails } from "./service/Api";
+import { getAccount, getUserDetails } from "./config/Api";
 import { setUserLoginInfo } from "./redux/slice/authSlice";
 import type { RootState } from "./redux/store";
 import { setClearProfileUser, setProfileUser } from "./redux/slice/userSlice";
@@ -109,7 +109,7 @@ const App = () => {
         }
 
         // nếu logout thì xóa profile
-        if(!isAuthenticated){
+        if (!isAuthenticated) {
           dispatch(setClearProfileUser());
         }
 

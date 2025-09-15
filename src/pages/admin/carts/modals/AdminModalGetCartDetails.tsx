@@ -1,5 +1,5 @@
 import { Descriptions, Drawer } from "antd";
-import type { ICart } from "../../../../types/intefaces";
+import type { ICart } from "../../../../types/backend";
 import dayjs from "dayjs";
 
 interface IProps {
