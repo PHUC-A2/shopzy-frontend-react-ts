@@ -4,7 +4,6 @@ import {
 } from "react-router";
 import ClientLayout from "./routers/ClientLayout";
 import HomePage from "./pages/HomePage";
-import UsersPage from "./pages/client/UsersPage";
 import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
 import AdminLayout from "./routers/AdminLayout";
 import AdminPage from "./pages/admin/AdminPage";
@@ -22,6 +21,8 @@ import AdminCartPage from "./pages/admin/carts/AdminCartPage";
 import AdminOrderPage from "./pages/admin/orders/AdminOrderPage";
 import AdminCartItemPage from "./pages/admin/cart-items/AdminCartItemPage";
 import AdminOrderItemPage from "./pages/admin/order-items/AdminOrderItemPage";
+import ProductPage from "./pages/client/ProductPage";
+import AboutPage from "./pages/client/AboutPage";
 
 const router = createBrowserRouter([
   /* cấu hình cho user */
@@ -30,7 +31,8 @@ const router = createBrowserRouter([
     children:
       [
         { index: true, element: <HomePage /> },
-        { path: "users", element: <UsersPage /> }
+        { path: "product", element: <ProductPage /> },
+        { path: "about", element: <AboutPage /> }
       ]
   },
 

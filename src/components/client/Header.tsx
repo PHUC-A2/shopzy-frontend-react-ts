@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import {
     LogoutOutlined,
+    ProductOutlined,
     SettingOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { HiHome } from 'react-icons/hi';
-import { FaReact, FaUser } from 'react-icons/fa';
 import { IoMdLogIn } from 'react-icons/io';
 import { FaCircleUser, FaUserPlus } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
@@ -18,6 +18,7 @@ import type { RootState } from '../../redux/store';
 import { logout } from '../../config/Api';
 import { setLogoutUser } from '../../redux/slice/authSlice';
 import { toast } from 'react-toastify';
+import { RiInfoCardLine } from 'react-icons/ri';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
@@ -60,17 +61,17 @@ const Header = () => {
             icon: <HiHome />,
         },
         {
-            label: <Link className='text-decoration-none' to={"/users"}>Users</Link>,
-            key: 'users',
-            icon: <FaUser />,
+            label: <Link className='text-decoration-none' to={"/product"}>Product</Link>,
+            key: 'product',
+            icon: <ProductOutlined />,
         },
         {
-            label: <Link className='text-decoration-none' to={"/admin"}>Admin</Link>,
-            key: 'admin',
-            icon: <AiFillDashboard />,
+            label: <Link className='text-decoration-none' to={"/about"}>About</Link>,
+            key: 'about',
+            icon: <RiInfoCardLine />,
         },
         {
-            label: <Link className='text-decoration-none' to={"#/admin"}>Cart</Link>,
+            label: <Link className='text-decoration-none' to={"#/cart"}></Link>,
             key: 'cart',
             icon: <TiShoppingCart />,
             className: 'header-cart'
@@ -92,6 +93,7 @@ const Header = () => {
                             ]
                             :
                             [
+                                { label: <Link to={'/admin'} className='text-decoration-none'>Dashboard</Link>, key: 'admin', icon: <AiFillDashboard /> },
                                 { label: <span onClick={handleProfile}>Profile</span>, key: 'profile', icon: <FaCircleUser /> },
                                 { label: <span onClick={handleLogout}>Log out</span>, key: 'logout', icon: <LogoutOutlined /> },
                             ])
@@ -107,12 +109,7 @@ const Header = () => {
         setCurrent(e.key);
     };
     return (
-        <div className='user-header-menu' style={{
-            display: "flex",
-            alignItems: "center",
-            width: "100%"
-        }} >
-            <h1 className='user-header-title' style={{ margin: 0 }}> <FaReact className='user-header-icon-1' /> Shopzy</h1>
+        <div>
             <Menu
                 style={{ display: "flex", flex: 1 }}
                 onClick={onClick}
