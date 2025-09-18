@@ -78,6 +78,14 @@ body {
         margin-top: 50px;
     }
 
+    // footer
+    .client-footer-container {
+        height: 100%;
+
+        footer.ant-layout-footer.css-dev-only-do-not-override-l9pxc0 {
+            height: 100vh;
+        }
+    }
 }
 
 /*CSS cho AdminLayout*/

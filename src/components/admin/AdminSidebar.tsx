@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { Link, Outlet, useNavigate } from 'react-router';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 import { MdFeaturedPlayList } from 'react-icons/md';
 import { AiOutlineProduct, AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaBoxesPacking, FaCartPlus, FaCircleUser } from 'react-icons/fa6';
@@ -68,7 +68,7 @@ const AdminSidebar = () => {
     }
 
     const items: MenuItem[] = [
-        getItem('Dashboard', '1', <DashboardOutlined />),
+        getItem(<Link to="/admin" style={{ color: "white", textDecoration: "none" }}>Dashboard</Link>, '1', <DashboardOutlined />),
         getItem('Feature', 'sub1', <MdFeaturedPlayList />, [
             getItem(<Link to="/admin/user" style={{ color: "white", textDecoration: "none" }}>QL User</Link>, '2', <UserOutlined />),
             getItem(<Link to="/admin/product" style={{ color: "white", textDecoration: "none" }}>QL Product</Link>, '3', <AiOutlineProduct />),
@@ -79,8 +79,9 @@ const AdminSidebar = () => {
 
         ]),
         getItem('Settings', 'sub2', <SettingOutlined />, [
-            getItem(<span onClick={handleProfile}>Profile</span>, '8', <FaCircleUser />),
-            getItem(<span onClick={handleLogout}>Log out</span>, '9', <LogoutOutlined />)
+            getItem(<Link to="/" style={{ color: "white", textDecoration: "none" }}>Client</Link>, '8', <UserOutlined />),
+            getItem(<span onClick={handleProfile}>Profile</span>, '9', <FaCircleUser />),
+            getItem(<span onClick={handleLogout}>Log out</span>, '10', <LogoutOutlined />),
         ]),
     ];
 
@@ -89,6 +90,16 @@ const AdminSidebar = () => {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
+    const location = useLocation();
+
+    // Tách path theo dấu "/"
+    const pathSnippets = location.pathname.split("/").filter(i => i);
+
+    // Tạo mảng breadcrumb (chỉ text)
+    const breadcrumbItems = pathSnippets.map((snippet) => ({
+        title: snippet, // chỉ text, không bọc Link
+    }));
+
     return (
         <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
@@ -96,9 +107,12 @@ const AdminSidebar = () => {
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
             </Sider>
             <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }} />
+                <Header style={{ padding: 0, background: colorBgContainer }}>
+                    <h3>Chào mừng bạn đến với trang quản trị !</h3>
+                </Header>
                 <Content style={{ margin: '0 16px' }}>
-                    <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User' }, { title: 'Bill' }]} />
+                    {/* <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'admin/user' }]} /> */}
+                    <Breadcrumb style={{ margin: "16px 0" }} items={breadcrumbItems} />
                     <div
                         style={{
                             padding: 24,
