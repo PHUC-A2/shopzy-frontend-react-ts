@@ -1,32 +1,29 @@
+import React, { useState } from 'react';
 import {
     DashboardOutlined,
     LogoutOutlined,
     SettingOutlined,
-    UserAddOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
-import type { MenuProps, MenuTheme } from 'antd';
-import { Menu } from 'antd';
+import type { MenuProps } from 'antd';
+import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Link, Outlet, useNavigate } from 'react-router';
+import { MdFeaturedPlayList } from 'react-icons/md';
 import { AiOutlineProduct, AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaBoxesPacking, FaCartPlus, FaCircleUser } from 'react-icons/fa6';
-import { MdFeaturedPlayList } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router';
-import type { RootState } from '../../redux/store';
+import { BsFillJournalBookmarkFill } from 'react-icons/bs';
 import { logout } from '../../config/Api';
 import { setLogoutUser } from '../../redux/slice/authSlice';
 import { toast } from 'react-toastify';
-import { BsFillJournalBookmarkFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../redux/store';
 
-type MenuItem = Required<MenuProps>['items'][number];
-interface IProps {
-    collapsed: boolean;
-    theme: MenuTheme;
-}
 
-const AdminSidebar = (props: IProps) => {
-    const { collapsed, theme } = props;
+const AdminSidebar = () => {
+
+    // code
     const dispatch = useDispatch();
-    const navigave = useNavigate();
+    const navigate = useNavigate();
     const profile = useSelector((state: RootState) => state.user.user);
 
     const handleLogout = async () => {
@@ -35,7 +32,7 @@ const AdminSidebar = (props: IProps) => {
             if (res?.data?.statusCode === 200) {
                 dispatch(setLogoutUser())
                 toast.success('Đăng xuất thành công');
-                navigave('/login');
+                navigate('/login');
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknown";
@@ -49,52 +46,77 @@ const AdminSidebar = (props: IProps) => {
 
     }
 
-
     const handleProfile = async () => {
         console.log("Profile: ", profile);
     }
 
+    const { Header, Content, Footer, Sider } = Layout;
+    type MenuItem = Required<MenuProps>['items'][number];
+
+    function getItem(
+        label: React.ReactNode,
+        key: React.Key,
+        icon?: React.ReactNode,
+        children?: MenuItem[],
+    ): MenuItem {
+        return {
+            key,
+            icon,
+            children,
+            label,
+        } as MenuItem;
+    }
+
     const items: MenuItem[] = [
-        { key: '1', icon: <DashboardOutlined />, label: <Link className='nav-link' to={"/admin"}> Dashboard</Link> },
-        {
-            key: 'sub1',
-            label: 'Feature',
-            icon: <MdFeaturedPlayList />,
-            children: [
-                { key: '2', icon: <UserAddOutlined />, label: <Link to="/admin/users" style={{ color: "white", textDecoration: "none" }}>User</Link> },
-                { key: '3', icon: <AiOutlineProduct />, label: <Link to="/admin/products" style={{ color: "white", textDecoration: "none" }}>Product</Link> },
-                { key: '4', icon: <FaCartPlus />, label: <Link to="/admin/carts" style={{ color: "white", textDecoration: "none" }}>Cart</Link> },
-                { key: '5', icon: <AiOutlineShoppingCart />, label: <Link to="/admin/cart-items" style={{ color: "white", textDecoration: "none" }}>Cart Item</Link> },
-                { key: '6', icon: <BsFillJournalBookmarkFill />, label: <Link to="/admin/orders" style={{ color: "white", textDecoration: "none" }}>Order</Link> },
-                { key: '7', icon: <FaBoxesPacking />, label: <Link to="/admin/order-items" style={{ color: "white", textDecoration: "none" }}>Order Item</Link> },
-            ],
-        },
-        {
-            key: 'sub2',
-            label: 'Settings',
-            icon: <SettingOutlined />,
-            children: [
-                { key: "8", label: <span onClick={handleProfile}>Profile</span>, icon: <FaCircleUser /> },
-                { key: "9", label: <span onClick={handleLogout}>Log out</span>, icon: <LogoutOutlined /> },
-            ],
-        },
+        getItem('Dashboard', '1', <DashboardOutlined />),
+        getItem('Feature', 'sub1', <MdFeaturedPlayList />, [
+            getItem(<Link to="/admin/user" style={{ color: "white", textDecoration: "none" }}>QL User</Link>, '2', <UserOutlined />),
+            getItem(<Link to="/admin/product" style={{ color: "white", textDecoration: "none" }}>QL Product</Link>, '3', <AiOutlineProduct />),
+            getItem(<Link to="/admin/cart" style={{ color: "white", textDecoration: "none" }}>QL Cart</Link>, '4', <FaCartPlus />),
+            getItem(<Link to="/admin/cart-item" style={{ color: "white", textDecoration: "none" }}>QL Cart Item</Link>, '5', <AiOutlineShoppingCart />),
+            getItem(<Link to="/admin/order" style={{ color: "white", textDecoration: "none" }}>QL Order</Link>, '6', <BsFillJournalBookmarkFill />),
+            getItem(<Link to="/admin/order-item" style={{ color: "white", textDecoration: "none" }}>QL Order Item</Link>, '7', <FaBoxesPacking />),
+
+        ]),
+        getItem('Settings', 'sub2', <SettingOutlined />, [
+            getItem(<span onClick={handleProfile}>Profile</span>, '8', <FaCircleUser />),
+            getItem(<span onClick={handleLogout}>Log out</span>, '9', <LogoutOutlined />)
+        ]),
     ];
 
+    const [collapsed, setCollapsed] = useState(false);
+    const {
+        token: { colorBgContainer, borderRadiusLG },
+    } = theme.useToken();
+
     return (
-        <div className='admin-sidebar-menu'
-            style={{
-                width: collapsed ? '80px' : '256px'
-            }}
-        >
-            <Menu
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['1']}
-                mode="inline"
-                theme={theme}
-                inlineCollapsed={collapsed}
-                items={items}
-            />
-        </div>
+        <Layout style={{ minHeight: '100vh' }}>
+            <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+                <div className="demo-logo-vertical" />
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+            </Sider>
+            <Layout>
+                <Header style={{ padding: 0, background: colorBgContainer }} />
+                <Content style={{ margin: '0 16px' }}>
+                    <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User' }, { title: 'Bill' }]} />
+                    <div
+                        style={{
+                            padding: 24,
+                            minHeight: 360,
+                            background: colorBgContainer,
+                            borderRadius: borderRadiusLG,
+                            overflowX: 'auto',
+                            // overflowY:'auto'
+                        }}
+                    >
+                        <Outlet />
+                    </div>
+                </Content>
+                <Footer style={{ textAlign: 'center' }}>
+                    Ant Design ©{new Date().getFullYear()} Created by Ant UED
+                </Footer>
+            </Layout>
+        </Layout>
     )
 }
 export default AdminSidebar;

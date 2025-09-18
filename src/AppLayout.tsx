@@ -43,12 +43,12 @@ const router = createBrowserRouter([
     children:
       [
         { index: true, element: <AdminPage /> },
-        { path: "users", element: <AdminUsersPage /> },
-        { path: "products", element: <AdminProductPage /> },
-        { path: "carts", element: <AdminCartPage /> },
-        { path: "cart-items", element: <AdminCartItemPage /> },
-        { path: "orders", element: <AdminOrderPage /> },
-        { path: "order-items", element: <AdminOrderItemPage /> },
+        { path: "user", element: <AdminUsersPage /> },
+        { path: "product", element: <AdminProductPage /> },
+        { path: "cart", element: <AdminCartPage /> },
+        { path: "cart-item", element: <AdminCartItemPage /> },
+        { path: "order", element: <AdminOrderPage /> },
+        { path: "order-item", element: <AdminOrderItemPage /> },
       ]
   },
   /* cấu hình cho login */
