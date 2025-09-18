@@ -16,12 +16,10 @@ html,
 body {
     padding: 0;
     margin: 0;
+    width: 100%;
     height: 100%;
     font-size: 16px;
     font-family: 'Times New Roman', Times, serif;
-    overflow: hidden;
-    // margin-left: 20px;
-    // margin-right: 20px;
 }
 
 // khi co lại trên mobile sẽ cho cuộn
@@ -42,25 +40,20 @@ body {
     font-family  : 'Times New Roman',
         Times,
         serif;
-    width      : 100%;
-    height     : 100%;
-    // overflow: hidden;
-
-    ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light.css-dev-only-do-not-override-l9pxc0 {
-        background-color: rgba($color: #464345, $alpha: 0.3);
-    }
+    width   : 100%;
+    height  : 100%;
+    overflow: hidden;
 
     .home-container {
         display   : flex;
-        height    : 100vh;
+        height    : 100%;
         width     : 100%;
-        margin-top: 0px;
-        overflow-y: auto;
+        margin-top: 50px;
 
         .home-main {
-            margin-left: 20px;
+            margin-left : 20px;
             margin-right: 20px;
-            max-width: 365px;
+            max-width   : 310px;
         }
 
         .home-content {

@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 import Header from "../components/client/Header";
+import Footer from "../components/client/Footer";
 
 const ClientLayout = () => {
     return (
@@ -9,6 +10,9 @@ const ClientLayout = () => {
             </div>
             <div className="client-main-container">
                 <Outlet />
+            </div>
+            <div className="client-footer-container">
+                <Footer />
             </div>
         </div>
     )
