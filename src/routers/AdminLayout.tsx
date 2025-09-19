@@ -1,4 +1,5 @@
 import AdminSidebar from '../components/admin/AdminSidebar';
+import '../styles/AdminLayout.scss'
 
 const AdminLayout = () => {
     return (
