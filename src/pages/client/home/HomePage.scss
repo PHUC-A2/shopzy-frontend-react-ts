@@ -1,0 +1,56 @@
+// home page
+.home-container {
+    width         : 100%;
+    height        : 100%;
+    // max-height : 100vh;
+    margin-top    : 0 0 0 0;
+    padding-top   : 45px;
+
+    .home-main {
+        width : 100%;
+        height: 100%;
+
+        .ant-carousel {
+            flex      : 1;
+            width     : 100%;
+            min-width : 80px;
+            min-height: 80px;
+            max-height: 300px;
+            overflow  : hidden; // ngăn tràn ngang
+
+            .slick-slider,
+            .slick-list,
+            .slick-track {
+                width  : 100%;
+                height : 100%;
+                margin : 0; // xoá margin mặc định
+                padding: 0; // xoá padding mặc định
+            }
+
+            .slick-slide {
+                margin: 0; // fix khoảng trống thừa
+
+                >div {
+                    width : 100%;
+                    height: 100%;
+
+                    >div {
+                        width : 100%;
+                        height: 100%;
+
+                        img {
+                            width     : 100%;
+                            height    : 100%;
+                            object-fit: cover;
+                            display   : block; // xoá khoảng trống do inline-img
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .home-content {
+        background-color: blueviolet;
+    }
+}

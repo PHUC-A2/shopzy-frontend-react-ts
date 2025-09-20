@@ -1,8 +1,13 @@
  .client-header-container {
      width   : 100%;
      position: fixed;
+     z-index : 1000;
 
      .header-cart {
          margin-left: auto;
+     }
+
+     ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light.css-dev-only-do-not-override-l9pxc0 {
+         background: rgba($color: #363434, $alpha: 0.3);
      }
  }

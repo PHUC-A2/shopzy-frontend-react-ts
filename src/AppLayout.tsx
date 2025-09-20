@@ -3,7 +3,7 @@ import {
   RouterProvider,
 } from "react-router";
 import ClientLayout from "./routers/ClientLayout";
-import HomePage from "./pages/client/HomePage";
+import HomePage from "./pages/client/home/HomePage";
 import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
 import AdminLayout from "./routers/AdminLayout";
 import AdminPage from "./pages/admin/AdminPage";
