@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
     LogoutOutlined,
-    ProductOutlined,
     SettingOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -19,6 +18,7 @@ import { logout } from '../../config/Api';
 import { setLogoutUser } from '../../redux/slice/authSlice';
 import { toast } from 'react-toastify';
 import { RiInfoCardLine } from 'react-icons/ri';
+import { FaTshirt } from 'react-icons/fa';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
@@ -56,17 +56,17 @@ const Header = () => {
 
     const items: MenuItem[] = [
         {
-            label: <Link className='text-decoration-none' to={"/"}>Home</Link>,
+            label: <Link className='text-decoration-none' to={"/"}>Trang Chủ</Link>,
             key: 'home',
             icon: <HiHome />,
         },
         {
-            label: <Link className='text-decoration-none' to={"/product"}>Product</Link>,
+            label: <Link className='text-decoration-none' to={"/product"}>Sản Phẩm</Link>,
             key: 'product',
-            icon: <ProductOutlined />,
+            icon: <FaTshirt />,
         },
         {
-            label: <Link className='text-decoration-none' to={"/about"}>About</Link>,
+            label: <Link className='text-decoration-none' to={"/about"}>Giới thiệu</Link>,
             key: 'about',
             icon: <RiInfoCardLine />,
         },

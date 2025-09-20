@@ -44,9 +44,10 @@ const Footer = () => {
                     </Title>
                     <Space direction="vertical" size="small">
                         <a href="/" style={{ color: "#ccc" }}>Trang chủ</a>
-                        <a href="/products" style={{ color: "#ccc" }}>Sản phẩm</a>
-                        <a href="/services" style={{ color: "#ccc" }}>Dịch vụ</a>
+                        <a href="/product" style={{ color: "#ccc" }}>Sản phẩm</a>
+                        <a href="/service" style={{ color: "#ccc" }}>Dịch vụ</a>
                         <a href="/contact" style={{ color: "#ccc" }}>Liên hệ</a>
+                        <a href="/about" style={{ color: "#ccc" }}>Giới thiệu</a>
                     </Space>
                 </Col>
 
