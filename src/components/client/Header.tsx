@@ -4,14 +4,13 @@ import {
     SettingOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Avatar, Badge, Menu, Space } from 'antd';
 import { HiHome } from 'react-icons/hi';
-import { IoMdLogIn } from 'react-icons/io';
+import { IoMdLogIn, IoMdNotifications } from 'react-icons/io';
 import { FaCircleUser, FaUserPlus } from 'react-icons/fa6';
-import { AiFillDashboard } from 'react-icons/ai';
+import { AiFillDashboard, AiFillMessage } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router';
 import './Header.scss'
-import { TiShoppingCart } from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
 import { logout } from '../../config/Api';
@@ -19,6 +18,7 @@ import { setLogoutUser } from '../../redux/slice/authSlice';
 import { toast } from 'react-toastify';
 import { RiInfoCardLine } from 'react-icons/ri';
 import { FaTshirt } from 'react-icons/fa';
+import { IoCartOutline } from 'react-icons/io5';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
@@ -71,9 +71,39 @@ const Header = () => {
             icon: <RiInfoCardLine />,
         },
         {
+            label: <Link className='text-decoration-none' to={"#/message"}></Link>,
+            key: 'message',
+            icon: (
+                <Space size={24}>
+                    <Badge count={10}>
+                        <Avatar shape="square" icon={<  AiFillMessage />} />
+                    </Badge>
+                </Space>
+            ),
+            className: 'header-message'
+        },
+        {
+            label: <Link className='text-decoration-none' to={"#/notification"}></Link>,
+            key: 'notification',
+            icon: (
+                <Space size={24}>
+                    <Badge count={10}>
+                        <Avatar shape="square" icon={<  IoMdNotifications />} />
+                    </Badge>
+                </Space>
+            ),
+            className: 'header-notification'
+        },
+        {
             label: <Link className='text-decoration-none' to={"#/cart"}></Link>,
             key: 'cart',
-            icon: <TiShoppingCart />,
+            icon: (
+                <Space size={24}>
+                    <Badge count={10}>
+                        <Avatar shape="square" icon={<IoCartOutline />} />
+                    </Badge>
+                </Space>
+            ),
             className: 'header-cart'
         },
         {
