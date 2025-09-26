@@ -68,7 +68,7 @@ const Footer = () => {
             <hr style={{ borderColor: "#737373ff", margin: "30px 0" }} />
 
             <div style={{ textAlign: "center", color: "#999" }}>
-                © {new Date().getFullYear()} Van Phuc. All rights reserved.
+                © {new Date().getFullYear()} Phuc - Linh. All rights reserved.
             </div>
         </AntFooter>
     );

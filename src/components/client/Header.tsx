@@ -19,6 +19,8 @@ import { toast } from 'react-toastify';
 import { RiInfoCardLine } from 'react-icons/ri';
 import { FaTshirt } from 'react-icons/fa';
 import { IoCartOutline } from 'react-icons/io5';
+import ModalProfile from './modals/ModalProfile';
+import ModalNotification from './modals/ModalNotification';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
@@ -26,8 +28,8 @@ const Header = () => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
     const navigave = useNavigate();
-    const profile = useSelector((state: RootState) => state.user.user);
-
+    const [openModalProfile, setOpenModalProfile] = useState<boolean>(false);
+    const [openModalNotification, setOpenModalNotification] = useState<boolean>(false);
 
     const handleLogout = async () => {
         try {
@@ -47,11 +49,6 @@ const Header = () => {
             )
         }
 
-    }
-
-
-    const handleProfile = async () => {
-        console.log("Profile: ", profile);
     }
 
     const items: MenuItem[] = [
@@ -83,11 +80,11 @@ const Header = () => {
             className: 'header-message'
         },
         {
-            label: <Link className='text-decoration-none' to={"#/notification"}></Link>,
+            label: '',
             key: 'notification',
             icon: (
-                <Space size={24}>
-                    <Badge count={10}>
+                <Space size={24} onClick={() => setOpenModalNotification(true)} >
+                    <Badge count={10} >
                         <Avatar shape="square" icon={<  IoMdNotifications />} />
                     </Badge>
                 </Space>
@@ -124,7 +121,7 @@ const Header = () => {
                             :
                             [
                                 { label: <Link to={'/admin'} className='text-decoration-none'>Dashboard</Link>, key: 'admin', icon: <AiFillDashboard /> },
-                                { label: <span onClick={handleProfile}>Profile</span>, key: 'profile', icon: <FaCircleUser /> },
+                                { label: <span onClick={() => setOpenModalProfile(true)}>Profile</span>, key: 'profile', icon: <FaCircleUser /> },
                                 { label: <span onClick={handleLogout}>Log out</span>, key: 'logout', icon: <LogoutOutlined /> },
                             ])
                     ],
@@ -145,6 +142,14 @@ const Header = () => {
                 onClick={onClick}
                 selectedKeys={[current]}
                 mode="horizontal" items={items} />
+            <ModalProfile
+                openModalProfile={openModalProfile}
+                setOpenModalProfile={setOpenModalProfile}
+            />
+            <ModalNotification
+                openModalNotification={openModalNotification}
+                setOpenModalNotification={setOpenModalNotification}
+            />
         </div>
     )
 }
