@@ -21,6 +21,7 @@ import { FaTshirt } from 'react-icons/fa';
 import { IoCartOutline } from 'react-icons/io5';
 import ModalProfile from './modals/ModalProfile';
 import ModalNotification from './modals/ModalNotification';
+import ModalCart from './modals/ModalCart';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
@@ -30,6 +31,7 @@ const Header = () => {
     const navigave = useNavigate();
     const [openModalProfile, setOpenModalProfile] = useState<boolean>(false);
     const [openModalNotification, setOpenModalNotification] = useState<boolean>(false);
+    const [openModalCart, setOpenModalCart] = useState<boolean>(false);
 
     const handleLogout = async () => {
         try {
@@ -92,10 +94,10 @@ const Header = () => {
             className: 'header-notification'
         },
         {
-            label: <Link className='text-decoration-none' to={"#/cart"}></Link>,
+            label: '',
             key: 'cart',
             icon: (
-                <Space size={24}>
+                <Space size={24} onClick={() => setOpenModalCart(true)}>
                     <Badge count={10}>
                         <Avatar shape="square" icon={<IoCartOutline />} />
                     </Badge>
@@ -149,6 +151,10 @@ const Header = () => {
             <ModalNotification
                 openModalNotification={openModalNotification}
                 setOpenModalNotification={setOpenModalNotification}
+            />
+            <ModalCart
+                openModalCart={openModalCart}
+                setOpenModalCart={setOpenModalCart}
             />
         </div>
     )
