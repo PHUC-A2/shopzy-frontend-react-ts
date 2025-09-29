@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import {
     LogoutOutlined,
-    SettingOutlined
+    SearchOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Avatar, Badge, Menu, Space } from 'antd';
+import { Badge, Col, Input, Layout, Menu, Row, Space } from 'antd';
 import { HiHome } from 'react-icons/hi';
 import { IoMdLogIn, IoMdNotifications } from 'react-icons/io';
 import { FaCircleUser, FaUserPlus } from 'react-icons/fa6';
-import { AiFillDashboard, AiFillMessage } from 'react-icons/ai';
+import { AiFillDashboard } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router';
 import './Header.scss'
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,11 +17,12 @@ import { logout } from '../../config/Api';
 import { setLogoutUser } from '../../redux/slice/authSlice';
 import { toast } from 'react-toastify';
 import { RiInfoCardLine } from 'react-icons/ri';
-import { FaTshirt } from 'react-icons/fa';
-import { IoCartOutline } from 'react-icons/io5';
+import { FaShoppingBag, FaTshirt, FaUserCircle } from 'react-icons/fa';
 import ModalProfile from './modals/ModalProfile';
 import ModalNotification from './modals/ModalNotification';
 import ModalCart from './modals/ModalCart';
+import { SiImessage } from 'react-icons/si';
+import type { SearchProps } from 'antd/es/input';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
@@ -57,25 +58,25 @@ const Header = () => {
         {
             label: <Link className='text-decoration-none' to={"/"}>Trang Chủ</Link>,
             key: 'home',
-            icon: <HiHome />,
+            icon: <HiHome className='header-home-icon' style={{ fontSize: 16 }} />,
         },
         {
             label: <Link className='text-decoration-none' to={"/product"}>Sản Phẩm</Link>,
             key: 'product',
-            icon: <FaTshirt />,
+            icon: <FaTshirt className='header-product-icon' style={{ fontSize: 16 }} />,
         },
         {
             label: <Link className='text-decoration-none' to={"/about"}>Giới thiệu</Link>,
             key: 'about',
-            icon: <RiInfoCardLine />,
+            icon: <RiInfoCardLine className='header-about-icon' style={{ fontSize: 16 }} />,
         },
         {
             label: <Link className='text-decoration-none' to={"#/message"}></Link>,
             key: 'message',
             icon: (
                 <Space size={24}>
-                    <Badge count={10}>
-                        <Avatar shape="square" icon={<  AiFillMessage />} />
+                    <Badge size='small' count={2}>
+                        <SiImessage className='header-message-icon' size={24} />
                     </Badge>
                 </Space>
             ),
@@ -86,8 +87,8 @@ const Header = () => {
             key: 'notification',
             icon: (
                 <Space size={24} onClick={() => setOpenModalNotification(true)} >
-                    <Badge count={10} >
-                        <Avatar shape="square" icon={<  IoMdNotifications />} />
+                    <Badge size='small' count={2}>
+                        <IoMdNotifications className='header-notification-icon' size={24} />
                     </Badge>
                 </Space>
             ),
@@ -98,18 +99,22 @@ const Header = () => {
             key: 'cart',
             icon: (
                 <Space size={24} onClick={() => setOpenModalCart(true)}>
-                    <Badge count={10}>
-                        <Avatar shape="square" icon={<IoCartOutline />} />
+                    <Badge size='small' count={10}>
+                        <FaShoppingBag className='header-cart-icon' size={24} />
                     </Badge>
                 </Space>
             ),
             className: 'header-cart'
         },
         {
-            label: 'Settings',
-            key: 'settings',
-            icon: <SettingOutlined />,
-            className: "header-settings",
+            label: '',
+            key: 'setting',
+            icon: (
+                <Space size={24}>
+                    <FaUserCircle className='header-setting-icon' size={24} />
+                </Space>
+            ),
+            className: "header-setting",
             children: [
                 {
                     type: 'group',
@@ -137,25 +142,44 @@ const Header = () => {
     const onClick: MenuProps['onClick'] = (e) => {
         setCurrent(e.key);
     };
+
+    const onSearch: SearchProps['onSearch'] = (value, _e, info) => console.log(info?.source, value);
     return (
         <div>
-            <Menu
-                style={{ display: "flex", flex: 1 }}
-                onClick={onClick}
-                selectedKeys={[current]}
-                mode="horizontal" items={items} />
-            <ModalProfile
-                openModalProfile={openModalProfile}
-                setOpenModalProfile={setOpenModalProfile}
-            />
-            <ModalNotification
-                openModalNotification={openModalNotification}
-                setOpenModalNotification={setOpenModalNotification}
-            />
-            <ModalCart
-                openModalCart={openModalCart}
-                setOpenModalCart={setOpenModalCart}
-            />
+            <Layout>
+                <Menu
+                    style={{ display: "flex", flex: 1 }}
+                    onClick={onClick}
+                    selectedKeys={[current]}
+                    mode="horizontal" items={items} />
+                <ModalProfile
+                    openModalProfile={openModalProfile}
+                    setOpenModalProfile={setOpenModalProfile}
+                />
+                <ModalNotification
+                    openModalNotification={openModalNotification}
+                    setOpenModalNotification={setOpenModalNotification}
+                />
+                <ModalCart
+                    openModalCart={openModalCart}
+                    setOpenModalCart={setOpenModalCart}
+                />
+
+                <Row style={{ padding: '1rem' }} justify="space-between" align="middle">
+                    <Col>
+                        <h2><Link to={'/'} style={{ margin: 0, color: "#faad14", textDecoration: 'none' }}>Shopzy</Link></h2>
+                    </Col>
+                    <Col span={12}>
+                        <Input.Search
+                            placeholder="Tìm kiếm sản phẩm..."
+                            allowClear
+                            size='large'
+                            onSearch={onSearch}
+                            enterButton={<SearchOutlined />}
+                        />
+                    </Col>
+                </Row>
+            </Layout>
         </div>
     )
 }

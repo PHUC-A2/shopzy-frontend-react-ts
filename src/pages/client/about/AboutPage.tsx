@@ -17,7 +17,8 @@ const AboutPage = () => {
                 style={{
                     borderRadius: 12,
                     boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                    padding: "24px",
+                    padding: "2rem",
+                    marginTop: 45
                 }}
             >
                 <Row gutter={[24, 24]} align="middle">

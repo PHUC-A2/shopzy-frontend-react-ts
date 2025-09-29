@@ -3,8 +3,8 @@ import { AiFillDelete } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { getCartClient } from '../../../config/Api';
 import { FaShoppingBag } from 'react-icons/fa';
-
 const { Text, Title } = Typography;
+import './Modal.scss'
 
 interface CartItem {
     cartItemId: number;
@@ -86,12 +86,15 @@ const ModalCart = ({ openModalCart, setOpenModalCart }: IProps) => {
 
     return (
         <Drawer
-            title={<Title level={4}><span onClick={() => setOpenModalCart(false)}>Shopzy | Giỏ Hàng</span></Title>}
+            title={<Title level={4}><span onClick={() => setOpenModalCart(false)}><span style={{ color: '#389e0d' }}>Shopzy | Giỏ Hàng</span></span></Title>}
             onClose={() => setOpenModalCart(false)}
             open={openModalCart}
             placement="right"
             width={700}
-            // maskClosable={false}
+        // headerStyle={{ background: "#001529" }}
+        // bodyStyle={{ background: "#f9f9f9" }}
+
+        // maskClosable={false}
         >
             {cartItems.length > 0 ? (
                 <>
@@ -146,9 +149,7 @@ const ModalCart = ({ openModalCart, setOpenModalCart }: IProps) => {
                             <Text>{totalPrice.toLocaleString()} VND</Text>
                         </Col>
                         <Col>
-                            {/* <Text strong> </Text>
-                            <Text>{totalPrice.toLocaleString()} VND</Text> */}
-                            <Button type="primary" danger icon={<FaShoppingBag />} onClick={() => alert('Đã chuyển sang trang checkout')}>
+                            <Button type="primary" style={{ backgroundColor: '#faad14' }} icon={<FaShoppingBag />} onClick={() => alert('Đã chuyển sang trang checkout')}>
                                 Mua Hàng
                             </Button>
                         </Col>

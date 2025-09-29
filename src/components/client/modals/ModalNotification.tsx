@@ -1,6 +1,6 @@
 import { Drawer, List, Avatar, Badge, Typography, Button, Space } from "antd";
 import { BellOutlined } from "@ant-design/icons";
-
+import './Modal.scss'
 interface IProps {
     setOpenModalNotification: (v: boolean) => void;
     openModalNotification: boolean;
@@ -40,7 +40,7 @@ const ModalNotification = (props: IProps) => {
         <Drawer
             title={
                 <Space style={{ justifyContent: "space-between", width: "100%" }}>
-                    <span>Thông báo</span>
+                    <span style={{ color:'#389e0d'}}>Thông báo</span>
                     <Button type="link" size="small">
                         Đánh dấu tất cả đã đọc
                     </Button>

@@ -21,7 +21,7 @@ import AdminCartPage from "./pages/admin/carts/AdminCartPage";
 import AdminOrderPage from "./pages/admin/orders/AdminOrderPage";
 import AdminCartItemPage from "./pages/admin/cart-items/AdminCartItemPage";
 import AdminOrderItemPage from "./pages/admin/order-items/AdminOrderItemPage";
-import ProductPage from "./pages/client/ProductPage";
+import ProductPage from "./pages/client/product/ProductPage";
 import AboutPage from "./pages/client/about/AboutPage";
 
 const router = createBrowserRouter([

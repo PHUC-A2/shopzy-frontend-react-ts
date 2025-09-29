@@ -1,5 +1,4 @@
-import { Layout, Row, Col, Input, Carousel, Card, Pagination, Image } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Layout, Row, Col, Carousel, Card, Pagination, Image } from "antd";
 import { useState } from "react";
 
 // ảnh local
@@ -10,7 +9,7 @@ import shirt_01 from "../../../assets/shirt-01.png";
 import asus_zenbook_01 from "../../../assets/asus-zenbook-01.png";
 import lenovo_legion_05_01 from "../../../assets/lenovo-legion05-01.png";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { Meta } = Card;
 
 interface Product {
@@ -133,27 +132,10 @@ const HomePage = () => {
     const fallbackImage = background_01;
 
     return (
-        <Layout style={{ marginTop: 50 }}>
-            {/* Header với thanh tìm kiếm */}
-            <Header style={{ background: "#fff", padding: "0 24px" }}>
-                <Row justify="space-between" align="middle">
-                    <Col>
-                        <h2 style={{ margin: 0, color: "#1890ff" }}>Shopzy</h2>
-                    </Col>
-                    <Col span={12}>
-                        <Input.Search
-                            placeholder="Tìm kiếm sản phẩm..."
-                            allowClear
-                            enterButton={<SearchOutlined />}
-                            size="large"
-                        />
-                    </Col>
-                </Row>
-            </Header>
-
+        <Layout style={{ marginTop: 100 }}>
             <Content style={{ padding: "24px" }}>
                 {/* Carousel banner */}
-                <Carousel autoplay autoplaySpeed={2000} style={{ marginBottom: 24 }}>
+                <Carousel autoplay arrows autoplaySpeed={2000} style={{ marginBottom: 24 }}>
                     <div>
                         <img
                             src={background_01}
@@ -178,7 +160,7 @@ const HomePage = () => {
                 </Carousel>
 
                 {/* Danh mục sản phẩm */}
-                <h3 style={{ marginBottom: 16 }}>DANH MỤC SẢN PHẨM</h3>
+                <h3 style={{ marginBottom: 16 }}>DANH MỤC</h3>
                 <Row gutter={[16, 16]}>
                     {paginatedProducts.map((product) => (
                         <Col xs={24} sm={12} md={8} lg={6} key={product.id}>

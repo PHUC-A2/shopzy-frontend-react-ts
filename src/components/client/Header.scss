@@ -1,13 +1,128 @@
- .client-header-container {
-     width   : 100%;
-     position: fixed;
-     z-index : 1000;
+.client-header-container {
+    width   : 100%;
+    position: fixed;
+    z-index : 1000;
 
-     .header-message {
-         margin-left: auto;
-     }
+    .header-message {
+        margin-left: auto;
+    }
 
-     ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light.css-dev-only-do-not-override-l9pxc0 {
-         background: rgba($color: #919677, $alpha: 0.8);
-     }
- }
+    // icon mặc định
+    .header-message-icon,
+    .header-notification-icon,
+    .header-cart-icon,
+    .header-setting-icon {
+        color     : #389e0d;
+        transition: color 0.15s;
+    }
+
+    // text mặc định
+    .ant-menu-title-content {
+        color     : #389e0d;
+        transition: color 0.0001s !important; // đồng bộ với icon
+    }
+
+    // icon mặc định
+    .ant-menu-item .header-home-icon,
+    .ant-menu-item .header-product-icon,
+    .ant-menu-item .header-about-icon {
+        color: #389e0d;
+    }
+
+    // tắt transition mặc định của AntD menu item wrapper
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+        transition: none !important;
+    }
+
+
+
+    // hover trên cả Menu.Item (áp dụng cho text + icon)
+    .ant-menu-item:hover,
+    .ant-menu-submenu-title:hover {
+
+        .ant-menu-title-content,
+        .header-home-icon,
+        .header-product-icon,
+        .header-about-icon,
+        .header-message-icon,
+        .header-notification-icon,
+        .header-cart-icon,
+        .header-setting-icon {
+            color: #faad14 !important;
+        }
+    }
+
+    // item đang được chọn (áp dụng cho text + icon)
+    :where(.css-dev-only-do-not-override-l9pxc0).ant-menu-light .ant-menu-item-selected,
+    :where(.css-dev-only-do-not-override-l9pxc0).ant-menu-light>.ant-menu .ant-menu-item-selected {
+
+        // text
+        .ant-menu-title-content {
+            color: #faad14 !important;
+        }
+
+        // icon
+        .header-home-icon,
+        .header-product-icon,
+        .header-about-icon,
+        .header-message-icon,
+        .header-notification-icon,
+        .header-cart-icon,
+        .header-setting-icon {
+            color: #faad14 !important;
+        }
+
+        &:hover {
+
+            .ant-menu-title-content,
+            .header-home-icon,
+            .header-product-icon,
+            .header-about-icon,
+            .header-message-icon,
+            .header-notification-icon,
+            .header-cart-icon,
+            .header-setting-icon {
+                color: #faad14 !important;
+            }
+        }
+    }
+
+    // style chung cho menu
+    ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light.css-dev-only-do-not-override-l9pxc0 {
+        font-size  : 14pt;
+        font-family: auto;
+    }
+
+    // Input (bên trái) thanh tìm kiếm
+    span.ant-input-affix-wrapper.ant-input-affix-wrapper-lg.css-dev-only-do-not-override-l9pxc0.ant-input-outlined {
+        background   : #dae3d5;
+        border-radius: 24px 0 0 24px;
+        border-right : none;
+        border       : none !important;
+        // tắt focus (khi click vào bị outline xanh)
+        &:focus,
+        &.ant-input-affix-wrapper-focused {
+            border-color: transparent !important;
+            box-shadow  : none !important;
+            outline     : none !important;
+        }
+    }
+
+    // Button (bên phải) thanh tìm kiếm
+    button.ant-btn.css-dev-only-do-not-override-l9pxc0.ant-btn-default.ant-btn-color-primary.ant-btn-variant-solid.ant-btn-lg.ant-input-search-button {
+        background   : #dae3d5;
+        border-radius: 0 24px 24px 0; // bo tròn bên phải
+        border-left  : none; // bỏ viền trái để khớp với input
+    }
+
+    // nền header
+    ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light.css-dev-only-do-not-override-l9pxc0 {
+        background: #001529;
+    }
+
+    // nền header
+    .ant-row.ant-row-space-between.ant-row-middle.css-dev-only-do-not-override-l9pxc0 {
+        background: #001529;
+    }
+}
