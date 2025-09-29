@@ -1,7 +1,8 @@
 import { Drawer, Empty, Image, Space, Typography, Divider, Button, Row, Col } from 'antd';
 import { AiFillDelete } from 'react-icons/ai';
-import { MdPayment, MdPayments } from 'react-icons/md';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getCartClient } from '../../../config/Api';
+import { FaShoppingBag } from 'react-icons/fa';
 
 const { Text, Title } = Typography;
 
@@ -73,14 +74,24 @@ const ModalCart = ({ openModalCart, setOpenModalCart }: IProps) => {
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
 
+    const fetchCartClient = async () => {
+        const res = await getCartClient();
+        console.log(res);
+    }
+
+    useEffect(() => {
+        fetchCartClient();
+        console.log(cartItems.length)
+    }, []);
+
     return (
         <Drawer
-            title={<Title level={4}>Shopzy | Giỏ Hàng</Title>}
+            title={<Title level={4}><span onClick={() => setOpenModalCart(false)}>Shopzy | Giỏ Hàng</span></Title>}
             onClose={() => setOpenModalCart(false)}
             open={openModalCart}
             placement="right"
             width={700}
-            maskClosable={false}
+            // maskClosable={false}
         >
             {cartItems.length > 0 ? (
                 <>
@@ -129,25 +140,17 @@ const ModalCart = ({ openModalCart, setOpenModalCart }: IProps) => {
                     <Divider />
 
                     {/* Total Price */}
-                    <Row justify="end" style={{ marginBottom: 16 }}>
+                    <Row justify="space-between" style={{ marginBottom: 16 }}>
                         <Col>
                             <Text strong>Tổng tiền: </Text>
                             <Text>{totalPrice.toLocaleString()} VND</Text>
                         </Col>
-                    </Row>
-
-                    {/* Payment Methods */}
-                    <Row>
-                        <Col span={24}>
-                            <Text strong>Phương thức thanh toán: </Text>
-                            <Space style={{ marginTop: 8 }}>
-                                <Button type="primary" danger icon={<MdPayment />} onClick={() => alert('Bạn đã chọn COD')}>
-                                    COD
-                                </Button>
-                                <Button type="primary" danger icon={<MdPayments />} onClick={() => alert('Bạn đã chọn VNPAY')}>
-                                    VNPAY
-                                </Button>
-                            </Space>
+                        <Col>
+                            {/* <Text strong> </Text>
+                            <Text>{totalPrice.toLocaleString()} VND</Text> */}
+                            <Button type="primary" danger icon={<FaShoppingBag />} onClick={() => alert('Đã chuyển sang trang checkout')}>
+                                Mua Hàng
+                            </Button>
                         </Col>
                     </Row>
                 </>

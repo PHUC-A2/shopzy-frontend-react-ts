@@ -1,330 +1,229 @@
-import { Card, Carousel, Image, Pagination } from 'antd';
-import './HomePage.scss'
-import background_01 from '../../../assets/background-01.png'
-import background_02 from '../../../assets/background-02.png'
-import background_03 from '../../../assets/background-03.png'
-import shirt_01 from '../../../assets/shirt-01.png'
-import asus_zenbook_01 from '../../../assets/asus-zenbook-01.png'
-import lenovo_legion_05_01 from '../../../assets/lenovo-legion05-01.png'
+import { Layout, Row, Col, Input, Carousel, Card, Pagination, Image } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
+// ảnh local
+import background_01 from "../../../assets/background-01.png";
+import background_02 from "../../../assets/background-02.png";
+import background_03 from "../../../assets/background-03.png";
+import shirt_01 from "../../../assets/shirt-01.png";
+import asus_zenbook_01 from "../../../assets/asus-zenbook-01.png";
+import lenovo_legion_05_01 from "../../../assets/lenovo-legion05-01.png";
 
+const { Header, Content } = Layout;
 const { Meta } = Card;
-const gridStyle: React.CSSProperties = {
-    width: '200px',
-    textAlign: 'center',
+
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+    status: string;
+    productCondition: string;
+    imageUrl: string;
+    size: string;
+    color: string;
+}
+
+// ⚡️ Giả lập API response tĩnh
+const apiResponse = {
+    meta: {
+        page: 1,
+        pageSize: 2, // backend set pageSize = total → hiển thị hết
+        pages: 2,
+        total: 4,
+    },
+    result: [
+        {
+            id: 1,
+            name: "Quần ABC",
+            description: "Quần âu đẹp",
+            price: 200000,
+            stock: 15,
+            status: "IN_STOCK",
+            productCondition: "NEW",
+            imageUrl: asus_zenbook_01,
+            size: "S",
+            color: "Đỏ",
+        },
+        {
+            id: 2,
+            name: "Quần A",
+            description: "Quần âu đẹp",
+            price: 200000,
+            stock: 15,
+            status: "IN_STOCK",
+            productCondition: "NEW",
+            imageUrl: lenovo_legion_05_01,
+            size: "S",
+            color: "Đỏ",
+        },
+        {
+            id: 3,
+            name: "Quần C",
+            description: "Quần âu đẹp",
+            price: 200000,
+            stock: 20,
+            status: "IN_STOCK",
+            productCondition: "USED",
+            imageUrl: "", // thiếu ảnh → fallback
+            size: "S",
+            color: "Đen",
+        },
+        {
+            id: 4,
+            name: "Quần C_D",
+            description: "Quần âu đẹp d",
+            price: 3000,
+            stock: 0,
+            status: "OUT_OF_STOCK",
+            productCondition: "USED",
+            imageUrl: shirt_01,
+            size: "M",
+            color: "Đen",
+        },
+        {
+            id: 5,
+            name: "Quần C_D",
+            description: "Quần âu đẹp d",
+            price: 3000,
+            stock: 0,
+            status: "OUT_OF_STOCK",
+            productCondition: "USED",
+            imageUrl: shirt_01,
+            size: "M",
+            color: "Đen",
+        },
+        {
+            id: 6,
+            name: "Quần C_D",
+            description: "Quần âu đẹp d",
+            price: 3000,
+            stock: 0,
+            status: "OUT_OF_STOCK",
+            productCondition: "USED",
+            imageUrl: shirt_01,
+            size: "M",
+            color: "Đen",
+        },
+        {
+            id: 7,
+            name: "Quần C_D",
+            description: "Quần âu đẹp d",
+            price: 3000,
+            stock: 0,
+            status: "OUT_OF_STOCK",
+            productCondition: "USED",
+            imageUrl: shirt_01,
+            size: "M",
+            color: "Đen",
+        },
+    ] as Product[],
 };
 
 const HomePage = () => {
+    const { meta, result } = apiResponse;
+    const [currentPage, setCurrentPage] = useState(meta.page);
+
+    // ✅ backend đã phân trang rồi → chỉ dùng trực tiếp result
+    const paginatedProducts = result;
+
+    // ảnh fallback
+    const fallbackImage = background_01;
+
     return (
-        <div className='home-container'>
-            <div className="home-main">
-                <Carousel arrows infinite={true} autoplay autoplaySpeed={1000} >
+        <Layout style={{ marginTop: 50 }}>
+            {/* Header với thanh tìm kiếm */}
+            <Header style={{ background: "#fff", padding: "0 24px" }}>
+                <Row justify="space-between" align="middle">
+                    <Col>
+                        <h2 style={{ margin: 0, color: "#1890ff" }}>Shopzy</h2>
+                    </Col>
+                    <Col span={12}>
+                        <Input.Search
+                            placeholder="Tìm kiếm sản phẩm..."
+                            allowClear
+                            enterButton={<SearchOutlined />}
+                            size="large"
+                        />
+                    </Col>
+                </Row>
+            </Header>
+
+            <Content style={{ padding: "24px" }}>
+                {/* Carousel banner */}
+                <Carousel autoplay autoplaySpeed={2000} style={{ marginBottom: 24 }}>
                     <div>
-                        <img src={background_01} alt="slide1" />
+                        <img
+                            src={background_01}
+                            alt="slide1"
+                            style={{ width: "100%", borderRadius: 8 }}
+                        />
                     </div>
                     <div>
-                        <img src={background_02} alt="slide2" />
+                        <img
+                            src={background_02}
+                            alt="slide2"
+                            style={{ width: "100%", borderRadius: 8 }}
+                        />
                     </div>
                     <div>
-                        <img src={background_03} alt="slide3" />
+                        <img
+                            src={background_03}
+                            alt="slide3"
+                            style={{ width: "100%", borderRadius: 8 }}
+                        />
                     </div>
                 </Carousel>
-            </div>
-            <div className="home-content">
-                <h4>DANH MỤC</h4>
-                <hr />
-                <div className='home-card'>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
-                    <Card title='DANH MỤC' hoverable>
-                        <Card.Grid style={gridStyle}>
-                            <Image
-                                width='100%'
-                                src={asus_zenbook_01}
-                            />
-                            <a href="/">
-                                <div>
-                                    <div><strong>Asus zenbook</strong></div>
-                                    <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                    <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                    <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                    <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                                </div></a>
-                            <Meta title="Europe Street beat" description="www.instagram.com" />
-                        </Card.Grid>
-                    </Card>
 
-                </div>
-                <hr />
-                <Card title="Sản phẩm khác">
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={asus_zenbook_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Asus zenbook</strong></div>
-                                <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
+                {/* Danh mục sản phẩm */}
+                <h3 style={{ marginBottom: 16 }}>DANH MỤC SẢN PHẨM</h3>
+                <Row gutter={[16, 16]}>
+                    {paginatedProducts.map((product) => (
+                        <Col xs={24} sm={12} md={8} lg={6} key={product.id}>
+                            <Card
+                                hoverable
+                                style={{ height: "100%" }}
+                                cover={
+                                    <Image
+                                        src={product.imageUrl || fallbackImage}
+                                        alt={product.name}
+                                        preview
+                                        style={{ objectFit: "contain", height: 200 }}
+                                    />
+                                }
+                            >
+                                <Meta
+                                    title={product.name}
+                                    description={`Giá: ${product.price.toLocaleString()} VND`}
+                                />
+                                <div>
+                                    <strong>Còn lại:</strong> {product.stock}
+                                </div>
+                                <div>
+                                    <strong>Trạng thái:</strong> {product.status}
+                                </div>
+                                <div>
+                                    <strong>Tình trạng:</strong> {product.productCondition}
+                                </div>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
 
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={lenovo_legion_05_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Lenovo legion 5</strong></div>
-                                <div><strong>Giá:</strong><span> 20.000.000 VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 99</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
+                {/* Phân trang */}
+                <Row justify="center" style={{ marginTop: 24 }}>
+                    <Pagination
+                        current={currentPage}
+                        pageSize={meta.pageSize}
+                        total={meta.total}
+                        onChange={(page) => setCurrentPage(page)}
+                    />
+                </Row>
+            </Content>
+        </Layout>
+    );
+};
 
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={shirt_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Áo thun nóng lạnh</strong></div>
-                                <div><strong>Giá:</strong><span> 999.999.999 + VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={shirt_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Áo thun nóng lạnh</strong></div>
-                                <div><strong>Giá:</strong><span> 999.999.999 + VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={shirt_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Áo thun nóng lạnh</strong></div>
-                                <div><strong>Giá:</strong><span> 999.999.999 + VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={shirt_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Áo thun nóng lạnh</strong></div>
-                                <div><strong>Giá:</strong><span> 999.999.999 + VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={shirt_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Áo thun nóng lạnh</strong></div>
-                                <div><strong>Giá:</strong><span> 999.999.999 + VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={shirt_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Áo thun nóng lạnh</strong></div>
-                                <div><strong>Giá:</strong><span> 999.999.999 + VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
-                    <Card.Grid style={gridStyle}>
-                        <Image
-                            width='100%'
-                            src={shirt_01}
-                        />
-                        <a href="/">
-                            <div>
-                                <div><strong>Áo thun nóng lạnh</strong></div>
-                                <div><strong>Giá:</strong><span> 999.999.999 + VND</span></div>
-                                <div><strong>Số lượng đã bán:</strong><span> 899</span></div>
-                                <div><strong>Trạng thái:</strong><span> Còn hàng</span></div>
-                                <div><strong>Tình trạng:</strong><span> Mới</span></div>
-                            </div></a>
-                    </Card.Grid>
-
-                </Card>
-                <br />
-                <Pagination align="center" defaultCurrent={1} total={50} />
-            </div>
-        </div>
-    )
-}
 export default HomePage;

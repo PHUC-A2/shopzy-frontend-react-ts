@@ -52,3 +52,6 @@ export const getOrderItemById = (id: number) => instance.get(`/api/v1/order-item
 export const deleteOrderItem = (id: number) => instance.delete(`/api/v1/order-items/${id}`);
 export const createOrderItem = (data: ICreateOrderItemReq) => instance.post(`/api/v1/order-items`, data);
 export const updateOrderItem = (data: IUpdateOrderItemReq) => instance.put(`/api/v1/order-items`, data);
+
+/* ====================Client================ */
+export const getCartClient = () => instance.get(`/api/v1/client/carts`);
