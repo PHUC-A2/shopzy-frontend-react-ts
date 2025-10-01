@@ -1,7 +1,7 @@
 import { Drawer, Empty, Image, Space, Typography, Divider, Button, Row, Col } from 'antd';
 import { AiFillDelete } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
-import { getCartClient } from '../../../config/Api';
+import {  useState } from 'react';
+// import { getCartClient } from '../../../config/Api';
 import { FaShoppingBag } from 'react-icons/fa';
 const { Text, Title } = Typography;
 import './Modal.scss'
@@ -74,15 +74,15 @@ const ModalCart = ({ openModalCart, setOpenModalCart }: IProps) => {
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
 
-    const fetchCartClient = async () => {
-        const res = await getCartClient();
-        console.log(res);
-    }
+    // const fetchCartClient = async () => {
+    //     const res = await getCartClient();
+    //     console.log(res);
+    // }
 
-    useEffect(() => {
-        fetchCartClient();
-        console.log(cartItems.length)
-    }, []);
+    // useEffect(() => {
+    //     fetchCartClient();
+    //     console.log(cartItems.length)
+    // }, []);
 
     return (
         <Drawer

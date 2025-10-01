@@ -100,6 +100,7 @@
         border-radius: 24px 0 0 24px;
         border-right : none;
         border       : none !important;
+
         // tắt focus (khi click vào bị outline xanh)
         &:focus,
         &.ant-input-affix-wrapper-focused {
@@ -124,5 +125,9 @@
     // nền header
     .ant-row.ant-row-space-between.ant-row-middle.css-dev-only-do-not-override-l9pxc0 {
         background: #001529;
+    }
+
+    span.anticon.anticon-ellipsis {
+        color: #faad14;
     }
 }

@@ -132,7 +132,7 @@ const HomePage = () => {
     const fallbackImage = background_01;
 
     return (
-        <Layout style={{ marginTop: 100 }}>
+        <Layout style={{ marginTop: 103 }}>
             <Content style={{ padding: "24px" }}>
                 {/* Carousel banner */}
                 <Carousel autoplay arrows autoplaySpeed={2000} style={{ marginBottom: 24 }}>
