@@ -166,7 +166,7 @@ const ProductPage = () => {
                             Bộ lọc
                         </Button>
                         <Drawer
-                            title="Bộ lọc sản phẩm"
+                            title={<span style={{ color: 'orange' }}>Bộ lọc sản phẩm</span>}
                             placement="left"
                             open={openDrawer}
                             onClose={() => setOpenDrawer(false)}

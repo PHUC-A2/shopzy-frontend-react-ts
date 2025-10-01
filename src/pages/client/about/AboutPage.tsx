@@ -20,8 +20,8 @@ const AboutPage = () => {
                     padding: "2rem",
                     marginTop: 125,
                     marginLeft: 20,
-                    marginRight:20,
-                    marginBottom:20,
+                    marginRight: 20,
+                    marginBottom: 20,
                 }}
             >
                 <Row gutter={[24, 24]} align="middle">
@@ -90,16 +90,16 @@ const AboutPage = () => {
                     <a href="https://m.me/shopzy" target="_blank" rel="noopener noreferrer">
                         <RiMessengerLine />
                     </a>
-                    <a href="https://zalo.me/your-id" target="_blank" rel="noopener noreferrer">
+                    <a href="https://chat.zalo.me/" target="_blank" rel="noopener noreferrer">
                         <SiZalo />
                     </a>
-                    <a href="https://facebook.com/shopzy" target="_blank" rel="noopener noreferrer">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                         <FacebookOutlined />
                     </a>
-                    <a href="https://www.tiktok.com/@shopzy" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
                         <FaTiktok />
                     </a>
-                    <a href="https://www.youtube.com/@shopzy" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
                         <YoutubeOutlined />
                     </a>
 
