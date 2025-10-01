@@ -12,13 +12,16 @@ const { Title, Paragraph, Text } = Typography;
 
 const AboutPage = () => {
     return (
-        <div style={{ maxWidth: "90%", margin: "0 auto", padding: "50px" }}>
+        <div style={{ maxWidth: "100%", margin: 0, padding: 0 }}>
             <Card
                 style={{
                     borderRadius: 12,
                     boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                     padding: "2rem",
-                    marginTop: 45
+                    marginTop: 125,
+                    marginLeft: 20,
+                    marginRight:20,
+                    marginBottom:20,
                 }}
             >
                 <Row gutter={[24, 24]} align="middle">

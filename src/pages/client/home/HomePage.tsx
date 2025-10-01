@@ -163,7 +163,7 @@ const HomePage = () => {
                 <h3 style={{ marginBottom: 16 }}>DANH MỤC</h3>
                 <Row gutter={[16, 16]}>
                     {paginatedProducts.map((product) => (
-                        <Col xs={24} sm={12} md={8} lg={6} key={product.id}>
+                        <Col xs={12} sm={8} md={4} lg={6} xl={4} key={product.id}>
                             <Card
                                 hoverable
                                 style={{ height: "100%" }}
