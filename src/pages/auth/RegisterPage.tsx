@@ -8,70 +8,81 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import type { ICreateUserReq } from '../../types/backend';
 
-
 const RegisterPage = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleRegister = async (data: ICreateUserReq) => {
+        // Trim toàn bộ dữ liệu trước khi gửi API
+        const cleanedData: ICreateUserReq = {
+            ...data,
+            name: data.name?.trim(),
+            fullName: data.fullName?.trim(),
+            email: data.email?.trim(),
+            password: data.password, // password giữ nguyên
+            phoneNumber: data.phoneNumber?.trim()
+        };
+
         setIsLoading(true);
-        const res = await register(data);
-        setIsLoading(false);
         try {
+            const res = await register(cleanedData);
+            setIsLoading(false);
             if (res?.data?.statusCode === 201) {
                 toast.success('Đăng ký tài khoản thành công');
-                form.resetFields(); // xóa các gái trị form sau khi submit
+                form.resetFields();
                 setTimeout(() => {
-                    navigate('/login') // chuyển sang trang log in sau khi đăng ký
-                }, 2000)
+                    navigate('/login');
+                }, 2000);
             }
         } catch (error: any) {
+            setIsLoading(false);
             const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
                     <div><strong>Có lỗi xảy ra!</strong></div>
                     <div>{m}</div>
                 </div>
-            )
+            );
         }
-
     };
 
     return (
         <div className='register-container'>
+            <div className="overlay"></div>
+
             <Form
-                className='register-from'
+                className='register-form'
                 form={form}
                 style={{ maxWidth: 460 }}
                 onFinish={handleRegister}
+                layout="vertical"
             >
                 <Form.Item>
                     <Flex justify='center'>
-                        <h1>Sign up</h1>
+                        <h1 className="register-title">Sign up</h1>
                     </Flex>
                 </Form.Item>
 
                 <Form.Item
                     name="name"
-                    rules={[
-                        { required: true, message: 'Please input your name!' }
-                    ]}
+                    normalize={(v) => v.trim()}
+                    rules={[{ required: true, message: 'Please input your name!' }]}
                 >
                     <Input prefix={<UserOutlined />} placeholder="Name" />
                 </Form.Item>
 
                 <Form.Item
                     name="fullName"
-                    rules={[
-                        { required: true, message: 'Please input your fullName!' }
-                    ]}
+                    normalize={(v) => v.trim()}
+                    rules={[{ required: true, message: 'Please input your full name!' }]}
                 >
                     <Input prefix={<UserOutlined />} placeholder="Full name" />
                 </Form.Item>
 
                 <Form.Item
                     name="email"
+                    normalize={(v) => v.trim()}
                     rules={[
                         { type: "email", message: 'The input is not valid E-mail!' },
                         { required: true, message: 'Please input your Email!' }
@@ -89,13 +100,20 @@ const RegisterPage = () => {
 
                 <Form.Item
                     name="phoneNumber"
+                    normalize={(v) => v.trim()}
                     rules={[{ required: true, message: 'Please input your phone number!' }]}
                 >
                     <Input prefix={<GrPhone />} placeholder="Phone number" />
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type='primary' block htmlType="submit" loading={isLoading}>
+                    <Button
+                        type='primary'
+                        block
+                        htmlType="submit"
+                        loading={isLoading}
+                        className="btn-register"
+                    >
                         Register
                     </Button>
                     <Flex className='mt-2' justify='space-between' align='center'>
@@ -108,4 +126,4 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage;;
+export default RegisterPage;

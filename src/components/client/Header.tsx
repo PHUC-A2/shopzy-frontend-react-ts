@@ -125,9 +125,9 @@ const Header = () => {
                             ]
                             :
                             [
-                                { label: <Link to={'/admin'} className='text-decoration-none'>Dashboard</Link>, key: 'admin', icon: <AiFillDashboard /> },
-                                { label: <span onClick={() => setOpenModalProfile(true)}>Profile</span>, key: 'profile', icon: <FaCircleUser /> },
-                                { label: <span onClick={handleLogout}>Log out</span>, key: 'logout', icon: <LogoutOutlined /> },
+                                { label: <Link to={'/admin'} className='text-decoration-none'>Trang quản trị</Link>, key: 'admin', icon: <AiFillDashboard /> },
+                                { label: <span onClick={() => setOpenModalProfile(true)}>Tài khoản</span>, key: 'profile', icon: <FaCircleUser /> },
+                                { label: <span onClick={handleLogout}>Đăng xuất</span>, key: 'logout', icon: <LogoutOutlined /> },
                             ])
                     ],
                 },

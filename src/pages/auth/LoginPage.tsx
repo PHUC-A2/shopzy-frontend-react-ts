@@ -1,38 +1,32 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Flex, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router';
-import './Login.scss';
 import type { ILogin } from '../../types/backend';
 import { login } from '../../config/Api';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { setUserLoginInfo } from '../../redux/slice/authSlice';
-// import type { RootState } from '../../redux/store';
-
-
+import { motion } from 'framer-motion';
+import './Login.scss';
 
 const LoginPage = () => {
-
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // const accountLogin = useSelector((state: RootState) => state.auth);
+
     const handleLogin = async (values: ILogin) => {
         try {
-            const res = await login(values.username, values.password);
+            const res = await login(values.username.trim(), values.password.trim()); // trim lần cuối
             if (res?.data?.statusCode === 200) {
                 const { access_token, user } = res.data.data;
 
-                // lưu access_token vào localStorage để khi F5 không mất data
                 localStorage.setItem('access_token', access_token);
-
-                // đẩy vào redux
                 dispatch(setUserLoginInfo({ access_token, user, isAuthenticated: true }));
                 form.resetFields();
-                // test nếu email là admin chuyển vào trang admin
+
                 const emailLogin = res?.data?.data?.user?.email;
                 navigate(emailLogin === "admin@gmail.com" ? "/admin" : "/");
-                toast.success('Đăng nhập thành công')
+                toast.success('Đăng nhập thành công');
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknown";
@@ -41,49 +35,74 @@ const LoginPage = () => {
                     <div><strong>Có lỗi xảy ra!</strong></div>
                     <div>{m}</div>
                 </div>
-            )
+            );
         }
     };
 
     return (
-        <div className='login-container'>
-            <Form
-                form={form}
-                className='login-from'
-                style={{ maxWidth: 460 }}
-                onFinish={handleLogin}
+        <div className="login-container">
+            <div className="overlay"></div>
+
+            <motion.div
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="login-form-wrapper"
             >
-                <Form.Item>
-                    <Flex justify='center'>
-                        <h1>Sign in</h1>
-                    </Flex>
-                </Form.Item>
-                <Form.Item
-                    name="username"
-                    rules={[
-                        { type: "email", message: 'The input is not valid E-mail!' },
-                        { required: true, message: 'Please input your Email!' }
-                    ]}
+                <Form
+                    form={form}
+                    className="login-form"
+                    onFinish={handleLogin}
+                    layout="vertical"
                 >
-                    <Input prefix={<UserOutlined />} placeholder="Email" />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your Password!' }]}
-                >
-                    <Input.Password prefix={<LockOutlined />} type="password" placeholder="Password" />
-                </Form.Item>
-                <Form.Item>
-                    <Button type='primary' block htmlType="submit">
-                        Log in
-                    </Button>
-                    <Flex className='mt-2' justify='space-between' align='center'>
-                        <Link to={"/register"}>Register now!</Link>
-                        <Link to={"#"}>Forgot password</Link>
-                    </Flex>
-                </Form.Item>
-            </Form>
+                    <h1 className="login-title">Sign in</h1>
+
+                    <Form.Item
+                        name="username"
+                        normalize={(value) => value?.trim()} // auto trim
+                        rules={[
+                            { type: "email", message: 'Email không hợp lệ!' },
+                            { required: true, message: 'Vui lòng nhập Email!' }
+                        ]}
+                    >
+                        <Input
+                            size="large"
+                            prefix={<UserOutlined />}
+                            placeholder="Email"
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="password"
+                        normalize={(value) => value?.trim()} // auto trim
+                        rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
+                    >
+                        <Input.Password
+                            size="large"
+                            prefix={<LockOutlined />}
+                            placeholder="Password"
+                        />
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            block
+                            size="large"
+                            htmlType="submit"
+                            className="btn-login"
+                        >
+                            <span>Đăng nhập</span>
+                        </Button>
+                        <Flex className="mt-2" justify="space-between" align="center">
+                            <Link to="/register">Sign up now!</Link>
+                            <Link to="#">Forgot password?</Link>
+                        </Flex>
+                    </Form.Item>
+                </Form>
+            </motion.div>
         </div>
-    )
-}
+    );
+};
+
 export default LoginPage;
