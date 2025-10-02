@@ -1,6 +1,7 @@
-import { Layout, Row, Col, Card, Image, Pagination, Spin, Empty, Space, Grid, Drawer, Button, Checkbox, Slider } from "antd";
+import { Layout, Row, Col, Card, Image, Pagination, Spin, Empty, Space, Grid, Drawer, Button, Checkbox, Slider, Rate } from "antd";
 import { useEffect, useState } from "react";
 import { IoFilter } from "react-icons/io5";
+import { motion } from "framer-motion"; // ✅ thêm framer-motion
 import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
 import { Link } from "react-router";
@@ -90,67 +91,82 @@ const ProductPage = () => {
                     <Spin spinning={loading}>
                         <Row gutter={[16, 16]}>
                             {listProduct.length > 0 ? (
-                                listProduct.map((product) => (
+                                listProduct.map((product, index) => (
                                     <Col xs={12} sm={8} md={6} lg={6} xl={4} key={product.id}>
-                                        <Card
-                                            hoverable
-                                            style={{ height: "100%", display: "flex", flexDirection: "column" }}
-                                            cover={
-                                                <Image
-                                                    src={fallbackImage}
-                                                    alt={product.name}
-                                                    preview
-                                                    style={{ objectFit: "contain", height: 200, background: "#fafafa" }}
-                                                />
-                                            }
+                                        {/* thêm motion.div để có hiệu ứng mượt */}
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 30 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: index * 0.05, duration: 0.4 }}
                                         >
-                                            <Link to={"/product-details"} className="nav-link">
-                                                <Meta
-                                                    title={
-                                                        <span className="card-title">{product.name}</span>
-                                                    }
-                                                    description={
-                                                        <span style={{ color: "#389e0d", fontWeight: 500 }}>
-                                                            {`Giá: ${product.price.toLocaleString()} VND`}
-                                                        </span>
-                                                    }
-                                                />
+                                            <Card
+                                                hoverable
+                                                style={{ height: "100%", display: "flex", flexDirection: "column", borderRadius: 12 }}
+                                                cover={
+                                                    <Image
+                                                        src={fallbackImage}
+                                                        alt={product.name}
+                                                        preview
+                                                        style={{ objectFit: "contain", height: 200, background: "#fafafa" }}
+                                                    />
+                                                }
+                                            >
+                                                {/*chỉ bọc tên + giá trong Link */}
+                                                <Link to={"/product-details"} className="nav-link">
+                                                    <Meta
+                                                        title={<span className="card-title">{product.name}</span>}
+                                                        description={
+                                                            <span style={{ color: "#389e0d", fontWeight: 500 }}>
+                                                                {`Giá: ${product.price.toLocaleString()} VND`}
+                                                            </span>
+                                                        }
+                                                    />
+                                                </Link>
 
-                                                <div className="card-info">
-                                                    <div>
-                                                        <strong>Còn lại:</strong> {product.stock}
-                                                    </div>
-
-                                                    <div>
-                                                        {product.status === "IN_STOCK" ? (
-                                                            <div>
-                                                                <strong style={{ color: "#faad14" }}>Trạng thái:</strong>{" "}
-                                                                <span style={{ color: "#389e0d" }}>Còn hàng</span>
-                                                            </div>
-                                                        ) : (
-                                                            <div>
-                                                                <strong style={{ color: "#faad14" }}>Trạng thái:</strong>{" "}
-                                                                <span style={{ color: "#001529" }}>Hết hàng</span>
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    <div>
-                                                        {product.productCondition === "NEW" ? (
-                                                            <div>
-                                                                <strong style={{ color: "#001529" }}>Tình trạng:</strong>{" "}
-                                                                <span style={{ color: "#389e0d" }}>Mới</span>
-                                                            </div>
-                                                        ) : (
-                                                            <div>
-                                                                <strong style={{ color: "#001529" }}>Tình trạng:</strong>{" "}
-                                                                <span style={{ color: "#faad14" }}>Đã sử dụng</span>
-                                                            </div>
-                                                        )}
-                                                    </div>
+                                                {/* Rate nằm ngoài Link → click không bị redirect */}
+                                                <div style={{ margin: "8px 0" }}>
+                                                    <Rate defaultValue={5} />
                                                 </div>
-                                            </Link>
-                                        </Card>
+
+                                                {/* Thông tin thêm vẫn có thể nằm trong Link */}
+                                                <Link to={"/product-details"} className="nav-link">
+                                                    <div className="card-info">
+                                                        <div>
+                                                            <strong>Còn lại:</strong> {product.stock}
+                                                        </div>
+
+                                                        <div>
+                                                            {product.status === "IN_STOCK" ? (
+                                                                <div>
+                                                                    <strong style={{ color: "#faad14" }}>Trạng thái:</strong>{" "}
+                                                                    <span style={{ color: "#389e0d" }}>Còn hàng</span>
+                                                                </div>
+                                                            ) : (
+                                                                <div>
+                                                                    <strong style={{ color: "#faad14" }}>Trạng thái:</strong>{" "}
+                                                                    <span style={{ color: "#001529" }}>Hết hàng</span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        <div>
+                                                            {product.productCondition === "NEW" ? (
+                                                                <div>
+                                                                    <strong style={{ color: "#001529" }}>Tình trạng:</strong>{" "}
+                                                                    <span style={{ color: "#389e0d" }}>Mới</span>
+                                                                </div>
+                                                            ) : (
+                                                                <div>
+                                                                    <strong style={{ color: "#001529" }}>Tình trạng:</strong>{" "}
+                                                                    <span style={{ color: "#faad14" }}>Đã sử dụng</span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            </Card>
+
+                                        </motion.div>
                                     </Col>
                                 ))
                             ) : (

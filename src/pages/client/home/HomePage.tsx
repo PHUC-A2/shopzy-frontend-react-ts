@@ -1,10 +1,6 @@
-import { Layout, Row, Col, Carousel, Card, Pagination, Image, Spin, Empty, Space } from "antd";
+import { Layout, Row, Col, Carousel, Card, Pagination, Image, Spin, Empty, Space, Rate } from "antd";
 import { useEffect, useState } from "react";
-
-import background_01 from "../../../assets/background-01.png";
-import background_02 from "../../../assets/background-02.png";
-import background_03 from "../../../assets/background-03.png";
-// import asus_zenbook_01 from "../../../assets/asus-zenbook-01.png";
+import { motion } from "framer-motion";   // ✅ thêm framer-motion
 
 import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
@@ -43,10 +39,24 @@ const HomePage = () => {
         <Layout style={{ marginTop: 103 }}>
             <Content style={{ padding: "24px" }}>
                 {/* Carousel */}
-                <Carousel autoplay arrows autoplaySpeed={1500} style={{ marginBottom: 24 }}>
-                    <div><img src={background_01} alt="slide1" style={{ width: "100%", borderRadius: 8 }} /></div>
-                    <div><img src={background_02} alt="slide2" style={{ width: "100%", borderRadius: 8 }} /></div>
-                    <div><img src={background_03} alt="slide3" style={{ width: "100%", borderRadius: 8 }} /></div>
+                {/* Carousel Responsive */}
+                <Carousel autoplay arrows autoplaySpeed={2500} style={{ marginBottom: 24 }}>
+                    {[1, 2, 3, 4, 5].map((i) => (
+                        <div key={i}>
+                            <img
+                                src={`https://picsum.photos/seed/slide${i}/1200/600`}
+                                alt={`slide-${i}`}
+                                style={{
+                                    width: "100%",
+                                    height: "50vh",       // chiều cao theo % màn hình
+                                    maxHeight: "400px",   // không quá cao ở PC
+                                    minHeight: "200px",   // không quá thấp ở mobile
+                                    objectFit: "cover",   // giữ tỉ lệ
+                                    borderRadius: 12,
+                                }}
+                            />
+                        </div>
+                    ))}
                 </Carousel>
 
                 <h3 style={{ marginBottom: 16 }}>DANH MỤC</h3>
@@ -55,99 +65,97 @@ const HomePage = () => {
                 <Spin spinning={loading}>
                     <Row gutter={[16, 16]}>
                         {listProduct.length > 0 ?
-                            listProduct.map((product) => (
+                            listProduct.map((product, index) => (
                                 <Col xs={12} sm={8} md={6} lg={6} xl={4} key={product.id}>
-                                    <Card
-                                        hoverable
-                                        style={{
-                                            height: "100%",
-                                            border: "1px solid #f0f0f0",
-                                            borderRadius: 12,
-                                            transition: "all 0.3s ease",
-                                        }}
-                                        styles={{
-                                            body: {
-                                                padding: 12
-                                            }
-                                        }}
-                                        cover={
-                                            <Image
-                                                src={`https://picsum.photos/seed/${product.id}/400/300`}
-                                                alt={product.name}
-                                                preview
-                                                style={{
-                                                    objectFit: "contain",
-                                                    height: 200,
-                                                    padding: 8,
-                                                }}
-                                            />
-                                        }
-                                        className="custom-card"
+                                    {/* thêm motion.div để bọc Card */}
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: index * 0.05, duration: 0.4 }}
                                     >
-                                        <Link to={"product-details"} className="nav-link">
-                                            <Meta
-                                                title={
-                                                    <span className="card-title">{product.name}</span>
-                                                }
-                                                description={
-                                                    <span style={{ color: "#389e0d", fontWeight: 500 }}>
-                                                        {`Giá: ${product.price.toLocaleString()} VND`}
-                                                    </span>
-                                                }
-                                            />
+                                        <Card
+                                            hoverable
+                                            style={{
+                                                height: "100%",
+                                                border: "1px solid #f0f0f0",
+                                                borderRadius: 12,
+                                                transition: "all 0.3s ease",
+                                            }}
+                                            styles={{
+                                                body: { padding: 12 }
+                                            }}
+                                            cover={
+                                                <Image
+                                                    src={`https://picsum.photos/seed/${product.id}/400/300`}
+                                                    alt={product.name}
+                                                    preview
+                                                    style={{
+                                                        objectFit: "contain",
+                                                        height: 200,
+                                                        padding: 8,
+                                                    }}
+                                                />
+                                            }
+                                            className="custom-card"
+                                        >
+                                            {/* Chỉ bọc phần tên + giá trong Link */}
+                                            <Link to={"product-details"} className="nav-link">
+                                                <Meta
+                                                    title={<span className="card-title">{product.name}</span>}
+                                                    description={
+                                                        <span style={{ color: "#389e0d", fontWeight: 500 }}>
+                                                            {`Giá: ${product.price.toLocaleString()} VND`}
+                                                        </span>
+                                                    }
+                                                />
+                                            </Link>
 
-                                            <div className="card-info">
-                                                <div>
-                                                    <strong>Còn lại:</strong> {product.stock}
-                                                </div>
-
-                                                <div>
-                                                    {product.status === "IN_STOCK" ? (
-                                                        <div>
-                                                            <strong style={{ color: "#faad14" }}>Trạng thái:</strong>{" "}
-                                                            <span style={{ color: "#389e0d" }}>Còn hàng</span>
-                                                        </div>
-                                                    ) : (
-                                                        <div>
-                                                            <strong style={{ color: "#faad14" }}>Trạng thái:</strong>{" "}
-                                                            <span style={{ color: "#001529" }}>Hết hàng</span>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div>
-                                                    {product.productCondition === "NEW" ? (
-                                                        <div>
-                                                            <strong style={{ color: "#001529" }}>Tình trạng:</strong>{" "}
-                                                            <span style={{ color: "#389e0d" }}>Mới</span>
-                                                        </div>
-                                                    ) : (
-                                                        <div>
-                                                            <strong style={{ color: "#001529" }}>Tình trạng:</strong>{" "}
-                                                            <span style={{ color: "#faad14" }}>Đã sử dụng</span>
-                                                        </div>
-                                                    )}
-                                                </div>
+                                            {/*  Đánh giá nằm ngoài Link nên có thể click */}
+                                            <div style={{ margin: "8px 0" }}>
+                                                <Rate defaultValue={
+                                                    // product.rating 
+                                                    // || 
+                                                    4} />
                                             </div>
-                                        </Link>
-                                    </Card>
 
+                                            {/* Thông tin sản phẩm vẫn để trong Link nếu muốn */}
+                                            <Link to={"product-details"} className="nav-link">
+                                                <div className="card-info">
+                                                    <div><strong>Còn lại:</strong> {product.stock}</div>
+                                                    <div>
+                                                        {product.status === "IN_STOCK" ? (
+                                                            <span style={{ color: "#389e0d" }}>Còn hàng</span>
+                                                        ) : (
+                                                            <span style={{ color: "#001529" }}>Hết hàng</span>
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        {product.productCondition === "NEW" ? (
+                                                            <span style={{ color: "#389e0d" }}>Mới</span>
+                                                        ) : (
+                                                            <span style={{ color: "#faad14" }}>Đã sử dụng</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </Card>
+
+                                    </motion.div>
                                 </Col>
                             ))
                             : (
                                 <Space
                                     style={{
                                         display: "flex",
-                                        alignItems: "center",       // căn giữa dọc
-                                        justifyContent: "center",   // căn giữa ngang
-                                        height: "100%",             // hoặc 300px, hoặc 'calc(100vh - 200px)' tùy layout
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        height: "100%",
                                         width: "100%"
                                     }}
                                 >
                                     <Empty />
                                 </Space>
                             )}
-
                     </Row>
                 </Spin>
 
