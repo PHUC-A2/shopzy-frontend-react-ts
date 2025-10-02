@@ -8,6 +8,7 @@ import background_03 from "../../../assets/background-03.png";
 
 import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
+import { Link } from "react-router";
 
 const { Content } = Layout;
 const { Meta } = Card;
@@ -83,7 +84,7 @@ const HomePage = () => {
                                         }
                                         className="custom-card"
                                     >
-                                        <span onClick={() => alert("Mở modal xem chi tiết")}>
+                                        <Link to={"product-details"} className="nav-link">
                                             <Meta
                                                 title={
                                                     <span className="card-title">{product.name}</span>
@@ -128,7 +129,7 @@ const HomePage = () => {
                                                     )}
                                                 </div>
                                             </div>
-                                        </span>
+                                        </Link>
                                     </Card>
 
                                 </Col>

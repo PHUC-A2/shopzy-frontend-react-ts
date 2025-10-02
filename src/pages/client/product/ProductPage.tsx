@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { IoFilter } from "react-icons/io5";
 import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
+import { Link } from "react-router";
 
 const { Content, Sider } = Layout;
 const { Meta } = Card;
@@ -103,7 +104,7 @@ const ProductPage = () => {
                                                 />
                                             }
                                         >
-                                            <span onClick={() => alert("Mở modal xem chi tiết")}>
+                                            <Link to={"/product-details"} className="nav-link">
                                                 <Meta
                                                     title={
                                                         <span className="card-title">{product.name}</span>
@@ -148,7 +149,7 @@ const ProductPage = () => {
                                                         )}
                                                     </div>
                                                 </div>
-                                            </span>
+                                            </Link>
                                         </Card>
                                     </Col>
                                 ))

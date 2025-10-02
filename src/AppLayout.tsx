@@ -23,6 +23,7 @@ import AdminCartItemPage from "./pages/admin/cart-items/AdminCartItemPage";
 import AdminOrderItemPage from "./pages/admin/order-items/AdminOrderItemPage";
 import ProductPage from "./pages/client/product/ProductPage";
 import AboutPage from "./pages/client/about/AboutPage";
+import ProductPageDetails from "./pages/client/details/ProductDetails";
 
 const router = createBrowserRouter([
   /* cấu hình cho user */
@@ -32,7 +33,9 @@ const router = createBrowserRouter([
       [
         { index: true, element: <HomePage /> },
         { path: "product", element: <ProductPage /> },
+        { path: "product-details", element: <ProductPageDetails /> },
         { path: "about", element: <AboutPage /> }
+
       ]
   },
 
