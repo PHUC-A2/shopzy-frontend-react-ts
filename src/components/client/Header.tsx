@@ -20,7 +20,6 @@ import { RiInfoCardLine } from 'react-icons/ri';
 import { FaShoppingBag, FaTshirt, FaUserCircle } from 'react-icons/fa';
 import ModalProfile from './modals/ModalProfile';
 import ModalNotification from './modals/ModalNotification';
-import ModalCart from './modals/ModalCart';
 import { SiImessage } from 'react-icons/si';
 import type { SearchProps } from 'antd/es/input';
 type MenuItem = Required<MenuProps>['items'][number];
@@ -32,7 +31,6 @@ const Header = () => {
     const navigave = useNavigate();
     const [openModalProfile, setOpenModalProfile] = useState<boolean>(false);
     const [openModalNotification, setOpenModalNotification] = useState<boolean>(false);
-    const [openModalCart, setOpenModalCart] = useState<boolean>(false);
 
     const handleLogout = async () => {
         try {
@@ -98,9 +96,9 @@ const Header = () => {
             label: '',
             key: 'cart',
             icon: (
-                <Space size={24} onClick={() => setOpenModalCart(true)}>
+                <Space size={24}>
                     <Badge size='small' count={10}>
-                        <FaShoppingBag className='header-cart-icon' size={24} />
+                        <Link to={"/cart"} className='nav-link'><FaShoppingBag className='header-cart-icon' size={24} /></Link>
                     </Badge>
                 </Space>
             ),
@@ -160,11 +158,6 @@ const Header = () => {
                     openModalNotification={openModalNotification}
                     setOpenModalNotification={setOpenModalNotification}
                 />
-                <ModalCart
-                    openModalCart={openModalCart}
-                    setOpenModalCart={setOpenModalCart}
-                />
-
                 <Row style={{ padding: '1rem' }} justify="space-between" align="middle">
                     <Col>
                         <h2><Link to={'/'} style={{ margin: 0, color: "#faad14", textDecoration: 'none' }}>Shopzy</Link></h2>
