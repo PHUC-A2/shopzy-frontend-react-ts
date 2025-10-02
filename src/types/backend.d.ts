@@ -1,3 +1,29 @@
+// ================Client================
+
+// Response API chung cho mọi entity
+export interface IApiResponse<T> {
+    statusCode: number;
+    error: string | null;
+    message: string;
+    data: T;
+}
+
+// Response có phân trang
+export interface IPaginate<T> {
+    meta: {
+        page: number;
+        pageSize: number;
+        pages: number;
+        total: number;
+    };
+    result: T[];
+}
+
+
+// product
+export type IGetAllProductsResponse = IApiResponse<IPaginate<IProduct>>;
+
+// ================Client================
 // ================USER================
 export interface IUser {
     id: number;

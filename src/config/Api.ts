@@ -1,5 +1,5 @@
 import instance from "./customAxios";
-import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
+import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
 
 // chuyển sang dùng instance
 
@@ -18,7 +18,7 @@ export const getAccount = () => instance.get("/api/v1/auth/account");
 export const getRefreshToken = () => instance.get("/api/v1/auth/refresh");
 
 
-/* api user */
+/* api product */
 export const createProduct = (data: ICreateProductReq) => instance.post("/api/v1/products", data);
 export const updateProduct = (data: IUpdateProductReq) => instance.put("/api/v1/products", data);
 export const getAllProducts = () => instance.get("/api/v1/products");
@@ -54,4 +54,15 @@ export const createOrderItem = (data: ICreateOrderItemReq) => instance.post(`/ap
 export const updateOrderItem = (data: IUpdateOrderItemReq) => instance.put(`/api/v1/order-items`, data);
 
 /* ====================Client================ */
+/* api product (client) */
+// export const clientGetAllProducts = () => instance.get<IGetAllProductsResponse>("/api/v1/products");
+// export const clientGetAllProducts = (page: number, size: number) =>
+//     instance.get<IGetAllProductsResponse>("/api/v1/products", {
+//         params: { page, size },
+//     });
+/* api product (client) */
+export const clientGetAllProducts = (page: number, size: number) => {
+    return instance.get<IGetAllProductsResponse>(`/api/v1/products?page=${page}&size=${size}`);
+};
+
 export const getCartClient = () => instance.get(`/api/v1/client/carts`);

@@ -1,206 +1,167 @@
-import { Layout, Row, Col, Carousel, Card, Pagination, Image } from "antd";
-import { useState } from "react";
+import { Layout, Row, Col, Carousel, Card, Pagination, Image, Spin, Empty, Space } from "antd";
+import { useEffect, useState } from "react";
 
-// ảnh local
 import background_01 from "../../../assets/background-01.png";
 import background_02 from "../../../assets/background-02.png";
 import background_03 from "../../../assets/background-03.png";
-import shirt_01 from "../../../assets/shirt-01.png";
-import asus_zenbook_01 from "../../../assets/asus-zenbook-01.png";
-import lenovo_legion_05_01 from "../../../assets/lenovo-legion05-01.png";
+// import asus_zenbook_01 from "../../../assets/asus-zenbook-01.png";
+
+import type { IProduct } from "../../../types/backend";
+import { clientGetAllProducts } from "../../../config/Api";
 
 const { Content } = Layout;
 const { Meta } = Card;
 
-interface Product {
-    id: number;
-    name: string;
-    description: string;
-    price: number;
-    stock: number;
-    status: string;
-    productCondition: string;
-    imageUrl: string;
-    size: string;
-    color: string;
-}
-
-// ⚡️ Giả lập API response tĩnh
-const apiResponse = {
-    meta: {
-        page: 1,
-        pageSize: 2, // backend set pageSize = total → hiển thị hết
-        pages: 2,
-        total: 4,
-    },
-    result: [
-        {
-            id: 1,
-            name: "Quần ABC",
-            description: "Quần âu đẹp",
-            price: 200000,
-            stock: 15,
-            status: "IN_STOCK",
-            productCondition: "NEW",
-            imageUrl: asus_zenbook_01,
-            size: "S",
-            color: "Đỏ",
-        },
-        {
-            id: 2,
-            name: "Quần A",
-            description: "Quần âu đẹp",
-            price: 200000,
-            stock: 15,
-            status: "IN_STOCK",
-            productCondition: "NEW",
-            imageUrl: lenovo_legion_05_01,
-            size: "S",
-            color: "Đỏ",
-        },
-        {
-            id: 3,
-            name: "Quần C",
-            description: "Quần âu đẹp",
-            price: 200000,
-            stock: 20,
-            status: "IN_STOCK",
-            productCondition: "USED",
-            imageUrl: "", // thiếu ảnh → fallback
-            size: "S",
-            color: "Đen",
-        },
-        {
-            id: 4,
-            name: "Quần C_D",
-            description: "Quần âu đẹp d",
-            price: 3000,
-            stock: 0,
-            status: "OUT_OF_STOCK",
-            productCondition: "USED",
-            imageUrl: shirt_01,
-            size: "M",
-            color: "Đen",
-        },
-        {
-            id: 5,
-            name: "Quần C_D",
-            description: "Quần âu đẹp d",
-            price: 3000,
-            stock: 0,
-            status: "OUT_OF_STOCK",
-            productCondition: "USED",
-            imageUrl: shirt_01,
-            size: "M",
-            color: "Đen",
-        },
-        {
-            id: 6,
-            name: "Quần C_D",
-            description: "Quần âu đẹp d",
-            price: 3000,
-            stock: 0,
-            status: "OUT_OF_STOCK",
-            productCondition: "USED",
-            imageUrl: shirt_01,
-            size: "M",
-            color: "Đen",
-        },
-        {
-            id: 7,
-            name: "Quần C_D",
-            description: "Quần âu đẹp d",
-            price: 3000,
-            stock: 0,
-            status: "OUT_OF_STOCK",
-            productCondition: "USED",
-            imageUrl: shirt_01,
-            size: "M",
-            color: "Đen",
-        },
-    ] as Product[],
-};
-
 const HomePage = () => {
-    const { meta, result } = apiResponse;
-    const [currentPage, setCurrentPage] = useState(meta.page);
+    const [page, setPage] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<number>(12); // mỗi trang 12 sản phẩm
+    const [total, setTotal] = useState<number>(0);
+    const [listProduct, setListProduct] = useState<IProduct[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    // ✅ backend đã phân trang rồi → chỉ dùng trực tiếp result
-    const paginatedProducts = result;
+    const fetchProduct = async (page: number, size: number) => {
+        try {
+            setLoading(true);
+            const res = await clientGetAllProducts(page, size);
+            setListProduct(res.data.data.result);
+            setPage(res.data.data.meta.page);
+            setPageSize(res.data.data.meta.pageSize);
+            setTotal(res.data.data.meta.total);
+        } catch (error) {
+            console.error("Fetch products error:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    // ảnh fallback
-    const fallbackImage = background_01;
+    useEffect(() => {
+        fetchProduct(page, pageSize);
+    }, [page, pageSize]);
 
     return (
         <Layout style={{ marginTop: 103 }}>
             <Content style={{ padding: "24px" }}>
-                {/* Carousel banner */}
-                <Carousel autoplay arrows autoplaySpeed={2000} style={{ marginBottom: 24 }}>
-                    <div>
-                        <img
-                            src={background_01}
-                            alt="slide1"
-                            style={{ width: "100%", borderRadius: 8 }}
-                        />
-                    </div>
-                    <div>
-                        <img
-                            src={background_02}
-                            alt="slide2"
-                            style={{ width: "100%", borderRadius: 8 }}
-                        />
-                    </div>
-                    <div>
-                        <img
-                            src={background_03}
-                            alt="slide3"
-                            style={{ width: "100%", borderRadius: 8 }}
-                        />
-                    </div>
+                {/* Carousel */}
+                <Carousel autoplay arrows autoplaySpeed={1500} style={{ marginBottom: 24 }}>
+                    <div><img src={background_01} alt="slide1" style={{ width: "100%", borderRadius: 8 }} /></div>
+                    <div><img src={background_02} alt="slide2" style={{ width: "100%", borderRadius: 8 }} /></div>
+                    <div><img src={background_03} alt="slide3" style={{ width: "100%", borderRadius: 8 }} /></div>
                 </Carousel>
 
-                {/* Danh mục sản phẩm */}
                 <h3 style={{ marginBottom: 16 }}>DANH MỤC</h3>
-                <Row gutter={[16, 16]}>
-                    {paginatedProducts.map((product) => (
-                        <Col xs={12} sm={8} md={4} lg={6} xl={4} key={product.id}>
-                            <Card
-                                hoverable
-                                style={{ height: "100%" }}
-                                cover={
-                                    <Image
-                                        src={product.imageUrl || fallbackImage}
-                                        alt={product.name}
-                                        preview
-                                        style={{ objectFit: "contain", height: 200 }}
-                                    />
-                                }
-                            >
-                                <Meta
-                                    title={product.name}
-                                    description={`Giá: ${product.price.toLocaleString()} VND`}
-                                />
-                                <div>
-                                    <strong>Còn lại:</strong> {product.stock}
-                                </div>
-                                <div>
-                                    <strong>Trạng thái:</strong> {product.status}
-                                </div>
-                                <div>
-                                    <strong>Tình trạng:</strong> {product.productCondition}
-                                </div>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
 
-                {/* Phân trang */}
+                {/*  giữ UI, overlay loading */}
+                <Spin spinning={loading}>
+                    <Row gutter={[16, 16]}>
+                        {listProduct.length > 0 ?
+                            listProduct.map((product) => (
+                                <Col xs={12} sm={8} md={6} lg={6} xl={4} key={product.id}>
+                                    <Card
+                                        hoverable
+                                        style={{
+                                            height: "100%",
+                                            border: "1px solid #f0f0f0",
+                                            borderRadius: 12,
+                                            transition: "all 0.3s ease",
+                                        }}
+                                        styles={{
+                                            body: {
+                                                padding: 12
+                                            }
+                                        }}
+                                        cover={
+                                            <Image
+                                                src={`https://picsum.photos/seed/${product.id}/400/300`}
+                                                alt={product.name}
+                                                preview
+                                                style={{
+                                                    objectFit: "contain",
+                                                    height: 200,
+                                                    padding: 8,
+                                                }}
+                                            />
+                                        }
+                                        className="custom-card"
+                                    >
+                                        <span onClick={() => alert("Mở modal xem chi tiết")}>
+                                            <Meta
+                                                title={
+                                                    <span className="card-title">{product.name}</span>
+                                                }
+                                                description={
+                                                    <span style={{ color: "#389e0d", fontWeight: 500 }}>
+                                                        {`Giá: ${product.price.toLocaleString()} VND`}
+                                                    </span>
+                                                }
+                                            />
+
+                                            <div className="card-info">
+                                                <div>
+                                                    <strong>Còn lại:</strong> {product.stock}
+                                                </div>
+
+                                                <div>
+                                                    {product.status === "IN_STOCK" ? (
+                                                        <div>
+                                                            <strong style={{ color: "#faad14" }}>Trạng thái:</strong>{" "}
+                                                            <span style={{ color: "#389e0d" }}>Còn hàng</span>
+                                                        </div>
+                                                    ) : (
+                                                        <div>
+                                                            <strong style={{ color: "#faad14" }}>Trạng thái:</strong>{" "}
+                                                            <span style={{ color: "#001529" }}>Hết hàng</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                <div>
+                                                    {product.productCondition === "NEW" ? (
+                                                        <div>
+                                                            <strong style={{ color: "#001529" }}>Tình trạng:</strong>{" "}
+                                                            <span style={{ color: "#389e0d" }}>Mới</span>
+                                                        </div>
+                                                    ) : (
+                                                        <div>
+                                                            <strong style={{ color: "#001529" }}>Tình trạng:</strong>{" "}
+                                                            <span style={{ color: "#faad14" }}>Đã sử dụng</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </Card>
+
+                                </Col>
+                            ))
+                            : (
+                                <Space
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",       // căn giữa dọc
+                                        justifyContent: "center",   // căn giữa ngang
+                                        height: "100%",             // hoặc 300px, hoặc 'calc(100vh - 200px)' tùy layout
+                                        width: "100%"
+                                    }}
+                                >
+                                    <Empty />
+                                </Space>
+                            )}
+
+                    </Row>
+                </Spin>
+
+                {/* Pagination */}
                 <Row justify="center" style={{ marginTop: 24 }}>
                     <Pagination
-                        current={currentPage}
-                        pageSize={meta.pageSize}
-                        total={meta.total}
-                        onChange={(page) => setCurrentPage(page)}
+                        current={page}
+                        pageSize={pageSize}
+                        total={total}
+                        showSizeChanger
+                        pageSizeOptions={[4, 8, 12, 16]} // cho user chọn số card / trang
+                        onChange={(newPage, newSize) => {
+                            setPage(newPage);
+                            if (newSize !== pageSize) setPageSize(newSize);
+                        }}
                     />
                 </Row>
             </Content>
