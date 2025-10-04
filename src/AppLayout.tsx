@@ -7,7 +7,7 @@ import HomePage from "./pages/client/home/HomePage";
 import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
 import AdminLayout from "./routers/AdminLayout";
 import AdminPage from "./pages/admin/AdminPage";
-import { toast, ToastContainer } from 'react-toastify';
+import { Slide, toast, ToastContainer } from 'react-toastify';
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
@@ -132,7 +132,27 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={1800}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover={false}
+        draggable={false}
+        theme="colored"
+        transition={Slide}   // 👈 giống default
+        toastStyle={{
+          marginTop: "25px",
+          fontSize: "13px",
+          padding: "8px 14px",
+          borderRadius: "12px",
+          minHeight: "unset",
+          lineHeight: "1.3",
+          fontWeight: 500,
+          boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+        }}
+      />
     </>
   )
 }

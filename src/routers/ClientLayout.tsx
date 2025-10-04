@@ -7,7 +7,7 @@ import { useState } from "react";
 const ClientLayout = () => {
     // xử lý thêm vào giỏ hàng (đây là component cha)
     // dùng Context API của Outlet để xử lý sau này có thể mở rộng
-    const [cartCount, setCartCount] = useState<number>(3);
+    const [cartCount, setCartCount] = useState<number>(0);
 
     return (
         <div className="client-layout-container">

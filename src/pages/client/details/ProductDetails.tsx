@@ -21,7 +21,7 @@ import { Button } from "react-bootstrap";
 import { motion } from "framer-motion";
 import "./ProductDetails.scss";
 import { useOutletContext } from "react-router";
-import { toast } from "react-toastify";
+import { Slide, toast } from "react-toastify";
 
 const { Title, Text } = Typography;
 
@@ -36,7 +36,31 @@ const ProductPageDetails = () => {
     // thêm vào giỏ hàng
     const handleAddToCart = () => {
         setCartCount(pr => pr + 1);
-        toast.success("Đã thêm sản phẩm vào giỏ hàng")
+        toast.success("🛒 Đã thêm sản phẩm vào giỏ hàng", {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false, // cho hiện progress bar mảnh
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            transition: Slide,       // Slide | Zoom | Flip | Bounce
+            style: {
+                fontSize: "13px",
+                padding: "8px 14px",
+                borderRadius: "10px",
+                minHeight: "unset",
+                lineHeight: "1.3",
+                fontWeight: 500,
+                color: "#fff",
+                boxShadow: "0 6px 18px rgba(0,0,0,0.15)",
+                marginTop: "25px",
+            },
+            progressStyle: {
+                background: "rgba(255,255,255,0.8)", // progress bar trắng mảnh
+                height: "3px",
+                borderRadius: "2px",
+            },
+        } as any);
     };
 
     return (
