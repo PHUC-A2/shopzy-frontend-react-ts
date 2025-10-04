@@ -2,14 +2,12 @@ import { Outlet } from "react-router";
 import Header from "../components/client/Header";
 import Footer from "../components/client/Footer";
 import '../styles/ClientLayout.scss'
+import { useState } from "react";
 
-interface IProps {
-    cartCount: number;
-}
-
-const ClientLayout = (props: IProps) => {
-
-    const { cartCount } = props;
+const ClientLayout = () => {
+    // xử lý thêm vào giỏ hàng (đây là component cha)
+    // dùng Context API của Outlet để xử lý sau này có thể mở rộng
+    const [cartCount, setCartCount] = useState<number>(3);
 
     return (
         <div className="client-layout-container">
@@ -17,7 +15,7 @@ const ClientLayout = (props: IProps) => {
                 <Header cartCount={cartCount} />
             </div>
             <div className="client-main-container">
-                <Outlet />
+                <Outlet context={{ setCartCount }} />
             </div>
             <div className="client-footer-container">
                 <Footer />

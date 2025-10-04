@@ -20,6 +20,8 @@ import {
 import { Button } from "react-bootstrap";
 import { motion } from "framer-motion";
 import "./ProductDetails.scss";
+import { useOutletContext } from "react-router";
+import { toast } from "react-toastify";
 
 const { Title, Text } = Typography;
 
@@ -27,12 +29,15 @@ interface IProps {
     setCartCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ProductPageDetails = (props: IProps) => {
+const ProductPageDetails = () => {
 
-    const { setCartCount } = props;
+    const { setCartCount } = useOutletContext<IProps>();
 
     // thêm vào giỏ hàng
-    const handleAddToCart = () => setCartCount(pr => pr + 1);
+    const handleAddToCart = () => {
+        setCartCount(pr => pr + 1);
+        toast.success("Đã thêm sản phẩm vào giỏ hàng")
+    };
 
     return (
         <>
