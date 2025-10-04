@@ -191,6 +191,7 @@ const ProductPageDetails = () => {
 
                                         <motion.div whileHover={{ scale: 1.05 }}>
                                             <Button
+                                                onClick={() => toast.info("Chuyển sang trang checkout")}
                                                 variant="outline-dark"
                                                 style={{
                                                     padding: "10px 24px",

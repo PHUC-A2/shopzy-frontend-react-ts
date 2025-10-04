@@ -22,6 +22,7 @@ import ModalProfile from './modals/ModalProfile';
 import ModalNotification from './modals/ModalNotification';
 import { SiImessage } from 'react-icons/si';
 import type { SearchProps } from 'antd/es/input';
+import ModalMessage from '../../pages/client/chat/ModalMessage';
 type MenuItem = Required<MenuProps>['items'][number];
 
 interface IProps {
@@ -37,6 +38,7 @@ const Header = (props: IProps) => {
     const navigave = useNavigate();
     const [openModalProfile, setOpenModalProfile] = useState<boolean>(false);
     const [openModalNotification, setOpenModalNotification] = useState<boolean>(false);
+    const [openModalMessage, setOpenModalMessage] = useState<boolean>(false);
 
     const handleLogout = async () => {
         try {
@@ -75,10 +77,10 @@ const Header = (props: IProps) => {
             icon: <RiInfoCardLine className='header-about-icon' style={{ fontSize: 16 }} />,
         },
         {
-            label: <Link className='text-decoration-none' to={"#/message"}></Link>,
+            label: '',
             key: 'message',
             icon: (
-                <Space size={24}>
+                <Space size={24} onClick={() => setOpenModalMessage(true)}>
                     <Badge size='small' count={2}>
                         <SiImessage className='header-message-icon' size={24} />
                     </Badge>
@@ -163,6 +165,10 @@ const Header = (props: IProps) => {
                 <ModalNotification
                     openModalNotification={openModalNotification}
                     setOpenModalNotification={setOpenModalNotification}
+                />
+                <ModalMessage
+                    openModalMessage={openModalMessage}
+                    setOpenModalMessage={setOpenModalMessage}
                 />
                 <Row style={{ padding: '1rem' }} justify="space-between" align="middle">
                     <Col>
