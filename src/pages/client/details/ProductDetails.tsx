@@ -35,7 +35,7 @@ const ProductPageDetails = () => {
 
     // thêm vào giỏ hàng
     const handleAddToCart = () => {
-        setCartCount(pr => pr + 1);
+        setCartCount(cart => cart + 1);
         toast.success("🛒 Đã thêm sản phẩm vào giỏ hàng", {
             position: "top-right",
             autoClose: 1500,

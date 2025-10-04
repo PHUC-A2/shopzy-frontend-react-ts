@@ -1,70 +1,11 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router";
-import ClientLayout from "./routers/ClientLayout";
-import HomePage from "./pages/client/home/HomePage";
-import AdminUsersPage from "./pages/admin/users/AdminUsersPage";
-import AdminLayout from "./routers/AdminLayout";
-import AdminPage from "./pages/admin/AdminPage";
-import { Slide, toast, ToastContainer } from 'react-toastify';
-import LoginPage from "./pages/auth/LoginPage";
-import RegisterPage from "./pages/auth/RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAccount, getUserDetails } from "./config/Api";
 import { setUserLoginInfo } from "./redux/slice/authSlice";
 import type { RootState } from "./redux/store";
 import { setClearProfileUser, setProfileUser } from "./redux/slice/userSlice";
-import AdminProductPage from "./pages/admin/products/AdminProductPage";
-import AdminCartPage from "./pages/admin/carts/AdminCartPage";
-import AdminOrderPage from "./pages/admin/orders/AdminOrderPage";
-import AdminCartItemPage from "./pages/admin/cart-items/AdminCartItemPage";
-import AdminOrderItemPage from "./pages/admin/order-items/AdminOrderItemPage";
-import ProductPage from "./pages/client/product/ProductPage";
-import AboutPage from "./pages/client/about/AboutPage";
-import ProductPageDetails from "./pages/client/details/ProductDetails";
-import CartPage from "./pages/client/cart/CartPage";
-
-const router = createBrowserRouter([
-  /* cấu hình cho user */
-  {
-    path: "/", element: <ClientLayout />,
-    children:
-      [
-        { index: true, element: <HomePage /> },
-        { path: "product", element: <ProductPage /> },
-        { path: "product-details", element: <ProductPageDetails /> },
-        { path: "cart", element: <CartPage /> },
-        { path: "about", element: <AboutPage /> }
-
-      ]
-  },
-
-  /* cấu hình cho admin */
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children:
-      [
-        { index: true, element: <AdminPage /> },
-        { path: "user", element: <AdminUsersPage /> },
-        { path: "product", element: <AdminProductPage /> },
-        { path: "cart", element: <AdminCartPage /> },
-        { path: "cart-item", element: <AdminCartItemPage /> },
-        { path: "order", element: <AdminOrderPage /> },
-        { path: "order-item", element: <AdminOrderItemPage /> },
-      ]
-  },
-  /* cấu hình cho login */
-  {
-    path: "/login", element: <LoginPage />,
-  },
-  /* cấu hình cho register */
-  {
-    path: "/register", element: <RegisterPage />,
-  }
-]);
+import AppRouter from "./routers/AppRouter";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 const App = () => {
 
@@ -131,7 +72,8 @@ const App = () => {
 
   return (
     <>
-      <RouterProvider router={router} />
+      {/* router */}
+      <AppRouter />
       <ToastContainer
         position="top-right"
         autoClose={1800}
