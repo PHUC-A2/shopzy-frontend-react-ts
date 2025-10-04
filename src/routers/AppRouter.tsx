@@ -15,6 +15,7 @@ import AdminCartPage from "../pages/admin/carts/AdminCartPage";
 import AdminCartItemPage from "../pages/admin/cart-items/AdminCartItemPage";
 import AdminOrderPage from "../pages/admin/orders/AdminOrderPage";
 import AdminOrderItemPage from "../pages/admin/order-items/AdminOrderItemPage";
+import NotFoundPage from "../pages/error/NotFoundPage";
 
 
 const router = createBrowserRouter([
@@ -45,15 +46,21 @@ const router = createBrowserRouter([
                 { path: "cart-item", element: <AdminCartItemPage /> },
                 { path: "order", element: <AdminOrderPage /> },
                 { path: "order-item", element: <AdminOrderItemPage /> },
-            ]
+            ],
     },
     /* cấu hình cho login */
     {
-        path: "/login", element: <LoginPage />,
+        path: "/login", element: <LoginPage />
     },
     /* cấu hình cho register */
     {
-        path: "/register", element: <RegisterPage />,
+        path: "/register", element: <RegisterPage />
+    },
+
+    /* cấu hình cho lỗi sai đường dẫn */
+    {
+        path: "*", // bất kỳ đường dẫn nào không match
+        element: <NotFoundPage />
     }
 ]);
 
