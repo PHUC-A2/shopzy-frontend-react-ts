@@ -6,7 +6,7 @@ interface IProps {
     onClick: () => void;
 }
 
-const MotionButton = motion(Button);
+const MotionButton = motion.create(Button);
 
 const MessageButton = ({ onClick }: IProps) => {
     return (
