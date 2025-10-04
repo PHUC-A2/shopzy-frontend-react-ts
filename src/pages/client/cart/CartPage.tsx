@@ -4,6 +4,8 @@ import { Button } from "react-bootstrap";
 import { FaShoppingBag, FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CartPage.scss";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../redux/store";
 
 const { Text, Title } = Typography;
 
@@ -21,6 +23,8 @@ interface CartItem {
 }
 
 const CartPage = () => {
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    console.log(isAuthenticated);
     const [cartItems, setCartItems] = useState<CartItem[]>([
         {
             cartItemId: 1,
@@ -77,7 +81,7 @@ const CartPage = () => {
                     <span style={{ color: "#faad14" }}>🛒 Shopzy | Giỏ Hàng</span>
                 </Title>
 
-                {cartItems.length > 0 ? (
+                {cartItems.length > 0 && isAuthenticated ? (
                     <>
                         {/* Header */}
                         <Row style={{ fontWeight: "bold", marginBottom: 12 }}>

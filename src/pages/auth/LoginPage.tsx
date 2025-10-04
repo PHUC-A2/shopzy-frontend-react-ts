@@ -92,7 +92,7 @@ const LoginPage = () => {
                             htmlType="submit"
                             className="btn-login"
                         >
-                            <span>Đăng nhập</span>
+                            <span>Log in</span>
                         </Button>
                         <Flex className="mt-2" justify="space-between" align="center">
                             <Link to="/register">Sign up now!</Link>

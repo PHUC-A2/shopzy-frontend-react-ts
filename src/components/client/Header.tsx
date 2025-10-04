@@ -38,7 +38,7 @@ const Header = () => {
             if (res?.data?.statusCode === 200) {
                 dispatch(setLogoutUser())
                 toast.success('Đăng xuất thành công');
-                navigave('/login');
+                navigave('/');
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknown";
@@ -120,8 +120,8 @@ const Header = () => {
 
                         ...(isAuthenticated === false ?
                             [
-                                { label: <Link to={'/login'} className='text-decoration-none'>Sign in</Link>, key: 'signin', icon: <IoMdLogIn /> },
-                                { label: <Link to={'/register'} className='text-decoration-none'>Sign up</Link>, key: 'signup', icon: < FaUserPlus /> },
+                                { label: <Link to={'/login'} className='text-decoration-none'>Đăng nhập</Link>, key: 'signin', icon: <IoMdLogIn /> },
+                                { label: <Link to={'/register'} className='text-decoration-none'>Đăng ký</Link>, key: 'signup', icon: < FaUserPlus /> },
                             ]
                             :
                             [

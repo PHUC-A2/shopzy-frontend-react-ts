@@ -32,7 +32,7 @@ const AdminSidebar = () => {
             if (res?.data?.statusCode === 200) {
                 dispatch(setLogoutUser())
                 toast.success('Đăng xuất thành công');
-                navigate('/login');
+                navigate('/');
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknown";
