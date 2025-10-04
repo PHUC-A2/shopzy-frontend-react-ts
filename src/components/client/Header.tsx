@@ -24,7 +24,13 @@ import { SiImessage } from 'react-icons/si';
 import type { SearchProps } from 'antd/es/input';
 type MenuItem = Required<MenuProps>['items'][number];
 
-const Header = () => {
+interface IProps {
+    cartCount: number;
+}
+
+const Header = (props: IProps) => {
+
+    const { cartCount } = props;
 
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
@@ -97,7 +103,7 @@ const Header = () => {
             key: 'cart',
             icon: (
                 <Space size={24}>
-                    <Badge size='small' count={10}>
+                    <Badge size='small' count={cartCount}>
                         <Link to={"/cart"} className='nav-link'><FaShoppingBag className='header-cart-icon' size={24} /></Link>
                     </Badge>
                 </Space>

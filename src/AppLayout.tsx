@@ -11,7 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAccount, getUserDetails } from "./config/Api";
 import { setUserLoginInfo } from "./redux/slice/authSlice";
 import type { RootState } from "./redux/store";
@@ -26,51 +26,58 @@ import AboutPage from "./pages/client/about/AboutPage";
 import ProductPageDetails from "./pages/client/details/ProductDetails";
 import CartPage from "./pages/client/cart/CartPage";
 
-const router = createBrowserRouter([
-  /* cấu hình cho user */
-  {
-    path: "/", element: <ClientLayout />,
-    children:
-      [
-        { index: true, element: <HomePage /> },
-        { path: "product", element: <ProductPage /> },
-        { path: "product-details", element: <ProductPageDetails /> },
-        { path: "cart", element: <CartPage /> },
-        { path: "about", element: <AboutPage /> }
 
-      ]
-  },
-
-  /* cấu hình cho admin */
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children:
-      [
-        { index: true, element: <AdminPage /> },
-        { path: "user", element: <AdminUsersPage /> },
-        { path: "product", element: <AdminProductPage /> },
-        { path: "cart", element: <AdminCartPage /> },
-        { path: "cart-item", element: <AdminCartItemPage /> },
-        { path: "order", element: <AdminOrderPage /> },
-        { path: "order-item", element: <AdminOrderItemPage /> },
-      ]
-  },
-  /* cấu hình cho login */
-  {
-    path: "/login", element: <LoginPage />,
-  },
-  /* cấu hình cho register */
-  {
-    path: "/register", element: <RegisterPage />,
-  }
-]);
 
 const App = () => {
+
+  // xử lý thêm vào giỏ hàng (đây là component cha)
+  const [cartCount, setCartCount] = useState<number>(3);
+
+  /* router */
+  const router = createBrowserRouter([
+    /* cấu hình cho user */
+    {
+      path: "/", element: <ClientLayout cartCount={cartCount} />,
+      children:
+        [
+          { index: true, element: <HomePage /> },
+          { path: "product", element: <ProductPage /> },
+          { path: "product-details", element: <ProductPageDetails setCartCount={setCartCount} /> },
+          { path: "cart", element: <CartPage /> },
+          { path: "about", element: <AboutPage /> }
+
+        ]
+    },
+
+    /* cấu hình cho admin */
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children:
+        [
+          { index: true, element: <AdminPage /> },
+          { path: "user", element: <AdminUsersPage /> },
+          { path: "product", element: <AdminProductPage /> },
+          { path: "cart", element: <AdminCartPage /> },
+          { path: "cart-item", element: <AdminCartItemPage /> },
+          { path: "order", element: <AdminOrderPage /> },
+          { path: "order-item", element: <AdminOrderItemPage /> },
+        ]
+    },
+    /* cấu hình cho login */
+    {
+      path: "/login", element: <LoginPage />,
+    },
+    /* cấu hình cho register */
+    {
+      path: "/register", element: <RegisterPage />,
+    }
+  ]);
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const account = useSelector((state: RootState) => state.auth.user);
+
 
   // xử lý khi F5 với Login (authSlice)
   useEffect(() => {

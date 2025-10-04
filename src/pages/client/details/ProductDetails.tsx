@@ -23,7 +23,17 @@ import "./ProductDetails.scss";
 
 const { Title, Text } = Typography;
 
-const ProductPageDetails = () => {
+interface IProps {
+    setCartCount: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const ProductPageDetails = (props: IProps) => {
+
+    const { setCartCount } = props;
+
+    // thêm vào giỏ hàng
+    const handleAddToCart = () => setCartCount(pr => pr + 1);
+
     return (
         <>
             <div className="product-details-container">
@@ -128,6 +138,7 @@ const ProductPageDetails = () => {
                                     <Space size="large" wrap>
                                         <motion.div whileHover={{ scale: 1.05 }}>
                                             <Button
+                                                onClick={handleAddToCart}
                                                 variant="dark"
                                                 style={{
                                                     padding: "10px 24px",
