@@ -5,6 +5,7 @@ import { motion } from "framer-motion";   // ✅ thêm framer-motion
 import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
 import { Link } from "react-router";
+import { toast } from "react-toastify";
 
 const { Content } = Layout;
 const { Meta } = Card;
@@ -24,8 +25,14 @@ const HomePage = () => {
             setPage(res.data.data.meta.page);
             setPageSize(res.data.data.meta.pageSize);
             setTotal(res.data.data.meta.total);
-        } catch (error) {
+        } catch (error: any) {
             console.error("Fetch products error:", error);
+            toast.error(
+                <div>
+                    <div><strong>Có lỗi xảy ra!</strong></div>
+                    <div>{error}</div>
+                </div>
+            )
         } finally {
             setLoading(false);
         }
@@ -41,7 +48,7 @@ const HomePage = () => {
                 {/* Carousel */}
                 {/* Carousel Responsive */}
                 <Carousel autoplay arrows autoplaySpeed={2500} style={{ marginBottom: 24 }}>
-                    {[1, 2, 3, 4, 5].map((i) => (
+                    {[1, 2, 3,4,5,6,7].map((i) => (
                         <div key={i}>
                             <img
                                 src={`https://picsum.photos/seed/slide${i}/1200/600`}
