@@ -5,50 +5,16 @@ import { FaShoppingBag, FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CartPage.scss";
 import { toast } from "react-toastify";
+import type { ICartItemRes } from "../../../types/backend";
+import { getCartItemClient } from "../../../config/Api";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../redux/store";
 
 const { Text, Title } = Typography;
 
-interface CartItem {
-    cartItemId: number;
-    productId: number;
-    name: string;
-    imageUrl: string;
-    price: number;
-    quantity: number;
-    size: string;
-    color: string;
-    status: string;
-    subtotal: number;
-}
-
 const CartPage = () => {
-    const [cartItems, setCartItems] = useState<CartItem[]>([
-        {
-            cartItemId: 1,
-            productId: 1,
-            name: "Quần ABC",
-            imageUrl: "https://picsum.photos/200/200?random=1",
-            price: 200000,
-            quantity: 2,
-            size: "M",
-            color: "Đỏ",
-            status: "IN_STOCK",
-            subtotal: 200000 * 2,
-        },
-        {
-            cartItemId: 2,
-            productId: 3,
-            name: "Quần C",
-            imageUrl: "https://picsum.photos/200/200?random=2",
-            price: 300000,
-            quantity: 1,
-            size: "L",
-            color: "Đen",
-            status: "IN_STOCK",
-            subtotal: 300000 * 1,
-        },
-    ]);
-
+    const [cartItems, setCartItems] = useState<ICartItemRes[]>([]);
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -75,6 +41,35 @@ const CartPage = () => {
     };
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
+
+    const fetchCartItem = async () => {
+        try {
+            const res = await getCartItemClient();
+            if (res?.data?.statusCode === 200) {
+                // console.log(res.data.data.cartItems);
+                setCartItems(res.data.data.cartItems);
+            }
+        } catch (error: any) {
+            console.log("Có lỗi xảy ra!\n", error)
+            const msg = error?.response?.data?.message ?? "unknown";
+            toast.error(
+                <div>
+                    <div><strong>Có lỗi xảy ra</strong></div>
+                    <div>{msg}</div>
+                </div>
+            )
+        }
+    }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            fetchCartItem();
+            // console.log("Đã đăng nhập: ", isAuthenticated)
+        } else {
+            // console.log("Chưa đăng nhập: ", isAuthenticated)
+            setCartItems([]);
+        }
+    }, [setCartItems])
 
     return (
         <div className="cart-page-container">
@@ -251,7 +246,7 @@ const CartPage = () => {
                                             variant="outline-dark"
                                             style={{
                                                 display: "flex",
-                                                alignItems:"center",
+                                                alignItems: "center",
                                                 gap: 5,
                                                 padding: "10px 24px",
                                                 borderRadius: "8px",
@@ -278,7 +273,11 @@ const CartPage = () => {
                         )}
                     </>
                 ) : (
-                    <Empty description="Giỏ hàng trống" />
+                    isAuthenticated ? (
+                        <Empty description="Giỏ hàng trống" />
+                    ) : (
+                        <Empty description="Vui lòng đăng nhập để xem giỏ hàng" />
+                    )
                 )}
             </Layout>
         </div>
