@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { FaShoppingBag, FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CartPage.scss";
+import { toast } from "react-toastify";
 
 const { Text, Title } = Typography;
 
@@ -159,8 +160,34 @@ const CartPage = () => {
                                     </Col>
                                     <Col>
                                         <motion.div whileHover={{ scale: 1.05 }}>
-                                            <Button className="checkout-btn">
+                                            {/* <Button className="checkout-btn">
                                                 <FaShoppingBag /> Mua Hàng
+                                            </Button> */}
+                                            <Button
+                                                onClick={() => toast.info("Chuyển sang trang checkout")}
+                                                variant="outline-dark"
+                                                style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: 5,
+                                                    padding: "10px 24px",
+                                                    borderRadius: "8px",
+                                                    border: "2px solid #faad14",
+                                                    background: "white",
+                                                    color: "#faad14",
+                                                    fontWeight: "500",
+                                                    transition: "all 0.3s ease",
+                                                }}
+                                                onMouseOver={(e) => {
+                                                    e.currentTarget.style.background = "#faad14";
+                                                    e.currentTarget.style.color = "white";
+                                                }}
+                                                onMouseOut={(e) => {
+                                                    e.currentTarget.style.background = "white";
+                                                    e.currentTarget.style.color = "#faad14";
+                                                }}
+                                            >
+                                                <FaShoppingBag /> <span>Mua Hàng</span>
                                             </Button>
                                         </motion.div>
                                     </Col>
@@ -215,8 +242,35 @@ const CartPage = () => {
                                         </Text>
                                     </div>
                                     <motion.div whileHover={{ scale: 1.05 }}>
-                                        <Button className="checkout-btn-mobile">
+                                        {/* <Button className="checkout-btn-mobile">
                                             <FaShoppingBag /> Mua Hàng
+                                        </Button> */}
+
+                                        <Button
+                                            onClick={() => toast.info("Chuyển sang trang checkout")}
+                                            variant="outline-dark"
+                                            style={{
+                                                display: "flex",
+                                                alignItems:"center",
+                                                gap: 5,
+                                                padding: "10px 24px",
+                                                borderRadius: "8px",
+                                                border: "2px solid #faad14",
+                                                background: "white",
+                                                color: "#faad14",
+                                                fontWeight: "500",
+                                                transition: "all 0.3s ease",
+                                            }}
+                                            onMouseOver={(e) => {
+                                                e.currentTarget.style.background = "#faad14";
+                                                e.currentTarget.style.color = "white";
+                                            }}
+                                            onMouseOut={(e) => {
+                                                e.currentTarget.style.background = "white";
+                                                e.currentTarget.style.color = "#faad14";
+                                            }}
+                                        >
+                                            <FaShoppingBag /> <span>Mua Hàng</span>
                                         </Button>
                                     </motion.div>
                                 </div>
