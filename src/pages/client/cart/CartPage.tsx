@@ -15,7 +15,6 @@ const { Text, Title } = Typography;
 const CartPage = () => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const [cartItems, setCartItems] = useState<ICartItemRes[]>([]);
-    const [imageUrl, setImageUrl] = useState<string>('');
 
     const handleQuantityChange = (productId: number, delta: number) => {
         setCartItems((prev) =>
@@ -45,7 +44,6 @@ const CartPage = () => {
             if (res?.data?.statusCode === 200) {
                 console.log(res.data.data.cartItems);
                 setCartItems(res.data.data.cartItems);
-                setImageUrl('https://picsum.photos/200/200?random=1');
             }
         } catch (error: any) {
             console.log("Có lỗi xảy ra!\n", error)
@@ -97,7 +95,7 @@ const CartPage = () => {
                                         <Image
                                             width={80}
                                             // src={item.imageUrl}
-                                            src={imageUrl}
+                                            src={item.imageUrl}
                                             style={{ borderRadius: 8 }}
                                         />
                                         <div style={{ flex: 1, minWidth: 120 }}>

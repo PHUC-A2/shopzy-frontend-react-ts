@@ -14,7 +14,7 @@ import { FaRegEye } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 
-import anh_demo from '../../../assets/shirt-01.png';
+// import anh_demo from '../../../assets/shirt-01.png';
 
 const AdminProductPage = () => {
 
@@ -24,7 +24,7 @@ const AdminProductPage = () => {
     const [productUpdate, setProductUpdate] = useState<IProduct | null>(null);
     const [openAdminModalGetProductDetails, setOpenAdminModalGetProductDetails] = useState<boolean>(false);
     const [product, setProduct] = useState<IProduct | null>(null);
-    const [imageUrl,setImageUrl] = useState<string>('');
+    // const [imageUrl,setImageUrl] = useState<string>('');
 
     // chi tiết
     const handleGetProductDetails = async (id: number) => {
@@ -82,7 +82,7 @@ const AdminProductPage = () => {
             const res = await getAllProducts();
             if (res?.data?.statusCode === 200) {
                 setListProduct(res?.data?.data?.result);
-                setImageUrl(anh_demo);
+                // setImageUrl(anh_demo);
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknown";
@@ -177,9 +177,9 @@ const AdminProductPage = () => {
 
                                 {/* Image preview */}
                                 <td>
-                                    {imageUrl ? (
+                                    {item.imageUrl ? (
                                         <Image
-                                            src={imageUrl}
+                                            src={item.imageUrl}
                                             alt={item.name}
                                             width={60}
                                             height={60}
@@ -253,7 +253,6 @@ const AdminProductPage = () => {
                 openAdminModalGetProductDetails={openAdminModalGetProductDetails}
                 setOpenAdminModalGetProductDetails={setOpenAdminModalGetProductDetails}
                 product={product}
-                imageUrl={imageUrl}
             />
         </>
     )

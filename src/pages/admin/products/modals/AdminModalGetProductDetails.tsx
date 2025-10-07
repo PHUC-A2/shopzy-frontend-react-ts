@@ -7,11 +7,10 @@ interface IProps {
     openAdminModalGetProductDetails: boolean;
     setOpenAdminModalGetProductDetails: (v: boolean) => void;
     product: IProduct | null;
-    imageUrl: string;
 }
 
 const AdminModalGetProductDetails = (props: IProps) => {
-    const { openAdminModalGetProductDetails, setOpenAdminModalGetProductDetails, product, imageUrl } = props;
+    const { openAdminModalGetProductDetails, setOpenAdminModalGetProductDetails, product } = props;
     return (
         <>
             <Drawer
@@ -38,16 +37,15 @@ const AdminModalGetProductDetails = (props: IProps) => {
                     </Descriptions.Item>
                     <Descriptions.Item label="Condition">{product?.productCondition ?? "N/A"}</Descriptions.Item>
                     <Descriptions.Item label="Image">
-                        {/* {product?.imageUrl ? ( */}
-                        {imageUrl ? (
+                        {product?.imageUrl ? (
                             // <img
                             //     src={imageUrl}
                             //     alt={product?.name}
                             //     style={{ maxWidth: 100, display: "block" }}
                             // />
                             <Image
-                                src={imageUrl}
-                                alt={product?.name}
+                                src={product.imageUrl}
+                                alt={product.name}
                                 width={60}
                                 height={60}
                                 style={{ objectFit: "cover", borderRadius: 8 }}

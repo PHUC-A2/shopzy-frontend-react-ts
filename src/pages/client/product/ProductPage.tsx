@@ -104,7 +104,7 @@ const ProductPage = () => {
                                                 style={{ height: "100%", display: "flex", flexDirection: "column", borderRadius: 12 }}
                                                 cover={
                                                     <Image
-                                                        src={fallbackImage}
+                                                        src={product.imageUrl || fallbackImage}
                                                         alt={product.name}
                                                         preview
                                                         style={{ objectFit: "contain", height: 200, background: "#fafafa" }}

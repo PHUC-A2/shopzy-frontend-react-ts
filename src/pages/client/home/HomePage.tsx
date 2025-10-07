@@ -48,7 +48,7 @@ const HomePage = () => {
                 {/* Carousel */}
                 {/* Carousel Responsive */}
                 <Carousel autoplay arrows autoplaySpeed={2500} style={{ marginBottom: 24 }}>
-                    {[1, 2, 3,4,5,6,7].map((i) => (
+                    {[1,2,3,5,6,7,8,9,10,1].map((i) => (
                         <div key={i}>
                             <img
                                 src={`https://picsum.photos/seed/slide${i}/1200/600`}
@@ -93,7 +93,7 @@ const HomePage = () => {
                                             }}
                                             cover={
                                                 <Image
-                                                    src={`https://picsum.photos/seed/${product.id}/400/300`}
+                                                    src={product.imageUrl}
                                                     alt={product.name}
                                                     preview
                                                     style={{
