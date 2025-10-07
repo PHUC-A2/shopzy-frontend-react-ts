@@ -1,56 +1,21 @@
 import { Empty, Image, Typography, Layout } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaShoppingBag, FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CartPage.scss";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
+import type { ICartItemRes } from "../../../types/backend";
+import { getCartItemClient } from "../../../config/Api";
+import { toast } from "react-toastify";
 
 const { Text, Title } = Typography;
 
-interface CartItem {
-    cartItemId: number;
-    productId: number;
-    name: string;
-    imageUrl: string;
-    price: number;
-    quantity: number;
-    size: string;
-    color: string;
-    status: string;
-    subtotal: number;
-}
-
 const CartPage = () => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-
-    const [cartItems, setCartItems] = useState<CartItem[]>([
-        {
-            cartItemId: 1,
-            productId: 1,
-            name: "Quần ABC",
-            imageUrl: "https://picsum.photos/200/200?random=1",
-            price: 200000,
-            quantity: 2,
-            size: "M",
-            color: "Đỏ",
-            status: "IN_STOCK",
-            subtotal: 200000 * 2,
-        },
-        {
-            cartItemId: 2,
-            productId: 3,
-            name: "Quần C",
-            imageUrl: "https://picsum.photos/200/200?random=2",
-            price: 300000,
-            quantity: 1,
-            size: "L",
-            color: "Đen",
-            status: "IN_STOCK",
-            subtotal: 300000 * 1,
-        },
-    ]);
+    const [cartItems, setCartItems] = useState<ICartItemRes[]>([]);
+    const [imageUrl, setImageUrl] = useState<string>('');
 
     const handleQuantityChange = (productId: number, delta: number) => {
         setCartItems((prev) =>
@@ -73,6 +38,30 @@ const CartPage = () => {
     };
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
+
+    const fetchCartItem = async () => {
+        try {
+            const res = await getCartItemClient();
+            if (res?.data?.statusCode === 200) {
+                console.log(res.data.data.cartItems);
+                setCartItems(res.data.data.cartItems);
+                setImageUrl('https://picsum.photos/200/200?random=1');
+            }
+        } catch (error: any) {
+            console.log("Có lỗi xảy ra!\n", error)
+            const msg = error?.response?.data?.message ?? "unknown";
+            toast.error(
+                <div>
+                    <div><strong>Có lỗi xảy ra</strong></div>
+                    <div>{msg}</div>
+                </div>
+            )
+        }
+    }
+
+    useEffect(() => {
+        fetchCartItem();
+    }, [])
 
     return (
         <div className="cart-page-container">
@@ -107,7 +96,8 @@ const CartPage = () => {
                                     >
                                         <Image
                                             width={80}
-                                            src={item.imageUrl}
+                                            // src={item.imageUrl}
+                                            src={imageUrl}
                                             style={{ borderRadius: 8 }}
                                         />
                                         <div style={{ flex: 1, minWidth: 120 }}>

@@ -19,6 +19,27 @@ export interface IPaginate<T> {
     result: T[];
 }
 
+// cart item
+export interface ICartItemRes {
+    cartItemId: number;
+    productId: number;
+    name: string;
+    imageUrl: string;
+    price: number;
+    quantity: number;
+    size: string;
+    color: string;
+    status: ProductStatusEnum;
+    subtotal: number;
+}
+
+export interface ICartItemResult<T> {
+    cartId: number;
+    cartItems: T[]
+}
+
+// cart item
+export type IGetCartItemResponse = IApiResponse<ICartItemResult<ICartItemClient>>;
 
 // product
 export type IGetAllProductsResponse = IApiResponse<IPaginate<IProduct>>;
@@ -265,9 +286,6 @@ export interface IUpdateOrderItemReq {
         id: number;
     }
 }
-
-
-
 
 // ==============Các type tương tự Enum trong java==================
 

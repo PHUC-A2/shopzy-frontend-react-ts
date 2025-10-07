@@ -1,5 +1,5 @@
 import instance from "./customAxios";
-import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
+import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IGetCartItemResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
 
 // chuyển sang dùng instance
 
@@ -65,4 +65,4 @@ export const clientGetAllProducts = (page: number, size: number) => {
     return instance.get<IGetAllProductsResponse>(`/api/v1/products?page=${page}&size=${size}`);
 };
 
-export const getCartClient = () => instance.get(`/api/v1/client/carts`);
+export const getCartItemClient = () => instance.get<IGetCartItemResponse>(`/api/v1/client/carts`);
