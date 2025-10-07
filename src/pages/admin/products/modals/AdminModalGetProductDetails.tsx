@@ -1,4 +1,4 @@
-import { Drawer } from 'antd';
+import { Drawer, Image } from 'antd';
 import type { IProduct } from '../../../../types/backend';
 import { Descriptions, Tag } from "antd";
 import dayjs from "dayjs";
@@ -7,10 +7,11 @@ interface IProps {
     openAdminModalGetProductDetails: boolean;
     setOpenAdminModalGetProductDetails: (v: boolean) => void;
     product: IProduct | null;
+    imageUrl: string;
 }
 
 const AdminModalGetProductDetails = (props: IProps) => {
-    const { openAdminModalGetProductDetails, setOpenAdminModalGetProductDetails, product } = props;
+    const { openAdminModalGetProductDetails, setOpenAdminModalGetProductDetails, product, imageUrl } = props;
     return (
         <>
             <Drawer
@@ -37,11 +38,19 @@ const AdminModalGetProductDetails = (props: IProps) => {
                     </Descriptions.Item>
                     <Descriptions.Item label="Condition">{product?.productCondition ?? "N/A"}</Descriptions.Item>
                     <Descriptions.Item label="Image">
-                        {product?.imageUrl ? (
-                            <img
-                                src={product.imageUrl}
-                                alt={product.name}
-                                style={{ maxWidth: 100, display: "block" }}
+                        {/* {product?.imageUrl ? ( */}
+                        {imageUrl ? (
+                            // <img
+                            //     src={imageUrl}
+                            //     alt={product?.name}
+                            //     style={{ maxWidth: 100, display: "block" }}
+                            // />
+                            <Image
+                                src={imageUrl}
+                                alt={product?.name}
+                                width={60}
+                                height={60}
+                                style={{ objectFit: "cover", borderRadius: 8 }}
                             />
                         ) : (
                             "N/A"
