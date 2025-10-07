@@ -20,8 +20,11 @@ import {
 import { Button } from "react-bootstrap";
 import { motion } from "framer-motion";
 import "./ProductDetails.scss";
-import { useOutletContext } from "react-router";
+import { useOutletContext, useParams } from "react-router";
 import { Slide, toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { getProductDetails } from "../../../config/Api";
+import type { IProduct } from "../../../types/backend";
 
 const { Title, Text } = Typography;
 
@@ -32,6 +35,23 @@ interface IProps {
 const ProductPageDetails = () => {
 
     const { setCartCount } = useOutletContext<IProps>();
+    const [product, setProduct] = useState<IProduct | null>(null);
+
+    // dùng param lấy id thay vì dùng Contex API
+    const { id } = useParams<string>();
+
+    const fetchProductDetails = async () => {
+        const res = await getProductDetails(Number(id));
+        if (res?.data?.statusCode === 200) {
+            console.log(res);
+            console.log(res?.data?.data);
+            setProduct(res?.data?.data);
+        }
+    }
+
+    useEffect(() => {
+        fetchProductDetails();
+    })
 
     // thêm vào giỏ hàng
     const handleAddToCart = () => {
@@ -84,7 +104,7 @@ const ProductPageDetails = () => {
                             <Col xs={24} md={12}>
                                 <motion.div whileHover={{ scale: 1.05 }}>
                                     <Image
-                                        src="https://picsum.photos/400/300?random=1"
+                                        src={product?.imageUrl || "https://picsum.photos/400/300?random=1"}
                                         preview={true}
                                         width={"100%"}
                                         style={{
@@ -92,6 +112,7 @@ const ProductPageDetails = () => {
                                             objectFit: "cover",
                                             height: 400,
                                         }}
+                                        alt={product?.name}
                                     />
                                 </motion.div>
                                 <Row style={{ marginTop: "12px" }}>
@@ -114,13 +135,19 @@ const ProductPageDetails = () => {
                                         level={3}
                                         style={{ marginBottom: "12px", color: "#001529" }}
                                     >
-                                        Áo Hoodie Local Brand
+                                        {product?.name}
                                     </Title>
+                                    {/* <Title
+                                        level={4}
+                                        style={{ color: "#d4380d", marginBottom: "12px" }}
+                                    >
+                                        {product?.price} VND
+                                    </Title> */}
                                     <Title
                                         level={4}
                                         style={{ color: "#d4380d", marginBottom: "12px" }}
                                     >
-                                        350.000đ
+                                        {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(product?.price ?? 0)}
                                     </Title>
 
                                     {/* Đánh giá sao */}
@@ -142,23 +169,23 @@ const ProductPageDetails = () => {
                                     >
                                         <Text>
                                             <AppstoreAddOutlined style={{ color: "#faad14" }} />{" "}
-                                            <strong>Kích thước:</strong> M, L, XL
+                                            <strong>Kích thước:</strong> {product?.size}
                                         </Text>
                                         <Text>
                                             <BgColorsOutlined style={{ color: "#faad14" }} />{" "}
-                                            <strong>Màu sắc:</strong> Đen / Trắng
+                                            <strong>Màu sắc:</strong> {product?.color}
                                         </Text>
                                         <Text>
                                             <CheckCircleOutlined style={{ color: "#389e0d" }} />{" "}
-                                            <strong>Tình trạng:</strong> Còn hàng
+                                            <strong>Tình trạng:</strong> {product?.productCondition === "NEW" ? "Mới 100%" : "Đã sử dụng"}
                                         </Text>
                                         <Text>
                                             <ThunderboltOutlined style={{ color: "#faad14" }} />{" "}
-                                            <strong>Trạng thái:</strong> Mới 100%
+                                            <strong>Trạng thái:</strong> {product?.status === "IN_STOCK" ? "Còn hàng" : "Hết hàng"}
                                         </Text>
                                         <Text>
                                             <InboxOutlined style={{ color: "#001529" }} />{" "}
-                                            <strong>Số lượng tồn kho:</strong> 24
+                                            <strong>Số lượng tồn kho:</strong> {product?.stock}
                                         </Text>
                                     </Space>
 

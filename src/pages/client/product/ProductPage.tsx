@@ -112,7 +112,7 @@ const ProductPage = () => {
                                                 }
                                             >
                                                 {/*chỉ bọc tên + giá trong Link */}
-                                                <Link to={"/product-details"} className="nav-link">
+                                                <Link to={`/product-details/${product.id}`} className="nav-link">
                                                     <Meta
                                                         title={<span className="card-title">{product.name}</span>}
                                                         description={
@@ -129,7 +129,7 @@ const ProductPage = () => {
                                                 </div>
 
                                                 {/* Thông tin thêm vẫn có thể nằm trong Link */}
-                                                <Link to={"/product-details"} className="nav-link">
+                                                <Link to={`/product-details/${product.id}`} className="nav-link">
                                                     <div className="card-info">
                                                         <div>
                                                             <strong>Còn lại:</strong> {product.stock}

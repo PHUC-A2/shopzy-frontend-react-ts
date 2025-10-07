@@ -106,7 +106,7 @@ const HomePage = () => {
                                             className="custom-card"
                                         >
                                             {/* Chỉ bọc phần tên + giá trong Link */}
-                                            <Link to={"product-details"} className="nav-link">
+                                            <Link to={`/product-details/${product.id}`} className="nav-link">
                                                 <Meta
                                                     title={<span className="card-title">{product.name}</span>}
                                                     description={
@@ -126,7 +126,7 @@ const HomePage = () => {
                                             </div>
 
                                             {/* Thông tin sản phẩm vẫn để trong Link nếu muốn */}
-                                            <Link to={"product-details"} className="nav-link">
+                                            <Link to={`/product-details/${product.id}`} className="nav-link">
                                                 <div className="card-info">
                                                     <div><strong>Còn lại:</strong> {product.stock}</div>
                                                     <div>
