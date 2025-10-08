@@ -4,23 +4,25 @@ import { motion } from "framer-motion";   // ✅ thêm framer-motion
 
 import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { toast } from "react-toastify";
 
 const { Content } = Layout;
 const { Meta } = Card;
 
 const HomePage = () => {
+    const [searchParams] = useSearchParams();
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(12); // mỗi trang 12 sản phẩm
     const [total, setTotal] = useState<number>(0);
     const [listProduct, setListProduct] = useState<IProduct[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [currentFilter, setCurrentFilter] = useState<string | undefined>();
 
-    const fetchProduct = async (page: number, size: number) => {
+    const fetchProduct = async (page: number, size: number, filter?: string) => {
         try {
             setLoading(true);
-            const res = await clientGetAllProducts(page, size);
+            const res = await clientGetAllProducts(page, size, filter);
             setListProduct(res.data.data.result);
             setPage(res.data.data.meta.page);
             setPageSize(res.data.data.meta.pageSize);
@@ -39,8 +41,16 @@ const HomePage = () => {
     };
 
     useEffect(() => {
-        fetchProduct(page, pageSize);
-    }, [page, pageSize]);
+        const filter = searchParams.get('filter') || undefined;
+        if (filter !== currentFilter) {
+            setCurrentFilter(filter);
+            setPage(1);
+        }
+    }, [searchParams]);
+
+    useEffect(() => {
+        fetchProduct(page, pageSize, currentFilter);
+    }, [page, pageSize, currentFilter]);
 
     return (
         <Layout style={{ marginTop: 103 }}>

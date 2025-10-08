@@ -4,7 +4,7 @@ import { IoFilter } from "react-icons/io5";
 import { motion } from "framer-motion"; // ✅ thêm framer-motion
 import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 
 const { Content, Sider } = Layout;
 const { Meta } = Card;
@@ -12,18 +12,20 @@ const { useBreakpoint } = Grid;
 
 const ProductPage = () => {
     const screens = useBreakpoint();
+    const [searchParams] = useSearchParams();
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(12);
     const [total, setTotal] = useState(0);
     const [listProduct, setListProduct] = useState<IProduct[]>([]);
     const [loading, setLoading] = useState(false);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [currentFilter, setCurrentFilter] = useState<string | undefined>();
     const fallbackImage = "https://picsum.photos/400/300?random=1";
 
-    const fetchProducts = async (page: number, size: number) => {
+    const fetchProducts = async (page: number, size: number, filter?: string) => {
         try {
             setLoading(true);
-            const res = await clientGetAllProducts(page, size);
+            const res = await clientGetAllProducts(page, size, filter);
             setListProduct(res.data.data.result);
             setPage(res.data.data.meta.page);
             setPageSize(res.data.data.meta.pageSize);
@@ -36,8 +38,16 @@ const ProductPage = () => {
     };
 
     useEffect(() => {
-        fetchProducts(page, pageSize);
-    }, [page, pageSize]);
+        const filter = searchParams.get('filter') || undefined;
+        if (filter !== currentFilter) {
+            setCurrentFilter(filter);
+            setPage(1);
+        }
+    }, [searchParams]);
+
+    useEffect(() => {
+        fetchProducts(page, pageSize, currentFilter);
+    }, [page, pageSize, currentFilter]);
 
     const FilterContent = (
         <div style={{ padding: 16 }}>

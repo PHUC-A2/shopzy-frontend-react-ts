@@ -61,8 +61,8 @@ export const updateOrderItem = (data: IUpdateOrderItemReq) => instance.put(`/api
 //         params: { page, size },
 //     });
 /* api product (client) */
-export const clientGetAllProducts = (page: number, size: number) => {
-    return instance.get<IGetAllProductsResponse>(`/api/v1/products?page=${page}&size=${size}`);
+export const clientGetAllProducts = (page: number, size: number, filter?: string) => {
+    return instance.get<IGetAllProductsResponse>(`/api/v1/products?page=${page}&size=${size}${filter ? `&filter=${filter}` : ''}`);
 };
 
 export const getCartItemClient = () => instance.get<IGetCartItemResponse>(`/api/v1/client/carts`);

@@ -9,7 +9,7 @@ import { HiHome } from 'react-icons/hi';
 import { IoMdLogIn, IoMdNotifications } from 'react-icons/io';
 import { FaCircleUser, FaUserPlus } from 'react-icons/fa6';
 import { AiFillDashboard } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate, useLocation } from 'react-router';
 import './Header.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
@@ -36,6 +36,7 @@ const Header = (props: IProps) => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
     const navigave = useNavigate();
+    const location = useLocation();
     const [openModalProfile, setOpenModalProfile] = useState<boolean>(false);
     const [openModalNotification, setOpenModalNotification] = useState<boolean>(false);
     const [openModalMessage, setOpenModalMessage] = useState<boolean>(false);
@@ -149,7 +150,14 @@ const Header = (props: IProps) => {
         setCurrent(e.key);
     };
 
-    const onSearch: SearchProps['onSearch'] = (value, _e, info) => console.log(info?.source, value);
+    const onSearch: SearchProps['onSearch'] = (value, _e) => {
+        const targetPath = location.pathname === '/product' ? '/product' : '/';
+        if (value.trim()) {
+            navigave(`${targetPath}?filter=name:'${value}'`);
+        } else {
+            navigave(targetPath);
+        }
+    };
     return (
         <div>
             <Layout>
