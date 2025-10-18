@@ -6,6 +6,7 @@ import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
 import { Link, useSearchParams } from "react-router";
 import { toast } from "react-toastify";
+import { buildQuery } from "../../../util/query";
 
 const { Content } = Layout;
 const { Meta } = Card;
@@ -19,10 +20,18 @@ const HomePage = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [currentFilter, setCurrentFilter] = useState<string | undefined>();
 
-    const fetchProduct = async (page: number, size: number, filter?: string) => {
+    const fetchProduct = async () => {
         try {
             setLoading(true);
-            const res = await clientGetAllProducts(page, size, filter);
+
+            const query = buildQuery({
+                page,
+                size: pageSize,
+                filter: currentFilter,
+            });
+
+
+            const res = await clientGetAllProducts(query);
             setListProduct(res.data.data.result);
             setPage(res.data.data.meta.page);
             setPageSize(res.data.data.meta.pageSize);
@@ -49,7 +58,7 @@ const HomePage = () => {
     }, [searchParams]);
 
     useEffect(() => {
-        fetchProduct(page, pageSize, currentFilter);
+        fetchProduct();
     }, [page, pageSize, currentFilter]);
 
     return (
@@ -58,7 +67,7 @@ const HomePage = () => {
                 {/* Carousel */}
                 {/* Carousel Responsive */}
                 <Carousel autoplay arrows autoplaySpeed={2500} style={{ marginBottom: 24 }}>
-                    {[1,2,3,5,6,7,8,9,10,1].map((i) => (
+                    {[1, 2, 3, 5, 6, 7, 8, 9, 10, 1].map((i) => (
                         <div key={i}>
                             <img
                                 src={`https://picsum.photos/seed/slide${i}/1200/600`}

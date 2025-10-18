@@ -23,6 +23,7 @@ import ModalNotification from './modals/ModalNotification';
 import { SiImessage } from 'react-icons/si';
 import type { SearchProps } from 'antd/es/input';
 import ModalMessage from '../../pages/client/chat/ModalMessage';
+import { buildFilterQuery } from '../../util/query';
 type MenuItem = Required<MenuProps>['items'][number];
 
 interface IProps {
@@ -150,14 +151,32 @@ const Header = (props: IProps) => {
         setCurrent(e.key);
     };
 
+    // const onSearch: SearchProps['onSearch'] = (value, _e) => {
+    //     const targetPath = location.pathname === '/product' ? '/product' : '/';
+
+    //     if (value.trim()) {
+    //         const query = `filter=${encodeURIComponent(`name ~ '${value}'`)}`;
+    //         navigate(`${targetPath}?${query}`);
+    //     } else {
+    //         navigate(targetPath);
+    //     }
+    // };
+
     const onSearch: SearchProps['onSearch'] = (value, _e) => {
         const targetPath = location.pathname === '/product' ? '/product' : '/';
+
         if (value.trim()) {
-            navigate(`${targetPath}?filter=name ~ '${value}'`);
+            // Tạo query filter theo "name"
+            const query = buildFilterQuery({ name: value });
+
+            // Điều hướng với filter
+            navigate(`${targetPath}?${query}`);
         } else {
+            // Không có giá trị -> trở về trang mặc định
             navigate(targetPath);
         }
     };
+
     return (
         <div>
             <Layout>

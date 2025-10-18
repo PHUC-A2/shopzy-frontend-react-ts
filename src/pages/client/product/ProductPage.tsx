@@ -5,6 +5,7 @@ import { motion } from "framer-motion"; // ✅ thêm framer-motion
 import type { IProduct } from "../../../types/backend";
 import { clientGetAllProducts } from "../../../config/Api";
 import { Link, useSearchParams } from "react-router";
+import { buildQuery } from "../../../util/query";
 
 const { Content, Sider } = Layout;
 const { Meta } = Card;
@@ -22,10 +23,32 @@ const ProductPage = () => {
     const [currentFilter, setCurrentFilter] = useState<string | undefined>();
     const fallbackImage = "https://picsum.photos/400/300?random=1";
 
-    const fetchProducts = async (page: number, size: number, filter?: string) => {
+    // const fetchProducts = async (query?: string) => {
+    //     try {
+    //         setLoading(true);
+    //         const res = await clientGetAllProducts(query);
+    //         setListProduct(res.data.data.result);
+    //         setPage(res.data.data.meta.page);
+    //         setPageSize(res.data.data.meta.pageSize);
+    //         setTotal(res.data.data.meta.total);
+    //     } catch (err) {
+    //         console.error("Fetch products error:", err);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    const fetchProducts = async () => {
         try {
             setLoading(true);
-            const res = await clientGetAllProducts(page, size, filter);
+
+            const query = buildQuery({
+                page,
+                size: pageSize,
+                filter: currentFilter,
+            });
+
+            const res = await clientGetAllProducts(query);
             setListProduct(res.data.data.result);
             setPage(res.data.data.meta.page);
             setPageSize(res.data.data.meta.pageSize);
@@ -37,6 +60,7 @@ const ProductPage = () => {
         }
     };
 
+
     useEffect(() => {
         const filter = searchParams.get('filter') || undefined;
         if (filter !== currentFilter) {
@@ -46,7 +70,7 @@ const ProductPage = () => {
     }, [searchParams]);
 
     useEffect(() => {
-        fetchProducts(page, pageSize, currentFilter);
+        fetchProducts();
     }, [page, pageSize, currentFilter]);
 
     const FilterContent = (
