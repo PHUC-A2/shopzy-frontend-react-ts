@@ -35,7 +35,7 @@ const Header = (props: IProps) => {
 
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
-    const navigave = useNavigate();
+    const navigate = useNavigate();
     const location = useLocation();
     const [openModalProfile, setOpenModalProfile] = useState<boolean>(false);
     const [openModalNotification, setOpenModalNotification] = useState<boolean>(false);
@@ -47,7 +47,7 @@ const Header = (props: IProps) => {
             if (res?.data?.statusCode === 200) {
                 dispatch(setLogoutUser())
                 toast.success('Đăng xuất thành công');
-                navigave('/');
+                navigate('/');
             }
         } catch (error: any) {
             const m = error?.response?.data?.message ?? "unknown";
@@ -153,9 +153,9 @@ const Header = (props: IProps) => {
     const onSearch: SearchProps['onSearch'] = (value, _e) => {
         const targetPath = location.pathname === '/product' ? '/product' : '/';
         if (value.trim()) {
-            navigave(`${targetPath}?filter=name:'${value}'`);
+            navigate(`${targetPath}?filter=name ~ '${value}'`);
         } else {
-            navigave(targetPath);
+            navigate(targetPath);
         }
     };
     return (
