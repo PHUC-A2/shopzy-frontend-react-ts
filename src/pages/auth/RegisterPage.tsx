@@ -25,8 +25,10 @@ const RegisterPage = () => {
         };
 
         setIsLoading(true);
+        const minDelay = new Promise(resolve => setTimeout(resolve, 2000)); // tối thiểu 2 giây
         try {
             const res = await register(cleanedData);
+            await minDelay;
             setIsLoading(false);
             if (res?.data?.statusCode === 201) {
                 toast.success('Đăng ký tài khoản thành công');
@@ -36,7 +38,6 @@ const RegisterPage = () => {
                 }, 2000);
             }
         } catch (error: any) {
-            setIsLoading(false);
             const m = error?.response?.data?.message ?? "unknown";
             toast.error(
                 <div>
@@ -44,6 +45,8 @@ const RegisterPage = () => {
                     <div>{m}</div>
                 </div>
             );
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -116,6 +119,23 @@ const RegisterPage = () => {
                     >
                         Register
                     </Button>
+
+                    {/* <Button
+                        type='primary'
+                        block
+                        htmlType="submit"
+                        className="btn-register"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? (
+                            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <Spin size="small" /> <span style={{ marginLeft: 8 }}>Đang đăng ký...</span>
+                            </span>
+                        ) : (
+                            'Register'
+                        )}
+                    </Button> */}
+
                     <Flex className='mt-2' justify='space-between' align='center'>
                         <Link to={"/login"}>Sign in now!</Link>
                         <Link to={"#"}>Forgot password</Link>

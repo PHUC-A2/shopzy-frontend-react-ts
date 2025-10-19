@@ -8,15 +8,24 @@ import { useDispatch } from 'react-redux';
 import { setUserLoginInfo } from '../../redux/slice/authSlice';
 import { motion } from 'framer-motion';
 import './Login.scss';
+import { useState } from 'react';
 
 const LoginPage = () => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleLogin = async (values: ILogin) => {
         try {
+            setLoading(true);
+
+            const minDelay = new Promise(resolve => setTimeout(resolve, 2000));
+
             const res = await login(values.username.trim(), values.password.trim()); // trim lần cuối
+
+            await minDelay; // chạy spin 2s
+
             if (res?.data?.statusCode === 200) {
                 const { access_token, user } = res.data.data;
 
@@ -36,6 +45,8 @@ const LoginPage = () => {
                     <div>{m}</div>
                 </div>
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -91,6 +102,7 @@ const LoginPage = () => {
                             size="large"
                             htmlType="submit"
                             className="btn-login"
+                            loading={loading}
                         >
                             <span>Log in</span>
                         </Button>
