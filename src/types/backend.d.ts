@@ -38,6 +38,17 @@ export interface ICartItemResult<T> {
     cartItems: T[]
 }
 
+// ============= FILE===========
+export interface IUploadFile {
+    fileName: string;
+    uploadedAt: string;
+    url: string;
+}
+
+// upload file res
+
+export type IGetUploadResponse = IApiResponse<IUploadFile>;
+
 // cart item
 export type IGetCartItemResponse = IApiResponse<ICartItemResult<ICartItemClient>>;
 
@@ -286,6 +297,7 @@ export interface IUpdateOrderItemReq {
         id: number;
     }
 }
+
 
 // ==============Các type tương tự Enum trong java==================
 

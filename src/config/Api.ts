@@ -1,5 +1,5 @@
 import instance from "./customAxios";
-import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IGetCartItemResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
+import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IGetCartItemResponse, IGetUploadResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
 
 // chuyển sang dùng instance
 
@@ -71,3 +71,20 @@ export const clientGetAllProducts = (query?: string) => {
 
 
 export const getCartItemClient = () => instance.get<IGetCartItemResponse>(`/api/v1/client/carts`);
+
+// ==========upload product=======
+// export const uploadImageProduct = (data: IUploadFileReq) => instance.post('/api/v1/files/upload', data);
+// Đúng cách gửi file (FormData)
+export const uploadImageProduct = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("folder", "products");
+
+    const { data } = await instance.post<IGetUploadResponse>(
+        "/api/v1/files/upload",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+    );
+
+    return data; //  trả về đúng cấu trúc JSON từ backend
+};
