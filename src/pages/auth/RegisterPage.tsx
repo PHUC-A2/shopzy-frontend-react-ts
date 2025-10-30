@@ -69,7 +69,7 @@ const RegisterPage = () => {
 
                 <Form.Item
                     name="name"
-                    normalize={(v) => v.trim()}
+                    // normalize={(v) => v.trim()}
                     rules={[{ required: true, message: 'Please input your name!' }]}
                 >
                     <Input prefix={<UserOutlined />} placeholder="Name" />
@@ -77,7 +77,7 @@ const RegisterPage = () => {
 
                 <Form.Item
                     name="fullName"
-                    normalize={(v) => v.trim()}
+                    // normalize={(v) => v.trim()}
                     rules={[{ required: true, message: 'Please input your full name!' }]}
                 >
                     <Input prefix={<UserOutlined />} placeholder="Full name" />
