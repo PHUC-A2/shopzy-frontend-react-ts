@@ -55,7 +55,7 @@ export interface IUploadFile {
 export type IGetUploadResponse = IApiResponse<IUploadFile>;
 
 // cart item
-export type IGetCartItemResponse = IApiResponse<ICartItemResult<ICartItemClient>>;
+export type IGetCartItemResponse = IApiResponse<ICartItemResult<ICartItemRes>>;
 
 // product
 export type IGetAllProductsResponse = IApiResponse<IPaginate<IProduct>>;

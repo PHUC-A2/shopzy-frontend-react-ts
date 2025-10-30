@@ -9,16 +9,16 @@ import MessageButton from "../pages/client/chat/MessageButton";
 const ClientLayout = () => {
     // xử lý thêm vào giỏ hàng (đây là component cha)
     // dùng Context API của Outlet để xử lý sau này có thể mở rộng
-    const [cartCount, setCartCount] = useState<number>(0);
+    // const [cartCount, setCartCount] = useState<number>(0);
     const [openModalMessage, setOpenModalMessage] = useState(false);
 
     return (
         <div className="client-layout-container">
             <div className="client-header-container">
-                <Header cartCount={cartCount} />
+                <Header />
             </div>
             <div className="client-main-container">
-                <Outlet context={{ setCartCount }} />
+                <Outlet />
             </div>
             <div className="client-footer-container">
                 <Footer />

@@ -26,14 +26,9 @@ import ModalMessage from '../../pages/client/chat/ModalMessage';
 import { buildFilterQuery } from '../../util/query';
 type MenuItem = Required<MenuProps>['items'][number];
 
-interface IProps {
-    cartCount: number;
-}
+const Header = () => {
 
-const Header = (props: IProps) => {
-
-    const { cartCount } = props;
-
+    const cartCount = useSelector((state: RootState) => state.cartCount.cartCount);
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
     const navigate = useNavigate();
