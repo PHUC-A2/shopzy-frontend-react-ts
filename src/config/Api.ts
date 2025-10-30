@@ -1,5 +1,5 @@
 import instance from "./customAxios";
-import type { ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IGetCartItemResponse, IGetUploadResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
+import type { IAddToCartReq, ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IGetCartItemResponse, IGetUploadResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
 
 // chuyển sang dùng instance
 
@@ -71,6 +71,7 @@ export const clientGetAllProducts = (query?: string) => {
 
 
 export const getCartItemClient = () => instance.get<IGetCartItemResponse>(`/api/v1/client/carts`);
+export const addToCartClient = (data: IAddToCartReq) => instance.post(`/api/v1/client/carts/add-products`, data);
 
 // ==========upload product=======
 // export const uploadImageProduct = (data: IUploadFileReq) => instance.post('/api/v1/files/upload', data);

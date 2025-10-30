@@ -23,7 +23,7 @@ import "./ProductDetails.scss";
 import { useOutletContext, useParams } from "react-router";
 import { Slide, toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { getProductDetails } from "../../../config/Api";
+import { addToCartClient, getProductDetails } from "../../../config/Api";
 import type { IProduct } from "../../../types/backend";
 
 const { Title, Text } = Typography;
@@ -36,6 +36,8 @@ const ProductPageDetails = () => {
 
     const { setCartCount } = useOutletContext<IProps>();
     const [product, setProduct] = useState<IProduct | null>(null);
+    // const [productId, setProductId] = useState<number>();
+    // const [quantity, setQuantity] = useState<number>();
 
     // dùng param lấy id thay vì dùng Contex API
     const { id } = useParams<string>();
@@ -51,36 +53,86 @@ const ProductPageDetails = () => {
 
     useEffect(() => {
         fetchProductDetails();
-    })
+    }, [id]);
 
     // thêm vào giỏ hàng
-    const handleAddToCart = () => {
-        setCartCount(cart => cart + 1);
-        toast.success("🛒 Đã thêm sản phẩm vào giỏ hàng", {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false, // cho hiện progress bar mảnh
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            transition: Slide,       // Slide | Zoom | Flip | Bounce
-            style: {
-                fontSize: "13px",
-                padding: "8px 14px",
-                borderRadius: "10px",
-                minHeight: "unset",
-                lineHeight: "1.3",
-                fontWeight: 500,
-                color: "#fff",
-                boxShadow: "0 6px 18px rgba(0,0,0,0.15)",
-                marginTop: "25px",
-            },
-            progressStyle: {
-                background: "rgba(255,255,255,0.8)", // progress bar trắng mảnh
-                height: "3px",
-                borderRadius: "2px",
-            },
-        } as any);
+    // const handleAddToCart = async () => {
+
+    //     const res = await addToCartClient();
+
+    //     setCartCount(cart => cart + 1);
+
+    //     toast.success("🛒 Đã thêm sản phẩm vào giỏ hàng", {
+    //         position: "top-right",
+    //         autoClose: 1500,
+    //         hideProgressBar: false, // cho hiện progress bar mảnh
+    //         closeOnClick: true,
+    //         pauseOnHover: false,
+    //         draggable: false,
+    //         transition: Slide,       // Slide | Zoom | Flip | Bounce
+    //         style: {
+    //             fontSize: "13px",
+    //             padding: "8px 14px",
+    //             borderRadius: "10px",
+    //             minHeight: "unset",
+    //             lineHeight: "1.3",
+    //             fontWeight: 500,
+    //             color: "#fff",
+    //             boxShadow: "0 6px 18px rgba(0,0,0,0.15)",
+    //             marginTop: "25px",
+    //         },
+    //         progressStyle: {
+    //             background: "rgba(255,255,255,0.8)", // progress bar trắng mảnh
+    //             height: "3px",
+    //             borderRadius: "2px",
+    //         },
+    //     } as any);
+    // };
+    const handleAddToCart = async () => {
+        if (!product?.id) return;
+
+        try {
+            // Gọi API thêm sản phẩm vào giỏ hàng
+            const res = await addToCartClient({
+                productId: product.id,  // lấy id sản phẩm hiện tại
+                quantity: 1,            // cố định 1 nếu không có input chọn số lượng
+            });
+
+            if (res?.data?.statusCode === 200) {
+                setCartCount((cart) => cart + 1);
+
+                toast.success("🛒 Đã thêm sản phẩm vào giỏ hàng", {
+                    position: "top-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    transition: Slide,
+                    style: {
+                        fontSize: "13px",
+                        padding: "8px 14px",
+                        borderRadius: "10px",
+                        minHeight: "unset",
+                        lineHeight: "1.3",
+                        fontWeight: 500,
+                        color: "#fff",
+                        boxShadow: "0 6px 18px rgba(0,0,0,0.15)",
+                        marginTop: "25px",
+                    },
+                    progressStyle: {
+                        background: "rgba(255,255,255,0.8)",
+                        height: "3px",
+                        borderRadius: "2px",
+                    },
+                } as any);
+            } else {
+                toast.error("❌ Thêm sản phẩm thất bại!");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("⚠️ Có lỗi khi thêm vào giỏ hàng!");
+        }
     };
 
     return (

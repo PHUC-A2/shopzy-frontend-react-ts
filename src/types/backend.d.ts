@@ -33,6 +33,11 @@ export interface ICartItemRes {
     subtotal: number;
 }
 
+export interface IAddToCartReq {
+    productId: number;
+    quantity: number;
+}
+
 export interface ICartItemResult<T> {
     cartId: number;
     cartItems: T[]
