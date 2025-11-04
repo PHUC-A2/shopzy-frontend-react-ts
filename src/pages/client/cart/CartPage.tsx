@@ -5,18 +5,18 @@ import { FaShoppingBag, FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CartPage.scss";
 import { toast } from "react-toastify";
-import type { ICartItemRes } from "../../../types/backend";
-import { getCartItemClient } from "../../../config/Api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
+import { removeItem, updateQuantity } from "../../../redux/slice/cartSlice";
 
 const { Text, Title } = Typography;
 
 const CartPage = () => {
-    const [cartItems, setCartItems] = useState<ICartItemRes[]>([]);
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const [isMobile, setIsMobile] = useState(false);
-
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state: RootState) => state.cart.items);
+    
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         handleResize();
@@ -25,52 +25,14 @@ const CartPage = () => {
     }, []);
 
     const handleQuantityChange = (productId: number, delta: number) => {
-        setCartItems((prev) =>
-            prev.map((item) => {
-                if (item.productId === productId) {
-                    const newQuantity = Math.max(1, item.quantity + delta);
-                    return { ...item, quantity: newQuantity, subtotal: newQuantity * item.price };
-                }
-                return item;
-            })
-        );
+        dispatch(updateQuantity({ productId, delta }));
     };
 
     const handleRemoveItem = (productId: number) => {
-        setCartItems((prev) => prev.filter((item) => item.productId !== productId));
+        dispatch(removeItem(productId));
     };
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
-
-    const fetchCartItem = async () => {
-        try {
-            const res = await getCartItemClient();
-            if (res?.data?.statusCode === 200) {
-                // console.log(res.data.data.cartItems);
-                setCartItems(res.data.data.cartItems);
-            }
-        } catch (error: any) {
-            console.log("Có lỗi xảy ra!\n", error)
-            const msg = error?.response?.data?.message ?? "unknown";
-            toast.error(
-                <div>
-                    <div><strong>Có lỗi xảy ra</strong></div>
-                    <div>{msg}</div>
-                </div>
-            )
-        }
-    }
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            fetchCartItem();
-            // console.log("Đã đăng nhập: ", isAuthenticated)
-        } else {
-            // console.log("Chưa đăng nhập: ", isAuthenticated)
-            setCartItems([]);
-        }
-    }, [setCartItems])
-
     return (
         <div className="cart-page-container">
             <Layout style={{ padding: "2rem", borderRadius: "16px", background: "#fff" }}>
@@ -219,7 +181,9 @@ const CartPage = () => {
                                                 </div>
                                                 <div className="cart-card-footer">
                                                     <Text strong>{item.subtotal.toLocaleString()} VND</Text>
-                                                    <Button variant="danger" onClick={() => handleRemoveItem(item.productId)}>
+                                                    <Button variant="danger"
+                                                        onClick={() => handleRemoveItem(item.productId)}
+                                                    >
                                                         <FaTrashAlt />
                                                     </Button>
                                                 </div>

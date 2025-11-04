@@ -28,7 +28,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const Header = () => {
 
-    const cartCount = useSelector((state: RootState) => state.cartCount.cartCount);
+    const cartCount = useSelector((state: RootState) => state.cart.items.length);
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const dispatch = useDispatch();
     const navigate = useNavigate();

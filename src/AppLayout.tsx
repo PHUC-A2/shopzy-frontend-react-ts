@@ -7,6 +7,7 @@ import { setClearProfileUser, setProfileUser } from "./redux/slice/userSlice";
 import AppRouter from "./routers/AppRouter";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import { setCartCount, setClearCartCount } from "./redux/slice/cartCountSilce";
+import { setCart } from "./redux/slice/cartSlice";
 
 const App = () => {
 
@@ -96,6 +97,33 @@ const App = () => {
 
     // gọi hàm
     getCartCount();
+  }, [dispatch, isAuthenticated])
+
+  // xử lý khi F5 với cartSlice
+  useEffect(() => {
+    const getCart = async () => {
+
+      try {
+        // nếu đã login
+        if (isAuthenticated) {
+          const res = await getCartItemClient();
+          if (res.data.statusCode === 200) {
+            dispatch(setCart(res.data.data.cartItems));
+          }
+        }
+
+        // nếu logout thì xóa cart count
+        if (!isAuthenticated) {
+          dispatch(setClearCartCount());
+        }
+
+      } catch (error: any) {
+        toast.error('Chưa đăng nhập, giỏ hàng rỗng')
+      }
+    }
+
+    // gọi hàm
+    getCart();
   }, [dispatch, isAuthenticated])
 
   return (
