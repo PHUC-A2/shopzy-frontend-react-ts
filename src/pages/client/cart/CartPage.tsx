@@ -7,7 +7,8 @@ import "./CartPage.scss";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
-import { removeItem, updateQuantity } from "../../../redux/slice/cartSlice";
+import { setCart, updateQuantity } from "../../../redux/slice/cartSlice";
+import { deleteCartItemClient, getCartItemClient } from "../../../config/Api";
 
 const { Text, Title } = Typography;
 
@@ -16,7 +17,7 @@ const CartPage = () => {
     const [isMobile, setIsMobile] = useState(false);
     const dispatch = useDispatch();
     const cartItems = useSelector((state: RootState) => state.cart.items);
-    
+
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         handleResize();
@@ -28,8 +29,13 @@ const CartPage = () => {
         dispatch(updateQuantity({ productId, delta }));
     };
 
-    const handleRemoveItem = (productId: number) => {
-        dispatch(removeItem(productId));
+
+    const handleRemoveItem = async (cartItemId: number) => {
+        const res = await deleteCartItemClient(cartItemId);
+        if (res?.data?.statusCode === 200) {
+            const updatedCart = await getCartItemClient();
+            dispatch(setCart(updatedCart.data.data.cartItems));
+        }
     };
 
     const totalPrice = cartItems.reduce((acc, item) => acc + item.subtotal, 0);
@@ -96,7 +102,7 @@ const CartPage = () => {
                                                             color: "white",
                                                             borderRadius: "8px",
                                                         }}
-                                                        onClick={() => handleRemoveItem(item.productId)}
+                                                        onClick={() => handleRemoveItem(item.cartItemId)}
                                                     >
                                                         <FaTrashAlt />
                                                     </Button>
@@ -182,7 +188,7 @@ const CartPage = () => {
                                                 <div className="cart-card-footer">
                                                     <Text strong>{item.subtotal.toLocaleString()} VND</Text>
                                                     <Button variant="danger"
-                                                        onClick={() => handleRemoveItem(item.productId)}
+                                                        onClick={() => handleRemoveItem(item.cartItemId)}
                                                     >
                                                         <FaTrashAlt />
                                                     </Button>

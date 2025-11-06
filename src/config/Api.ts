@@ -72,6 +72,7 @@ export const clientGetAllProducts = (query?: string) => {
 
 export const getCartItemClient = () => instance.get<IGetCartItemResponse>(`/api/v1/client/carts`);
 export const addToCartClient = (data: IAddToCartReq) => instance.post(`/api/v1/client/carts/add-products`, data);
+export const deleteCartItemClient = (cartItemId: number) => instance.delete(`/api/v1/client/carts/items/${cartItemId}`);
 
 // ==========upload product=======
 // export const uploadImageProduct = (data: IUploadFileReq) => instance.post('/api/v1/files/upload', data);
