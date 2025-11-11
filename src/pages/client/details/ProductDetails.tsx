@@ -25,9 +25,7 @@ import { useEffect, useState } from "react";
 import { addToCartClient, getCartItemClient, getProductDetails } from "../../../config/Api";
 import type { IProduct } from "../../../types/backend";
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../redux/store";
-import { setCartCount } from "../../../redux/slice/cartCountSilce";
+import { useDispatch } from "react-redux";
 import { setCart } from "../../../redux/slice/cartSlice";
 
 const { Title, Text } = Typography;
@@ -35,7 +33,6 @@ const { Title, Text } = Typography;
 const ProductPageDetails = () => {
 
     const [product, setProduct] = useState<IProduct | null>(null);
-    const count = useSelector((state: RootState) => state.cartCount.cartCount);
     const dispatch = useDispatch();
 
     // dùng param lấy id thay vì dùng Contex API
@@ -44,8 +41,6 @@ const ProductPageDetails = () => {
     const fetchProductDetails = async () => {
         const res = await getProductDetails(Number(id));
         if (res?.data?.statusCode === 200) {
-            console.log(res);
-            console.log(res?.data?.data);
             setProduct(res?.data?.data);
         }
     }
@@ -65,14 +60,7 @@ const ProductPageDetails = () => {
                 return;
             }
 
-            const existingItems = cartRes.data.data.cartItems || [];
-
-            // 2️ Kiểm tra sản phẩm đã tồn tại trong giỏ chưa
-            const isExisting = existingItems.some(
-                (item: any) => item.productId === product.id
-            );
-
-            // 3️ Gọi API thêm sản phẩm
+            // 2 Gọi API thêm sản phẩm
             const res = await addToCartClient({
                 productId: product.id,
                 quantity: 1,
@@ -83,17 +71,12 @@ const ProductPageDetails = () => {
                 const updateCart = await getCartItemClient();
                 dispatch(setCart(updateCart.data.data.cartItems));
 
-                // 4 Thông báo
+                // 3 Thông báo
                 toast.success("🛒 Đã thêm sản phẩm vào giỏ hàng", {
                     position: "top-right",
                     autoClose: 1500,
                     transition: Slide,
                 });
-
-                // 5️ Nếu là sản phẩm mới -> tăng count Redux
-                if (!isExisting) {
-                    dispatch(setCartCount({ cartCount: count + 1 }));
-                }
             } else {
                 toast.error("❌ Thêm sản phẩm thất bại!");
             }

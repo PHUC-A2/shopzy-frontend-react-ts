@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartItemClient } from "../../config/Api";
-import { setCart } from "../../redux/slice/cartSlice";
-import { setClearCartCount } from "../../redux/slice/cartCountSilce";
+import { setCart, setClearCart } from "../../redux/slice/cartSlice";
 import { toast } from "react-toastify";
 import type { RootState } from "../../redux/store";
 
@@ -21,9 +20,9 @@ export const useCartInit = () => {
                     }
                 }
 
-                // nếu logout thì xóa cart count
+                // nếu logout thì xóa giỏ hàng
                 if (!isAuthenticated) {
-                    dispatch(setClearCartCount());
+                    dispatch(setClearCart());
                 }
 
             } catch (error: any) {

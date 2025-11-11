@@ -1,13 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './slice/authSlice';
 import userReducer from './slice/userSlice';
-import cartCountReducer from './slice/cartCountSilce';
 import cartReducer from './slice/cartSlice';
 export const store = configureStore({
     reducer: {
         auth: authReducer, // authReducer là tên có thể đặt tùy ý
         user: userReducer,
-        cartCount: cartCountReducer,
         cart: cartReducer,
     },
 })

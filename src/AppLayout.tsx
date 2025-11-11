@@ -4,14 +4,12 @@ import { Slide, ToastContainer } from "react-toastify";
 import { useAuthInit } from "./hooks/init/useAuthInit";
 import { useProfileInit } from "./hooks/init/useProfileInit";
 import { useCartInit } from "./hooks/init/useCartInit";
-import { useCartCountInit } from "./hooks/init/useCartCountInit";
 
 const App = () => {
 
 
   useAuthInit();// xử lý khi F5 với Login (authSlice)
   useProfileInit()// xử lý khi F5 với userSlice
-  useCartCountInit();// xử lý khi F5 với cartCountSlice
   useCartInit() // xử lý khi F5 với cartSlice
 
   return (
