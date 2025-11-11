@@ -28,6 +28,7 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../redux/store";
 import { setCartCount } from "../../../redux/slice/cartCountSilce";
+import { setCart } from "../../../redux/slice/cartSlice";
 
 const { Title, Text } = Typography;
 
@@ -78,6 +79,10 @@ const ProductPageDetails = () => {
             });
 
             if (res?.data?.statusCode === 200) {
+
+                const updateCart = await getCartItemClient();
+                dispatch(setCart(updateCart.data.data.cartItems));
+
                 // 4 Thông báo
                 toast.success("🛒 Đã thêm sản phẩm vào giỏ hàng", {
                     position: "top-right",
