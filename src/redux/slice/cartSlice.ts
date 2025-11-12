@@ -1,12 +1,18 @@
 // src/redux/slice/cartSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ICartItemRes } from "../../types/backend";
+import { fetchCart } from "./thunk/cartThunk";
 
 interface CartState {
     items: ICartItemRes[];
+    loading: boolean;
+    error?: string;
 }
 
-const initialState: CartState = { items: [] };
+const initialState: CartState = {
+    items: [],
+    loading: false
+};
 
 const cartSlice = createSlice({
     name: "cart",
@@ -31,6 +37,21 @@ const cartSlice = createSlice({
             state.items = [];
         }
     },
+
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchCart.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchCart.fulfilled, (state, action) => {
+                state.loading = false;
+                state.items = action.payload ?? [];
+            })
+            .addCase(fetchCart.rejected, (state, action) => {
+                state.loading = false;
+                state.error = (action.payload as string) ?? "Lỗi không xác định"; // đảm bảo cho rejected luôn trả string
+            });
+    }
 });
 
 export const { setCart, updateQuantity, removeItem, setClearCart } = cartSlice.actions;

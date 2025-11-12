@@ -5,17 +5,18 @@ import { FaShoppingBag, FaMinus, FaPlus, FaTrashAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import "./CartPage.scss";
 import { toast } from "react-toastify";
+import type { AppDispatch, RootState } from "../../../redux/store";
+import { updateQuantity } from "../../../redux/slice/cartSlice";
+import { deleteCartItemClient} from "../../../config/Api";
+import { fetchCart } from "../../../redux/slice/thunk/cartThunk";
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../../../redux/store";
-import { setCart, updateQuantity } from "../../../redux/slice/cartSlice";
-import { deleteCartItemClient, getCartItemClient } from "../../../config/Api";
 
 const { Text, Title } = Typography;
 
 const CartPage = () => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const [isMobile, setIsMobile] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const cartItems = useSelector((state: RootState) => state.cart.items);
 
     useEffect(() => {
@@ -33,8 +34,7 @@ const CartPage = () => {
     const handleRemoveItem = async (cartItemId: number) => {
         const res = await deleteCartItemClient(cartItemId);
         if (res?.data?.statusCode === 200) {
-            const updatedCart = await getCartItemClient();
-            dispatch(setCart(updatedCart.data.data.cartItems));
+            dispatch(fetchCart());
         }
     };
 

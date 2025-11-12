@@ -26,14 +26,15 @@ import { addToCartClient, getCartItemClient, getProductDetails } from "../../../
 import type { IProduct } from "../../../types/backend";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { setCart } from "../../../redux/slice/cartSlice";
+import { fetchCart } from "../../../redux/slice/thunk/cartThunk";
+import type { AppDispatch } from "../../../redux/store";
 
 const { Title, Text } = Typography;
 
 const ProductPageDetails = () => {
 
     const [product, setProduct] = useState<IProduct | null>(null);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     // dùng param lấy id thay vì dùng Contex API
     const { id } = useParams<string>();
@@ -68,8 +69,7 @@ const ProductPageDetails = () => {
 
             if (res?.data?.statusCode === 200) {
 
-                const updateCart = await getCartItemClient();
-                dispatch(setCart(updateCart.data.data.cartItems));
+                dispatch(fetchCart());
 
                 // 3 Thông báo
                 toast.success("🛒 Đã thêm sản phẩm vào giỏ hàng", {
