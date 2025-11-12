@@ -7,8 +7,8 @@ import "./CartPage.scss";
 import { toast } from "react-toastify";
 import type { AppDispatch, RootState } from "../../../redux/store";
 import { updateQuantity } from "../../../redux/slice/cartSlice";
-import { deleteCartItemClient} from "../../../config/Api";
-import { fetchCart } from "../../../redux/slice/thunk/cartThunk";
+import { deleteCartItemClient } from "../../../config/Api";
+import { fetchCart } from "../../../redux/thunks/cartThunk";
 import { useDispatch, useSelector } from "react-redux";
 
 const { Text, Title } = Typography;

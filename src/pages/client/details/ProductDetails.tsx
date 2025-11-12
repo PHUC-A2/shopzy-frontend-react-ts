@@ -26,7 +26,7 @@ import { addToCartClient, getCartItemClient, getProductDetails } from "../../../
 import type { IProduct } from "../../../types/backend";
 import { useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { fetchCart } from "../../../redux/slice/thunk/cartThunk";
+import { fetchCart } from "../../../redux/thunks/cartThunk";
 import type { AppDispatch } from "../../../redux/store";
 
 const { Title, Text } = Typography;

@@ -1,7 +1,7 @@
 // src/redux/slice/cartSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ICartItemRes } from "../../types/backend";
-import { fetchCart } from "./thunk/cartThunk";
+import { fetchCart } from "../thunks/cartThunk";
 
 interface CartState {
     items: ICartItemRes[];
