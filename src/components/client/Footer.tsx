@@ -2,6 +2,7 @@ import { Layout, Row, Col, Typography, Space } from "antd";
 import { AiFillTikTok, AiFillYoutube } from "react-icons/ai";
 import { BiLogoFacebookCircle } from "react-icons/bi";
 import { SiZalo } from "react-icons/si";
+import { Link } from "react-router";
 
 const { Footer: AntFooter } = Layout;
 const { Title, Text, Paragraph } = Typography;
@@ -19,7 +20,7 @@ const Footer = () => {
                 {/* Cột 1 */}
                 <Col xs={24} sm={12} md={6}>
                     <Title level={4} style={{ color: "#389e0d", marginBottom: 16 }}>
-                        Về chúng tôi 
+                        Về chúng tôi
                     </Title>
                     <Paragraph style={{ color: "#ccc" }}>
                         Shopzy là một sàn thương mại điện tử, hay còn gọi là chợ trực tuyến,
@@ -46,11 +47,11 @@ const Footer = () => {
                         Liên kết nhanh
                     </Title>
                     <Space direction="vertical" size="small">
-                        <a href="/" style={{ color: "#ccc" }}>Trang chủ</a>
-                        <a href="/product" style={{ color: "#ccc" }}>Sản phẩm</a>
-                        <a href="/service" style={{ color: "#ccc" }}>Dịch vụ</a>
-                        <a href="/contact" style={{ color: "#ccc" }}>Liên hệ</a>
-                        <a href="/about" style={{ color: "#ccc" }}>Giới thiệu</a>
+                        <Link to="/" style={{ color: "#ccc" }}>Trang chủ</Link>
+                        <Link to="/product" style={{ color: "#ccc" }}>Sản phẩm</Link>
+                        <Link to="/service" style={{ color: "#ccc" }}>Dịch vụ</Link>
+                        <Link to="/contLinkct" style={{ color: "#ccc" }}>Liên hệ</Link>
+                        <Link to="/Linkbout" style={{ color: "#ccc" }}>Giới thiệu</Link>
                     </Space>
                 </Col>
 
@@ -59,11 +60,11 @@ const Footer = () => {
                     <Title level={4} style={{ color: "#389e0d", marginBottom: 16 }}>
                         Mạng xã hội
                     </Title>
-                    <Space size="middle" style={{fontSize:24}}>
-                        <a href="https://web.facebook.com/" style={{ color: "#faad14" }}> <BiLogoFacebookCircle /></a>
-                        <a href="https://chat.zalo.me/" style={{ color: "#faad14" }}><SiZalo /> </a>
-                        <a href="https://www.tiktok.com/vi-VN/" style={{ color: "#faad14" }}><AiFillTikTok /></a>
-                        <a href="https://www.youtube.com/" style={{ color: "#faad14" }}><AiFillYoutube /></a>
+                    <Space size="middle" style={{ fontSize: 24 }}>
+                        <Link to="https://web.facebook.com/" style={{ color: "#faad14" }}> <BiLogoFacebookCircle /></Link>
+                        <Link to="https://chat.zalo.me/" style={{ color: "#faad14" }}><SiZalo /> </Link>
+                        <Link to="https://www.tiktok.com/vi-VN/" style={{ color: "#faad14" }}><AiFillTikTok /></Link>
+                        <Link to="https://www.youtube.com/" style={{ color: "#faad14" }}><AiFillYoutube /></Link>
                     </Space>
                 </Col>
             </Row>
