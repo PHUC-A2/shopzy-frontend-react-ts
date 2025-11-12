@@ -1,5 +1,5 @@
 import instance from "./customAxios";
-import type { IAddToCartReq, ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IGetCartItemResponse, IGetUploadResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateUserReq } from "../types/backend";
+import type { IAddToCartReq, ICreateCartItemReq, ICreateCartReq, ICreateOrderItemReq, ICreateOrderReq, ICreateProductReq, ICreateUserReq, IGetAllProductsResponse, IGetCartItemResponse, IGetUploadResponse, IUpdateCartItemReq, IUpdateCartReq, IUpdateOrderItemReq, IUpdateOrderReq, IUpdateProductReq, IUpdateQuantityReq, IUpdateUserReq } from "../types/backend";
 
 // chuyển sang dùng instance
 
@@ -72,6 +72,7 @@ export const clientGetAllProducts = (query?: string) => {
 
 export const getCartItemClient = () => instance.get<IGetCartItemResponse>(`/api/v1/client/carts`);
 export const addToCartClient = (data: IAddToCartReq) => instance.post(`/api/v1/client/carts/add-products`, data);
+export const updateQuantityClient = (data: IUpdateQuantityReq) => instance.patch(`/api/v1/client/carts/items/update-quantity`, data); 
 export const deleteCartItemClient = (cartItemId: number) => instance.delete(`/api/v1/client/carts/items/${cartItemId}`);
 
 // ==========upload product=======

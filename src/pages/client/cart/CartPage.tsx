@@ -7,7 +7,7 @@ import "./CartPage.scss";
 import { toast } from "react-toastify";
 import type { AppDispatch, RootState } from "../../../redux/store";
 import { updateQuantity } from "../../../redux/slice/cartSlice";
-import { deleteCartItemClient } from "../../../config/Api";
+import { deleteCartItemClient, updateQuantityClient } from "../../../config/Api";
 import { fetchCart } from "../../../redux/thunks/cartThunk";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -26,8 +26,32 @@ const CartPage = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    const handleQuantityChange = (productId: number, delta: number) => {
+
+    const handleQuantityChange = async (productId: number, delta: number) => {
+        // Tìm item hiện tại
+        const item = cartItems.find(i => i.productId === productId);
+        if (!item) return;
+
+        const newQuantity = item.quantity + delta;
+        if (newQuantity < 1) return toast.warn("Số lượng tối thiểu là 1");
+
+        // Update Redux ngay để UI phản hồi nhanh
         dispatch(updateQuantity({ productId, delta }));
+
+        try {
+            // Gọi API để update số lượng trên server
+            const res = await updateQuantityClient({ productId, quantity: delta });
+            if (res?.data?.statusCode === 200) {
+                // Đồng bộ lại toàn bộ cart từ server
+                dispatch(fetchCart());
+            } else {
+                toast.error("Cập nhật giỏ hàng thất bại");
+                dispatch(fetchCart()); // rollback
+            }
+        } catch (err) {
+            toast.error("Lỗi kết nối server");
+            dispatch(fetchCart()); // rollback
+        }
     };
 
 

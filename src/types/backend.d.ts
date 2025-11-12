@@ -43,6 +43,11 @@ export interface ICartItemResult<T> {
     cartItems: T[]
 }
 
+export interface IUpdateQuantityReq {
+    productId: number;
+    quantity: number;
+}
+
 // ============= FILE===========
 export interface IUploadFile {
     fileName: string;
