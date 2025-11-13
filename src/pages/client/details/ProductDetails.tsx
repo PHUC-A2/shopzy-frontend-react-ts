@@ -24,7 +24,7 @@ import { Slide, toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { addToCartClient, getCartItemClient, getProductDetails } from "../../../config/Api";
 import type { IProduct } from "../../../types/backend";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { fetchCart } from "../../../redux/thunks/cartThunk";
 import type { AppDispatch } from "../../../redux/store";
@@ -35,9 +35,14 @@ const ProductPageDetails = () => {
 
     const [product, setProduct] = useState<IProduct | null>(null);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     // dùng param lấy id thay vì dùng Contex API
     const { id } = useParams<string>();
+
+    const handleBuyNow = () => {
+        navigate("/checkout");
+    }
 
     const fetchProductDetails = async () => {
         const res = await getProductDetails(Number(id));
@@ -221,7 +226,7 @@ const ProductPageDetails = () => {
 
                                         <motion.div whileHover={{ scale: 1.05 }}>
                                             <Button
-                                                onClick={() => toast.info("Chuyển sang trang checkout")}
+                                                onClick={() => handleBuyNow()}
                                                 variant="outline-dark"
                                                 style={{
                                                     padding: "10px 24px",

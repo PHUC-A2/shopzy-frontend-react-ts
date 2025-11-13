@@ -10,6 +10,7 @@ import { updateQuantity } from "../../../redux/slice/cartSlice";
 import { deleteCartItemClient, updateQuantityClient } from "../../../config/Api";
 import { fetchCart } from "../../../redux/thunks/cartThunk";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const { Text, Title } = Typography;
 
@@ -18,6 +19,11 @@ const CartPage = () => {
     const [isMobile, setIsMobile] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const cartItems = useSelector((state: RootState) => state.cart.items);
+    const navigate = useNavigate();
+
+    const handleBuyNow = () => {
+        navigate("/checkout");
+    }
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -151,7 +157,7 @@ const CartPage = () => {
                                                 <FaShoppingBag /> Mua Hàng
                                             </Button> */}
                                             <Button
-                                                onClick={() => toast.info("Chuyển sang trang checkout")}
+                                                onClick={() => handleBuyNow()}
                                                 variant="outline-dark"
                                                 style={{
                                                     display: "flex",
@@ -236,7 +242,7 @@ const CartPage = () => {
                                         </Button> */}
 
                                         <Button
-                                            onClick={() => toast.info("Chuyển sang trang checkout")}
+                                            onClick={() => handleBuyNow()}
                                             variant="outline-dark"
                                             style={{
                                                 display: "flex",

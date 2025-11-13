@@ -16,10 +16,11 @@ import AdminCartItemPage from "../pages/admin/cart-items/AdminCartItemPage";
 import AdminOrderPage from "../pages/admin/orders/AdminOrderPage";
 import AdminOrderItemPage from "../pages/admin/order-items/AdminOrderItemPage";
 import NotFoundPage from "../pages/error/NotFoundPage";
+import CheckOutPage from "../pages/client/checkout/CheckOutPage";
 
 
 const router = createBrowserRouter([
-    /* cấu hình cho user */
+    /* cấu hình cho client */
     {
         path: "/", element: <ClientLayout />,
         children:
@@ -28,7 +29,8 @@ const router = createBrowserRouter([
                 { path: "product", element: <ProductPage /> },
                 { path: "product-details/:id", element: <ProductPageDetails /> },
                 { path: "cart", element: <CartPage /> },
-                { path: "about", element: <AboutPage /> }
+                { path: "about", element: <AboutPage /> },
+                { path: "checkout", element: <CheckOutPage /> },
 
             ],
     },
